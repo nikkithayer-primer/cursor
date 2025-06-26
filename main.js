@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const zoom = map.getZoom();
         
         // Only filter when zoomed in (zoom level > 4)
-        const shouldFilter = zoom > 4;
+        const shouldFilter = zoom > 1;
         
         Object.keys(cities).forEach(cityKey => {
             const city = cities[cityKey];
