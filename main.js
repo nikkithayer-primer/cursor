@@ -313,8 +313,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const mapBounds = map.getBounds();
         const zoom = map.getZoom();
         
-        // Only filter when zoomed in (zoom level > 4)
+        // Only filter when zoomed in (zoom level > 1)
         const shouldFilter = zoom > 1;
+        
+        // Track which accordion sections should be expanded
+        const sectionsWithVisibleCities = new Set();
+        
+        // Define which cities belong to which accordion sections
+        const cityToSection = {
+            newyork: 'north-america',
+            losangeles: 'north-america', 
+            sanfrancisco: 'north-america',
+            mexicocity: 'north-america',
+            london: 'europe',
+            stpetersburg: 'europe',
+            novgorod: 'europe',
+            pskov: 'europe',
+            petrozavodsk: 'europe',
+            murmansk: 'europe',
+            tokyo: 'asia-south-america',
+            saopaulo: 'asia-south-america',
+            cairo: 'africa'
+        };
         
         Object.keys(cities).forEach(cityKey => {
             const city = cities[cityKey];
@@ -327,6 +347,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const latLng = L.latLng(city.coords[0], city.coords[1]);
             const isInBounds = mapBounds.contains(latLng);
             const isManuallyVisible = cityManualVisibility[cityKey];
+            
+            // Track which sections have cities in view
+            if (isInBounds && cityToSection[cityKey]) {
+                sectionsWithVisibleCities.add(cityToSection[cityKey]);
+            }
             
             if (cityListItem && visibilityToggle && eyeVisible && eyeHidden) {
                 let shouldShowInSidebar = true;
@@ -385,6 +410,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     cityLink.classList.add('disabled');
                 }
             }
+        });
+        
+        // Auto-expand accordion sections with cities in view
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            const sectionId = header.getAttribute('data-section');
+            const content = document.getElementById(sectionId);
+            
+            if (sectionsWithVisibleCities.has(sectionId)) {
+                // Expand this section as it has cities in view
+                header.classList.add('active');
+                content.classList.add('active');
+            } else if (shouldFilter) {
+                // When zoomed in, collapse sections with no cities in view
+                header.classList.remove('active');
+                content.classList.remove('active');
+            }
+            // When zoomed out, leave accordion state as is (don't auto-collapse)
         });
     }
 

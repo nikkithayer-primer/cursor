@@ -762,11 +762,10 @@ strong {
     border-left: 4px solid var(--chart-pink);
 }
 
-.accordion-section:nth-child(5) {
-    border-left: 4px solid var(--chart-indigo);
-}
-
 .accordion-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     width: 100%;
     background-color: var(--gray-50);
     border: none;
