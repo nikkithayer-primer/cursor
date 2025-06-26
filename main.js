@@ -106,4 +106,114 @@ document.addEventListener('DOMContentLoaded', function() {
             padding: [20, 20]
         });
     });
+
+    // Add click handler for Export KML button
+    const exportKmlBtn = document.querySelector('#export-kml-btn');
+    exportKmlBtn.addEventListener('click', function() {
+        // Generate KML content for all cities
+        let kmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>City Locations</name>
+    <description>Exported city markers from Primer Design Sandbox</description>
+`;
+        
+        Object.keys(cities).forEach(cityKey => {
+            const city = cities[cityKey];
+            kmlContent += `    <Placemark>
+      <name>${city.name}</name>
+      <Point>
+        <coordinates>${city.coords[1]},${city.coords[0]},0</coordinates>
+      </Point>
+    </Placemark>
+`;
+        });
+        
+        kmlContent += `  </Document>
+</kml>`;
+        
+        // Create and download the KML file
+        const blob = new Blob([kmlContent], { type: 'application/vnd.google-earth.kml+xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'city-locations.kml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    // Add click handler for Map Settings button
+    const mapSettingsBtn = document.querySelector('#map-settings-btn');
+    mapSettingsBtn.addEventListener('click', function() {
+        // Toggle between different map tile layers
+        const currentTiles = map._layers;
+        const tileLayerKeys = Object.keys(currentTiles).filter(key => 
+            currentTiles[key] instanceof L.TileLayer
+        );
+        
+        if (tileLayerKeys.length > 0) {
+            const currentTileLayer = currentTiles[tileLayerKeys[0]];
+            map.removeLayer(currentTileLayer);
+            
+            // Check current tile URL to determine next layer
+            const currentUrl = currentTileLayer._url;
+            let newTileLayer;
+            
+            if (currentUrl.includes('openstreetmap.org')) {
+                // Switch to satellite view
+                newTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: '© <a href="https://www.esri.com/">Esri</a>'
+                });
+            } else {
+                // Switch back to OpenStreetMap
+                newTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                });
+            }
+            
+            newTileLayer.addTo(map);
+        }
+    });
+
+    // Add click handler for Fullscreen button
+    const fullscreenBtn = document.querySelector('#fullscreen-btn');
+    fullscreenBtn.addEventListener('click', function() {
+        const mapContainer = document.querySelector('#map');
+        
+        if (!document.fullscreenElement) {
+            // Enter fullscreen
+            if (mapContainer.requestFullscreen) {
+                mapContainer.requestFullscreen();
+            } else if (mapContainer.webkitRequestFullscreen) {
+                mapContainer.webkitRequestFullscreen();
+            } else if (mapContainer.msRequestFullscreen) {
+                mapContainer.msRequestFullscreen();
+            }
+        } else {
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    });
+
+    // Handle fullscreen change events
+    document.addEventListener('fullscreenchange', function() {
+        // Invalidate map size when entering/exiting fullscreen
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
+    });
+    
+    document.addEventListener('webkitfullscreenchange', function() {
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
+    });
 });

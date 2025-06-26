@@ -83,6 +83,18 @@ body {
     padding: 0 4px;
 }
 
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .event-count {
     font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     font-size: 16px;
@@ -110,6 +122,45 @@ body {
 
 .show-all-btn:active {
     transform: translateY(0);
+}
+
+.icon-btn {
+    background-color: white;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    color: rgb(59, 72, 92);
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.icon-btn:hover {
+    background-color: var(--gray-100);
+    border-color: var(--gray-400);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.icon-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.icon-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.icon-btn span {
+    white-space: nowrap;
 }
 
 .map-container {

@@ -15,12 +15,37 @@
     
     <div class="body-container">
         <div class="map-header">
-            <span class="event-count">Showing 8 events</span>
-            <button class="show-all-btn">Show All</button>
+            <div class="left-section">
+                <span class="event-count">Showing 8 events</span>
+                <button class="show-all-btn">Show All</button>
+            </div>
+            <div class="right-section">
+                <button class="icon-btn" id="export-kml-btn" title="Export KML">
+                    <span>Export KML</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="21"/>
+                        <line x1="8" y1="13" x2="16" y2="21"/>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="map-settings-btn" title="Map Settings">
+                    <span>Map Settings</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-4.5L19 7l-1.5 1.5M5 17l1.5-1.5L5 14m0 0L3.5 15.5M19 9l1.5-1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="fullscreen-btn" title="Full Screen">
+                    <span>Full Screen</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                </button>
+            </div>
         </div>
         <div class="map-container">
             <div class="sidebar">
-                <h3>Cities</h3>
                 <ul class="city-links">
                     <li><a href="#" data-city="london">London</a></li>
                     <li><a href="#" data-city="tokyo">Tokyo</a></li>
