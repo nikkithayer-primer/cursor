@@ -1,0 +1,109 @@
+// Initialize the map
+document.addEventListener('DOMContentLoaded', function() {
+    // Create map with initial view (will be adjusted after markers are added)
+    const map = L.map('map').setView([20, 0], 2);
+    
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    // City coordinates and information
+    const cities = {
+        london: { coords: [51.5074, -0.1278], name: 'London, UK', zoom: 11 },
+        tokyo: { coords: [35.6762, 139.6503], name: 'Tokyo, Japan', zoom: 11 },
+        newyork: { coords: [40.7128, -74.0060], name: 'New York, NY', zoom: 11 },
+        losangeles: { coords: [34.0522, -118.2437], name: 'Los Angeles, CA', zoom: 10 },
+        sanfrancisco: { coords: [37.7749, -122.4194], name: 'San Francisco, CA', zoom: 12 },
+        cairo: { coords: [30.0444, 31.2357], name: 'Cairo, Egypt', zoom: 11 },
+        saopaulo: { coords: [-23.5505, -46.6333], name: 'São Paulo, Brazil', zoom: 10 },
+        mexicocity: { coords: [19.4326, -99.1332], name: 'Mexico City, Mexico', zoom: 10 }
+    };
+    
+    // Store markers for each city
+    const cityMarkers = {};
+    
+    // Add markers for all cities
+    Object.keys(cities).forEach(cityKey => {
+        const city = cities[cityKey];
+        const marker = L.marker(city.coords)
+            .addTo(map)
+            .bindPopup(city.name);
+        
+        // Add click event to marker for smooth zoom behavior
+        marker.on('click', function() {
+            // Remove active class from all city links
+            const cityLinks = document.querySelectorAll('.city-links a');
+            cityLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to corresponding city link
+            const cityLink = document.querySelector(`[data-city="${cityKey}"]`);
+            if (cityLink) {
+                cityLink.classList.add('active');
+            }
+            
+            // Smoothly fly to city with proper zoom level
+            map.flyTo(city.coords, city.zoom, {
+                animate: true,
+                duration: 1.5
+            });
+        });
+        
+        cityMarkers[cityKey] = marker;
+    });
+    
+    // Fit map to show all cities on initial load
+    const group = new L.featureGroup(Object.values(cityMarkers));
+    map.fitBounds(group.getBounds(), {
+        padding: [20, 20]
+    });
+    
+    // Add click handlers for city links
+    const cityLinks = document.querySelectorAll('.city-links a');
+    cityLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const cityKey = this.getAttribute('data-city');
+            const city = cities[cityKey];
+            
+            if (city) {
+                // Remove active class from all links
+                cityLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Smoothly fly to city with animation
+                map.flyTo(city.coords, city.zoom, {
+                    animate: true,
+                    duration: 1.5
+                });
+                
+                // Open the marker popup
+                if (cityMarkers[cityKey]) {
+                    cityMarkers[cityKey].openPopup();
+                }
+            }
+        });
+    });
+    
+    // No city is active by default since we start zoomed out
+    
+    // Add click handler for Show All button
+    const showAllBtn = document.querySelector('.show-all-btn');
+    showAllBtn.addEventListener('click', function() {
+        // Remove active class from all city links
+        cityLinks.forEach(link => link.classList.remove('active'));
+        
+        // Create a group of all city coordinates to fit bounds
+        const allCoords = Object.values(cities).map(city => city.coords);
+        const group = new L.featureGroup(Object.values(cityMarkers));
+        
+        // Smoothly fly to show all cities
+        map.flyToBounds(group.getBounds(), {
+            animate: true,
+            duration: 1.5,
+            padding: [20, 20]
+        });
+    });
+});

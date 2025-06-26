@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primer Design Sandbox</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏖️</text></svg>">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <img src="img/logo.png" alt="Logo" class="nav-logo">
+    </nav>
+    
+    <div class="body-container">
+        <div class="map-header">
+            <span class="event-count">Showing 8 events</span>
+            <button class="show-all-btn">Show All</button>
+        </div>
+        <div class="map-container">
+            <div class="sidebar">
+                <h3>Cities</h3>
+                <ul class="city-links">
+                    <li><a href="#" data-city="london">London</a></li>
+                    <li><a href="#" data-city="tokyo">Tokyo</a></li>
+                    <li><a href="#" data-city="newyork">New York</a></li>
+                    <li><a href="#" data-city="losangeles">Los Angeles</a></li>
+                    <li><a href="#" data-city="sanfrancisco">San Francisco</a></li>
+                    <li><a href="#" data-city="cairo">Cairo</a></li>
+                    <li><a href="#" data-city="saopaulo">São Paulo</a></li>
+                    <li><a href="#" data-city="mexicocity">Mexico City</a></li>
+                </ul>
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="main.js"></script>
+</body>
+</html> 
