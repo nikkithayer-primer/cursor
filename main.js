@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
         sanfrancisco: { coords: [37.7749, -122.4194], name: 'San Francisco, CA', zoom: 12 },
         cairo: { coords: [30.0444, 31.2357], name: 'Cairo, Egypt', zoom: 11 },
         saopaulo: { coords: [-23.5505, -46.6333], name: 'São Paulo, Brazil', zoom: 10 },
-        mexicocity: { coords: [19.4326, -99.1332], name: 'Mexico City, Mexico', zoom: 10 }
+        mexicocity: { coords: [19.4326, -99.1332], name: 'Mexico City, Mexico', zoom: 10 },
+        stpetersburg: { coords: [59.9311, 30.3609], name: 'St. Petersburg, Russia', zoom: 11 },
+        novgorod: { coords: [58.5218, 31.2755], name: 'Veliky Novgorod, Russia', zoom: 11 },
+        pskov: { coords: [57.8136, 28.3496], name: 'Pskov, Russia', zoom: 11 },
+        petrozavodsk: { coords: [61.7849, 34.3469], name: 'Petrozavodsk, Russia', zoom: 11 },
+        murmansk: { coords: [68.9585, 33.0827], name: 'Murmansk, Russia', zoom: 10 }
     };
     
     // Store markers for each city
