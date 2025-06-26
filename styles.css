@@ -66,7 +66,7 @@ body {
 }
 
 .body-container {
-    margin: 48px;
+    margin: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,7 +75,6 @@ body {
 
 .map-header {
     width: 100%;
-    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -166,18 +165,17 @@ body {
 .map-container {
     display: flex;
     width: 100%;
-    max-width: 1200px;
-    gap: 20px;
+    gap: 0px;
     align-items: flex-start;
 }
 
 .sidebar {
-    flex: 0 0 200px;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 375px;
     background: white;
     border: 1px solid var(--gray-300);
-    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar h3 {
@@ -221,8 +219,6 @@ body {
 #map {
     flex: 1;
     height: 600px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--gray-300);
 }
 
@@ -279,8 +275,11 @@ h1 {
 
 .page-header {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 32px;
+    margin-bottom: 24px;
 }
 
 .back-btn {
@@ -324,11 +323,23 @@ h1 {
     border-radius: 16px;
     padding: 16px 20px;
     display: flex;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column;
+    gap: 12px;
     width: 100%;
     max-width: 900px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-row-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.search-row-secondary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .search-input {
