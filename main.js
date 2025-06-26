@@ -216,4 +216,48 @@ document.addEventListener('DOMContentLoaded', function() {
             map.invalidateSize();
         }, 100);
     });
+
+    // Add search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const dateRangeBtn = document.querySelector('.date-range-btn');
+    const advancedOptionsBtn = document.querySelector('.advanced-options-btn');
+    const backBtn = document.querySelector('.back-btn');
+
+    // Back button functionality
+    backBtn.addEventListener('click', function() {
+        // Go back in browser history
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // If no history, redirect to a default page or show message
+            console.log('No previous page to go back to');
+        }
+    });
+
+    // Search button functionality
+    searchBtn.addEventListener('click', function() {
+        const searchTerm = searchInput.value;
+        console.log('Searching for:', searchTerm);
+        // Add search logic here
+    });
+
+    // Enter key search
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchBtn.click();
+        }
+    });
+
+    // Date range button functionality
+    dateRangeBtn.addEventListener('click', function() {
+        console.log('Opening date range picker');
+        // Add date range picker logic here
+    });
+
+    // Advanced options button functionality
+    advancedOptionsBtn.addEventListener('click', function() {
+        console.log('Opening advanced options');
+        // Add advanced options panel logic here
+    });
 });
