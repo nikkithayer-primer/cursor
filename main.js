@@ -394,4 +394,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial update
     updateSidebarVisibility();
+
+    // Add accordion functionality
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const sectionId = this.getAttribute('data-section');
+            const content = document.getElementById(sectionId);
+            const isActive = this.classList.contains('active');
+            
+            // Close all accordion sections
+            accordionHeaders.forEach(h => h.classList.remove('active'));
+            document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+            
+            // Open clicked section if it wasn't already active
+            if (!isActive) {
+                this.classList.add('active');
+                content.classList.add('active');
+            }
+        });
+    });
+
+    // Open the first accordion section by default
+    if (accordionHeaders.length > 0) {
+        accordionHeaders[0].click();
+    }
 });
