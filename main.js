@@ -23,12 +23,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Store markers for each city
     const cityMarkers = {};
     
+    // Track visibility state for each city
+    const cityVisibility = {};
+    
+    // Track manual visibility state (user-controlled) separately from viewport visibility
+    const cityManualVisibility = {};
+
     // Add markers for all cities
     Object.keys(cities).forEach(cityKey => {
         const city = cities[cityKey];
         const marker = L.marker(city.coords)
             .addTo(map)
             .bindPopup(city.name);
+        
+        // Initialize all cities as visible
+        cityVisibility[cityKey] = true;
+        cityManualVisibility[cityKey] = true;
         
         // Add click event to marker for smooth zoom behavior
         marker.on('click', function() {
@@ -55,7 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fit map to show all cities on initial load
     const group = new L.featureGroup(Object.values(cityMarkers));
     map.fitBounds(group.getBounds(), {
-        padding: [20, 20]
+        padding: [50, 50],
+        maxZoom: 4
     });
     
     // Add click handlers for city links
@@ -260,4 +271,122 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Opening advanced options');
         // Add advanced options panel logic here
     });
+
+    // Add visibility toggle functionality
+    const visibilityToggles = document.querySelectorAll('.visibility-toggle');
+    visibilityToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const cityKey = this.getAttribute('data-city');
+            const marker = cityMarkers[cityKey];
+            const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
+            
+            if (cityManualVisibility[cityKey]) {
+                // Manually hide the city
+                cityManualVisibility[cityKey] = false;
+                cityVisibility[cityKey] = false;
+                map.removeLayer(marker);
+                
+                // Remove active state if this city was active
+                cityLink.classList.remove('active');
+            } else {
+                // Manually show the city
+                cityManualVisibility[cityKey] = true;
+                cityVisibility[cityKey] = true;
+                marker.addTo(map);
+            }
+            
+            // Update sidebar visibility after toggle
+            updateSidebarVisibility();
+        });
+    });
+
+    // Function to update sidebar visibility based on map viewport
+    function updateSidebarVisibility() {
+        const mapBounds = map.getBounds();
+        const zoom = map.getZoom();
+        
+        // Only filter when zoomed in (zoom level > 4)
+        const shouldFilter = zoom > 4;
+        
+        Object.keys(cities).forEach(cityKey => {
+            const city = cities[cityKey];
+            const cityListItem = document.querySelector(`li:has(a[data-city="${cityKey}"])`);
+            const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
+            const visibilityToggle = document.querySelector(`button[data-city="${cityKey}"]`);
+            const eyeVisible = visibilityToggle?.querySelector('.eye-visible');
+            const eyeHidden = visibilityToggle?.querySelector('.eye-hidden');
+            
+            const latLng = L.latLng(city.coords[0], city.coords[1]);
+            const isInBounds = mapBounds.contains(latLng);
+            const isManuallyVisible = cityManualVisibility[cityKey];
+            
+            if (cityListItem && visibilityToggle && eyeVisible && eyeHidden) {
+                let shouldShowInSidebar = true;
+                let shouldShowEyeAsVisible = isManuallyVisible;
+                
+                if (shouldFilter) {
+                    // When zoomed in, cities out of bounds are treated as hidden
+                    if (!isInBounds) {
+                        shouldShowEyeAsVisible = false;
+                        cityVisibility[cityKey] = false;
+                        // Remove marker if it's not manually hidden and not in bounds
+                        if (isManuallyVisible && cityMarkers[cityKey]._map) {
+                            map.removeLayer(cityMarkers[cityKey]);
+                        }
+                    } else if (isManuallyVisible) {
+                        // City is in bounds and manually visible
+                        shouldShowEyeAsVisible = true;
+                        cityVisibility[cityKey] = true;
+                        // Add marker back if it's not on the map
+                        if (!cityMarkers[cityKey]._map) {
+                            cityMarkers[cityKey].addTo(map);
+                        }
+                    }
+                    
+                    // Only show sidebar items that are in bounds or manually visible
+                    shouldShowInSidebar = isInBounds || !isManuallyVisible;
+                } else {
+                    // When zoomed out, restore all cities based on manual visibility
+                    if (isManuallyVisible) {
+                        cityVisibility[cityKey] = true;
+                        if (!cityMarkers[cityKey]._map) {
+                            cityMarkers[cityKey].addTo(map);
+                        }
+                    } else {
+                        cityVisibility[cityKey] = false;
+                        if (cityMarkers[cityKey]._map) {
+                            map.removeLayer(cityMarkers[cityKey]);
+                        }
+                    }
+                    shouldShowEyeAsVisible = isManuallyVisible;
+                }
+                
+                // Update sidebar item visibility
+                cityListItem.style.display = shouldShowInSidebar ? 'flex' : 'none';
+                
+                // Update eye icon state
+                if (shouldShowEyeAsVisible) {
+                    eyeVisible.style.display = 'block';
+                    eyeHidden.style.display = 'none';
+                    visibilityToggle.classList.remove('hidden');
+                    cityLink.classList.remove('disabled');
+                } else {
+                    eyeVisible.style.display = 'none';
+                    eyeHidden.style.display = 'block';
+                    visibilityToggle.classList.add('hidden');
+                    cityLink.classList.add('disabled');
+                }
+            }
+        });
+    }
+
+    // Add map event listeners for viewport changes
+    map.on('moveend', updateSidebarVisibility);
+    map.on('zoomend', updateSidebarVisibility);
+    
+    // Initial update
+    updateSidebarVisibility();
 });
