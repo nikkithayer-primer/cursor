@@ -75,7 +75,6 @@ body {
 
 .map-header {
     width: 100%;
-    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -166,25 +165,17 @@ body {
 .map-container {
     display: flex;
     width: 100%;
-    max-width: 1200px;
-    gap: 20px;
+    gap: 0px;
     align-items: flex-start;
 }
 
 .sidebar {
-<<<<<<< HEAD
-    flex: 0 0 auto;
+    flex: 0 0 20%;
     width: 20%;
-    max-width: 375px;
     height: 560px;
-=======
-    flex: 0 0 200px;
->>>>>>> parent of 93f9f71 (Map restyling)
     background: white;
     border: 1px solid var(--gray-300);
-    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar h3 {
@@ -267,8 +258,6 @@ body {
 #map {
     flex: 1;
     height: 600px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--gray-300);
 }
 
