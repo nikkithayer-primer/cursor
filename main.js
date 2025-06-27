@@ -315,6 +315,139 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Add click handlers for menu toggle buttons
+    const menuToggles = document.querySelectorAll('.menu-toggle');
+    menuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const cityKey = this.getAttribute('data-city');
+            const city = cities[cityKey];
+            
+            // Close any existing popovers
+            const existingPopover = document.querySelector('.menu-popover');
+            if (existingPopover) {
+                existingPopover.remove();
+            }
+            
+            // Create popover element
+            const popover = document.createElement('div');
+            popover.className = 'menu-popover';
+            popover.innerHTML = `
+                <div class="menu-popover-content">
+                    <div class="menu-item" data-action="zoom">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <span>Zoom to ${city.name}</span>
+                    </div>
+                    <div class="menu-item" data-action="info">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="l 12,16 0,-4"/>
+                            <path d="l 12,8 0,0"/>
+                        </svg>
+                        <span>City Information</span>
+                    </div>
+                    <div class="menu-item" data-action="export">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="21"/>
+                            <line x1="8" y1="13" x2="16" y2="21"/>
+                        </svg>
+                        <span>Export Location</span>
+                    </div>
+                </div>
+            `;
+            
+            // Position popover relative to the button
+            const buttonRect = this.getBoundingClientRect();
+            popover.style.position = 'fixed';
+            popover.style.top = (buttonRect.bottom + 8) + 'px';
+            popover.style.left = (buttonRect.left - 100) + 'px'; // Offset to the left to fit better
+            popover.style.zIndex = '1000';
+            
+            document.body.appendChild(popover);
+            
+            // Add click handlers for menu items
+            const menuItems = popover.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    
+                    switch(action) {
+                        case 'zoom':
+                            // Zoom to the city
+                            map.flyTo(city.coords, city.zoom, {
+                                animate: true,
+                                duration: 1.5
+                            });
+                            
+                            // Open the marker popup
+                            if (cityMarkers[cityKey]) {
+                                cityMarkers[cityKey].openPopup();
+                            }
+                            
+                            // Set as active
+                            const cityLinks = document.querySelectorAll('.city-links a');
+                            cityLinks.forEach(l => l.classList.remove('active'));
+                            const cityLink = document.querySelector(`[data-city="${cityKey}"]`);
+                            if (cityLink) {
+                                cityLink.classList.add('active');
+                            }
+                            break;
+                            
+                        case 'info':
+                            alert(`${city.name}\nCoordinates: ${city.coords[0]}, ${city.coords[1]}\nZoom Level: ${city.zoom}`);
+                            break;
+                            
+                        case 'export':
+                            // Export single city as KML
+                            const kmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>${city.name}</name>
+    <Placemark>
+      <name>${city.name}</name>
+      <Point>
+        <coordinates>${city.coords[1]},${city.coords[0]},0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>`;
+                            
+                            const blob = new Blob([kmlContent], { type: 'application/vnd.google-earth.kml+xml' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `${cityKey}-location.kml`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                            break;
+                    }
+                    
+                    // Close popover after action
+                    popover.remove();
+                });
+            });
+            
+            // Close popover when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', function closePopover(e) {
+                    if (!popover.contains(e.target)) {
+                        popover.remove();
+                        document.removeEventListener('click', closePopover);
+                    }
+                });
+            }, 100);
+        });
+    });
+
     // Function to update sidebar visibility based on map viewport
     function updateSidebarVisibility() {
         const mapBounds = map.getBounds();
