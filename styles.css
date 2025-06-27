@@ -6,6 +6,14 @@
 }
 
 @font-face {
+    font-family: 'NeueHaasGrotesk';
+    src: url('./fonts/NeueHaasGroteskDisplay(RoundDots)-75Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+@font-face {
     font-family: 'NeueHaasGroteskDisplay';
     src: url('./fonts/NeueHaasGroteskDisplay(RoundDots)-45Light(1).otf') format('opentype');
     font-weight: 300;
@@ -18,6 +26,7 @@
     font-weight: 500;
     font-style: normal;
 }
+
 
 :root {
     --chart-blue: #43A7DD;
@@ -257,7 +266,7 @@ body {
 }
 
 .city-header {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 16px;
     color: var(--gray-11);
     margin-bottom: 4px;
@@ -426,8 +435,8 @@ body {
 }
 
 #map .leaflet-control-zoom a {
-    background-color: #B8D4F0;
-    border-color: #A8C4E0;
+    background-color: var(--gray-0);
+    border-color: var(--gray-1);
     color: #2c3e50;
 }
 
@@ -952,19 +961,19 @@ strong {
     overflow: hidden;
 }
 
-.accordion-section:nth-child(1) {
+.accordion-header:nth-child(1) {
     border-left: 4px solid var(--chart-blue);
 }
 
-.accordion-section:nth-child(2) {
+.accordion-header:nth-child(2) {
     border-left: 4px solid var(--chart-orange);
 }
 
-.accordion-section:nth-child(3) {
+.accordion-header:nth-child(3) {
     border-left: 4px solid var(--chart-green);
 }
 
-.accordion-section:nth-child(4) {
+.accordion-header:nth-child(4) {
     border-left: 4px solid var(--chart-pink);
 }
 
