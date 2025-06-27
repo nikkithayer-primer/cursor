@@ -73,7 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
         padding: [50, 50],
         maxZoom: 4
     });
-    
+
+    // Update Show All button with total city count
+    const totalCities = Object.keys(cities).length;
+
     // Add click handlers for city links
     const cityLinks = document.querySelectorAll('.city-links a');
     cityLinks.forEach(link => {
@@ -107,6 +110,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add click handler for Show All button
     const showAllBtn = document.querySelector('.show-all-btn');
+    
+    // Update Show All button text with total city count
+    showAllBtn.textContent = `Show All (${totalCities})`;
+    
     showAllBtn.addEventListener('click', function() {
         // Remove active class from all city links
         cityLinks.forEach(link => link.classList.remove('active'));
@@ -303,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 marker.addTo(map);
             }
             
-            // Update sidebar visibility after toggle
+            // Update sidebar visibility and event count after toggle
             updateSidebarVisibility();
         });
     });
@@ -318,6 +325,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Track which accordion sections should be expanded
         const sectionsWithVisibleCities = new Set();
+        
+        // Count visible events
+        let visibleEventCount = 0;
         
         // Define which cities belong to which accordion sections
         const cityToSection = {
@@ -351,6 +361,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Track which sections have cities in view
             if (isInBounds && cityToSection[cityKey]) {
                 sectionsWithVisibleCities.add(cityToSection[cityKey]);
+            }
+            
+            // Count visible events (cities that are actually visible on the map)
+            if (cityVisibility[cityKey] && cityMarkers[cityKey]._map) {
+                visibleEventCount++;
             }
             
             if (cityListItem && visibilityToggle && eyeVisible && eyeHidden) {
@@ -411,6 +426,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        
+        // Count visible events after all processing is done
+        visibleEventCount = 0;
+        Object.keys(cities).forEach(cityKey => {
+            if (cityVisibility[cityKey] && cityMarkers[cityKey]._map) {
+                visibleEventCount++;
+            }
+        });
+        
+        // Update the event count display
+        const eventCountElement = document.querySelector('.event-count');
+        if (eventCountElement) {
+            eventCountElement.textContent = `Showing ${visibleEventCount} events`;
+        }
         
         // Auto-expand accordion sections with cities in view
         const accordionHeaders = document.querySelectorAll('.accordion-header');
