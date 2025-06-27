@@ -202,7 +202,9 @@ body {
 }
 
 .city-links a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 8px 64px 8px 12px;
     text-decoration: none;
     color: rgb(59, 72, 92);
@@ -210,6 +212,33 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
     font-size: 14px;
     flex: 1;
+}
+
+.city-name {
+    flex: 1;
+}
+
+.city-pin {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+/* Pin colors based on parent group */
+.accordion-section:nth-child(1) .city-pin {
+    color: var(--chart-blue);
+}
+
+.accordion-section:nth-child(2) .city-pin {
+    color: var(--chart-orange);
+}
+
+.accordion-section:nth-child(3) .city-pin {
+    color: var(--chart-green);
+}
+
+.accordion-section:nth-child(4) .city-pin {
+    color: var(--chart-pink);
 }
 
 .city-links a:hover {
