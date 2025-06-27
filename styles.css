@@ -985,7 +985,7 @@ strong {
     width: 100%;
     background-color: var(--gray-1);
     border: none;
-    padding: 12px 16px;
+    padding: 12px 10px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -1007,10 +1007,30 @@ strong {
 }
 
 .accordion-icon {
-    width: 16px;
-    height: 16px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--gray-6);
     transition: transform 0.2s ease;
     flex-shrink: 0;
+    margin-right: 4px;
+}
+
+.accordion-section:nth-child(1) .accordion-icon {
+    border-top-color: var(--chart-blue);
+}
+
+.accordion-section:nth-child(2) .accordion-icon {
+    border-top-color: var(--chart-orange);
+}
+
+.accordion-section:nth-child(3) .accordion-icon {
+    border-top-color: var(--chart-green);
+}
+
+.accordion-section:nth-child(4) .accordion-icon {
+    border-top-color: var(--chart-pink);
 }
 
 .accordion-header.active .accordion-icon {
