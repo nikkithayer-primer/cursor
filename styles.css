@@ -1025,7 +1025,7 @@ strong {
 }
 
 .accordion-content.active {
-    max-height: 500px;
+    max-height: fit-content;
 }
 
 .accordion-content .city-links {
