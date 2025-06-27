@@ -269,8 +269,7 @@ body {
 }
 
 .city-links a.active {
-    background-color: #3169ED;
-    color: white;
+    background-color: var(--gray-100);
 }
 
 .city-links a.disabled {

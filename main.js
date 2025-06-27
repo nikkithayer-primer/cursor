@@ -167,6 +167,30 @@ document.addEventListener('DOMContentLoaded', function() {
         map.addLayer(clusterGroup);
     });
     
+    // Add click handlers to cluster groups to zoom to fit all pins in the cluster
+    Object.entries(clusterGroups).forEach(([colorName, clusterGroup]) => {
+        clusterGroup.on('clusterclick', function(event) {
+            // Get all markers in this cluster group
+            const markers = [];
+            clusterGroup.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    markers.push(layer);
+                }
+            });
+            
+            if (markers.length > 0) {
+                // Create a feature group from all markers in this cluster
+                const group = new L.featureGroup(markers);
+                
+                // Zoom to fit all markers in this cluster with padding
+                map.fitBounds(group.getBounds(), {
+                    padding: [20, 20],
+                    maxZoom: 8
+                });
+            }
+        });
+    });
+    
     // Fit map to show all cities on initial load
     const group = new L.featureGroup(Object.values(cityMarkers));
     map.fitBounds(group.getBounds(), {
@@ -758,9 +782,86 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isActive) {
                 this.classList.add('active');
                 content.classList.add('active');
+                
+                // Zoom to show all cities in this group
+                zoomToGroupCities(sectionId);
             }
         });
     });
+    
+    // Function to zoom to all cities in a specific group
+    function zoomToGroupCities(sectionId) {
+        // Define which cities belong to which accordion sections
+        const sectionToCities = {
+            'north-america': ['newyork', 'losangeles', 'sanfrancisco', 'mexicocity'],
+            'europe': ['london', 'stpetersburg', 'novgorod', 'pskov', 'petrozavodsk', 'murmansk'],
+            'asia-south-america': ['tokyo', 'saopaulo'],
+            'africa': ['cairo']
+        };
+        
+        const citiesInSection = sectionToCities[sectionId];
+        if (!citiesInSection) return;
+        
+        // First, show all hidden cities in this section
+        const markersToShow = [];
+        citiesInSection.forEach(cityKey => {
+            const marker = cityMarkers[cityKey];
+            if (!marker) return;
+            
+            const color = cityColors[cityKey];
+            const clusterGroupName = colorToClusterGroup[color];
+            const isMarkerOnMap = clusterGroupName && clusterGroups[clusterGroupName] && clusterGroups[clusterGroupName].hasLayer(marker);
+            
+            // If city is manually hidden or not on map, show it
+            if (!cityManualVisibility[cityKey] || !isMarkerOnMap) {
+                // Make city manually visible
+                cityManualVisibility[cityKey] = true;
+                cityVisibility[cityKey] = true;
+                
+                // Add marker to its cluster group if not already there
+                if (!isMarkerOnMap && clusterGroupName && clusterGroups[clusterGroupName]) {
+                    clusterGroups[clusterGroupName].addLayer(marker);
+                }
+                
+                // Update UI elements
+                const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
+                const visibilityToggle = document.querySelector(`button[data-city="${cityKey}"]`);
+                const eyeVisible = visibilityToggle?.querySelector('.eye-visible');
+                const eyeHidden = visibilityToggle?.querySelector('.eye-hidden');
+                const cityDetails = cityLink?.querySelector('.city-details');
+                
+                if (visibilityToggle && eyeVisible && eyeHidden) {
+                    eyeVisible.style.display = 'block';
+                    eyeHidden.style.display = 'none';
+                    visibilityToggle.classList.remove('hidden');
+                }
+                
+                if (cityLink) {
+                    cityLink.classList.remove('disabled');
+                }
+                
+                if (cityDetails) {
+                    cityDetails.style.display = 'block';
+                }
+            }
+            
+            markersToShow.push(marker);
+        });
+        
+        // Update sidebar visibility after showing cities
+        updateSidebarVisibility();
+        
+        // Zoom to fit all markers in this section
+        if (markersToShow.length > 0) {
+            const group = new L.featureGroup(markersToShow);
+            map.fitBounds(group.getBounds(), {
+                padding: [30, 30],
+                maxZoom: 6,
+                animate: true,
+                duration: 1.5
+            });
+        }
+    }
 
     // Open the first accordion section by default
     if (accordionHeaders.length > 0) {
