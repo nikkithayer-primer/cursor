@@ -1,7 +1,21 @@
 @font-face {
+    font-family: 'NeueHaasGroteskDisplay';
+    src: url('./fonts/NeueHaasGroteskDisplay(RoundDots)-45Light(1).otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'NeueHaasGrotesk';
     src: url('./fonts/NeueHaasGroteskText(RoundDots)-55Roman.otf') format('opentype');
     font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NeueHaasGroteskDisplayMedium';
+    src: url('./fonts/NeueHaasGroteskDisplay(RoundDots)-65Medium.otf') format('opentype');
+    font-weight: 600;
     font-style: normal;
 }
 
@@ -12,20 +26,6 @@
     font-style: normal;
 }
 
-
-@font-face {
-    font-family: 'NeueHaasGroteskDisplay';
-    src: url('./fonts/NeueHaasGroteskDisplay(RoundDots)-45Light(1).otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'NeueHaasGroteskDisplayMedium';
-    src: url('./fonts/NeueHaasGroteskDisplay(RoundDots)-65Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-}
 
 
 :root {
@@ -266,7 +266,8 @@ body {
 }
 
 .city-header {
-    font-weight: 700;
+    font-family: 'NeueHaasGroteskDisplayMedium';
+    font-weight: 600;
     font-size: 16px;
     color: var(--gray-11);
     margin-bottom: 4px;
@@ -953,7 +954,7 @@ strong {
 .accordion {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0px;
 }
 
 .accordion-section {
@@ -961,19 +962,19 @@ strong {
     overflow: hidden;
 }
 
-.accordion-header:nth-child(1) {
+.accordion-section:nth-child(1) .accordion-header {
     border-left: 4px solid var(--chart-blue);
 }
 
-.accordion-header:nth-child(2) {
+.accordion-section:nth-child(2) .accordion-header {
     border-left: 4px solid var(--chart-orange);
 }
 
-.accordion-header:nth-child(3) {
+.accordion-section:nth-child(3) .accordion-header {
     border-left: 4px solid var(--chart-green);
 }
 
-.accordion-header:nth-child(4) {
+.accordion-section:nth-child(4) .accordion-header {
     border-left: 4px solid var(--chart-pink);
 }
 
