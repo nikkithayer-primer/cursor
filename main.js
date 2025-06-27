@@ -209,19 +209,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Define city groups based on their accordion sections
     const cityGroups = {
         'north-america': {
-            title: 'North America',
+            title: 'Activities Extracted from Search Results',
             cities: Object.keys(cityColors).filter(city => cityColors[city] === '#43A7DD')
         },
         'europe': {
-            title: 'Europe',
+            title: 'Violent incidents near churches',
             cities: Object.keys(cityColors).filter(city => cityColors[city] === '#FC922D')
         },
         'asia-south-america': {
-            title: 'Asia & South America',
+            title: 'Arrests in violent incidents',
             cities: Object.keys(cityColors).filter(city => cityColors[city] === '#819B2A')
         },
         'africa': {
-            title: 'Africa & Middle East',
+            title: 'Unresolved incidents',
             cities: Object.keys(cityColors).filter(city => cityColors[city] === '#DF5094')
         }
     };
