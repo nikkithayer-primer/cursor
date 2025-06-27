@@ -1037,6 +1037,13 @@ strong {
     transform: rotate(180deg);
 }
 
+.accordion-count {
+    color: var(--gray-7);
+    font-weight: 500;
+    margin-left: 4px;
+    font-size: 12px;
+}
+
 .accordion-content {
     max-height: 0;
     overflow: hidden;

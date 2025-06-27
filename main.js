@@ -206,6 +206,40 @@ document.addEventListener('DOMContentLoaded', function() {
         maxZoom: 4
     });
 
+    // Define city groups based on their accordion sections
+    const cityGroups = {
+        'north-america': {
+            title: 'North America',
+            cities: Object.keys(cityColors).filter(city => cityColors[city] === '#43A7DD')
+        },
+        'europe': {
+            title: 'Europe',
+            cities: Object.keys(cityColors).filter(city => cityColors[city] === '#FC922D')
+        },
+        'asia-south-america': {
+            title: 'Asia & South America',
+            cities: Object.keys(cityColors).filter(city => cityColors[city] === '#819B2A')
+        },
+        'africa': {
+            title: 'Africa & Middle East',
+            cities: Object.keys(cityColors).filter(city => cityColors[city] === '#DF5094')
+        }
+    };
+
+    // Function to update accordion header counts
+    function updateAccordionCounts() {
+        Object.keys(cityGroups).forEach(sectionId => {
+            const group = cityGroups[sectionId];
+            const header = document.querySelector(`[data-section="${sectionId}"] span`);
+            if (header) {
+                header.innerHTML = `${group.title} <span class="accordion-count">${group.cities.length}</span>`;
+            }
+        });
+    }
+
+    // Update accordion counts on initialization
+    updateAccordionCounts();
+
     // Update Show All button with total city count
     const totalCities = Object.keys(cities).length;
 
