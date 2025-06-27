@@ -22,7 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
         novgorod: { coords: [58.5218, 31.2755], name: 'Veliky Novgorod, Russia', zoom: 11 },
         pskov: { coords: [57.8136, 28.3496], name: 'Pskov, Russia', zoom: 11 },
         petrozavodsk: { coords: [61.7849, 34.3469], name: 'Petrozavodsk, Russia', zoom: 11 },
-        murmansk: { coords: [68.9585, 33.0827], name: 'Murmansk, Russia', zoom: 10 }
+        murmansk: { coords: [68.9585, 33.0827], name: 'Murmansk, Russia', zoom: 10 },
+        omaha: { coords: [41.2565, -95.9345], name: 'Omaha, NE', zoom: 11 },
+        iowacity: { coords: [41.6611, -91.5302], name: 'Iowa City, IA', zoom: 11 },
+        iran: { coords: [32.4279, 53.6880], name: 'Iran', zoom: 6 },
+        cedarfalls: { coords: [42.5348, -92.4453], name: 'Cedar Falls, IA', zoom: 11 }
     };
     
     // Store markers for each city
@@ -92,7 +96,11 @@ document.addEventListener('DOMContentLoaded', function() {
         tokyo: '#819B2A',
         saopaulo: '#819B2A',
         // Africa & Middle East - Pink
-        cairo: '#DF5094'
+        cairo: '#DF5094',
+        omaha: '#DF5094',
+        iowacity: '#DF5094',
+        iran: '#DF5094',
+        cedarfalls: '#DF5094'
     };
 
     // Function to create custom colored marker
@@ -623,7 +631,11 @@ document.addEventListener('DOMContentLoaded', function() {
             murmansk: 'europe',
             tokyo: 'asia-south-america',
             saopaulo: 'asia-south-america',
-            cairo: 'africa'
+            cairo: 'africa',
+            omaha: 'africa',
+            iowacity: 'africa',
+            iran: 'africa',
+            cedarfalls: 'africa'
         };
         
         Object.keys(cities).forEach(cityKey => {
@@ -796,7 +808,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'north-america': ['newyork', 'losangeles', 'sanfrancisco', 'mexicocity'],
             'europe': ['london', 'stpetersburg', 'novgorod', 'pskov', 'petrozavodsk', 'murmansk'],
             'asia-south-america': ['tokyo', 'saopaulo'],
-            'africa': ['cairo']
+            'africa': ['cairo', 'omaha', 'iowacity', 'iran', 'cedarfalls']
         };
         
         const citiesInSection = sectionToCities[sectionId];
