@@ -34,10 +34,52 @@ document.addEventListener('DOMContentLoaded', function() {
     // Track manual visibility state (user-controlled) separately from viewport visibility
     const cityManualVisibility = {};
 
+    // Define city colors based on their accordion sections
+    const cityColors = {
+        // North America - Blue
+        newyork: '#43A7DD',
+        losangeles: '#43A7DD', 
+        sanfrancisco: '#43A7DD',
+        mexicocity: '#43A7DD',
+        // Europe - Orange
+        london: '#FC922D',
+        stpetersburg: '#FC922D',
+        novgorod: '#FC922D',
+        pskov: '#FC922D',
+        petrozavodsk: '#FC922D',
+        murmansk: '#FC922D',
+        // Asia & South America - Green
+        tokyo: '#819B2A',
+        saopaulo: '#819B2A',
+        // Africa & Middle East - Pink
+        cairo: '#DF5094'
+    };
+
+    // Function to create custom colored marker
+    function createColoredMarker(color) {
+        const svgIcon = `
+            <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.5 0C5.596 0 0 5.596 0 12.5c0 12.5 12.5 28.5 12.5 28.5s12.5-16 12.5-28.5C25 5.596 19.404 0 12.5 0z" fill="${color}"/>
+                <circle cx="12.5" cy="12.5" r="5" fill="white"/>
+            </svg>
+        `;
+        
+        return L.divIcon({
+            html: svgIcon,
+            className: 'custom-marker',
+            iconSize: [25, 41],
+            iconAnchor: [12.5, 41],
+            popupAnchor: [0, -41]
+        });
+    }
+
     // Add markers for all cities
     Object.keys(cities).forEach(cityKey => {
         const city = cities[cityKey];
-        const marker = L.marker(city.coords)
+        const color = cityColors[cityKey];
+        const customIcon = createColoredMarker(color);
+        
+        const marker = L.marker(city.coords, { icon: customIcon })
             .addTo(map)
             .bindPopup(city.name);
         
@@ -294,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityKey = this.getAttribute('data-city');
             const marker = cityMarkers[cityKey];
             const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
+            const cityDetails = cityLink.querySelector('.city-details');
             
             if (cityManualVisibility[cityKey]) {
                 // Manually hide the city
@@ -303,11 +346,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Remove active state if this city was active
                 cityLink.classList.remove('active');
+                
+                // Hide city details
+                if (cityDetails) {
+                    cityDetails.style.display = 'none';
+                }
             } else {
                 // Manually show the city
                 cityManualVisibility[cityKey] = true;
                 cityVisibility[cityKey] = true;
                 marker.addTo(map);
+                
+                // Show city details
+                if (cityDetails) {
+                    cityDetails.style.display = 'block';
+                }
             }
             
             // Update sidebar visibility and event count after toggle
@@ -545,17 +598,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update sidebar item visibility
                 cityListItem.style.display = shouldShowInSidebar ? 'flex' : 'none';
                 
+                // Update city details visibility
+                const cityDetails = cityLink.querySelector('.city-details');
+                
                 // Update eye icon state
                 if (shouldShowEyeAsVisible) {
                     eyeVisible.style.display = 'block';
                     eyeHidden.style.display = 'none';
                     visibilityToggle.classList.remove('hidden');
                     cityLink.classList.remove('disabled');
+                    // Show city details when pin is visible
+                    if (cityDetails) {
+                        cityDetails.style.display = 'block';
+                    }
                 } else {
                     eyeVisible.style.display = 'none';
                     eyeHidden.style.display = 'block';
                     visibilityToggle.classList.add('hidden');
                     cityLink.classList.add('disabled');
+                    // Hide city details when pin is hidden
+                    if (cityDetails) {
+                        cityDetails.style.display = 'none';
+                    }
                 }
             }
         });
