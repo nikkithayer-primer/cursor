@@ -33,6 +33,46 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Track manual visibility state (user-controlled) separately from viewport visibility
     const cityManualVisibility = {};
+    
+    // Create cluster groups for each color
+    const clusterGroups = {
+        blue: L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                    className: 'marker-cluster marker-cluster-blue',
+                    iconSize: new L.Point(40, 40)
+                });
+            }
+        }),
+        orange: L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                    className: 'marker-cluster marker-cluster-orange',
+                    iconSize: new L.Point(40, 40)
+                });
+            }
+        }),
+        green: L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                    className: 'marker-cluster marker-cluster-green',
+                    iconSize: new L.Point(40, 40)
+                });
+            }
+        }),
+        pink: L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                    className: 'marker-cluster marker-cluster-pink',
+                    iconSize: new L.Point(40, 40)
+                });
+            }
+        })
+    };
 
     // Define city colors based on their accordion sections
     const cityColors = {
@@ -73,6 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Map colors to cluster group names
+    const colorToClusterGroup = {
+        '#43A7DD': 'blue',
+        '#FC922D': 'orange', 
+        '#819B2A': 'green',
+        '#DF5094': 'pink'
+    };
+
     // Add markers for all cities
     Object.keys(cities).forEach(cityKey => {
         const city = cities[cityKey];
@@ -80,8 +128,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const customIcon = createColoredMarker(color);
         
         const marker = L.marker(city.coords, { icon: customIcon })
-            .addTo(map)
             .bindPopup(city.name);
+        
+        // Add marker to appropriate cluster group
+        const clusterGroupName = colorToClusterGroup[color];
+        if (clusterGroupName && clusterGroups[clusterGroupName]) {
+            clusterGroups[clusterGroupName].addLayer(marker);
+        }
         
         // Initialize all cities as visible
         cityVisibility[cityKey] = true;
@@ -107,6 +160,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         cityMarkers[cityKey] = marker;
+    });
+    
+    // Add all cluster groups to the map
+    Object.values(clusterGroups).forEach(clusterGroup => {
+        map.addLayer(clusterGroup);
     });
     
     // Fit map to show all cities on initial load
@@ -342,7 +400,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Manually hide the city
                 cityManualVisibility[cityKey] = false;
                 cityVisibility[cityKey] = false;
-                map.removeLayer(marker);
+                
+                // Remove marker from its cluster group
+                const color = cityColors[cityKey];
+                const clusterGroupName = colorToClusterGroup[color];
+                if (clusterGroupName && clusterGroups[clusterGroupName]) {
+                    clusterGroups[clusterGroupName].removeLayer(marker);
+                }
                 
                 // Remove active state if this city was active
                 cityLink.classList.remove('active');
@@ -355,7 +419,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Manually show the city
                 cityManualVisibility[cityKey] = true;
                 cityVisibility[cityKey] = true;
-                marker.addTo(map);
+                
+                // Add marker back to its cluster group
+                const color = cityColors[cityKey];
+                const clusterGroupName = colorToClusterGroup[color];
+                if (clusterGroupName && clusterGroups[clusterGroupName]) {
+                    clusterGroups[clusterGroupName].addLayer(marker);
+                }
                 
                 // Show city details
                 if (cityDetails) {
@@ -550,7 +620,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Count visible events (cities that are actually visible on the map)
-            if (cityVisibility[cityKey] && cityMarkers[cityKey]._map) {
+            const color = cityColors[cityKey];
+            const clusterGroupName = colorToClusterGroup[color];
+            const isMarkerOnMap = clusterGroupName && clusterGroups[clusterGroupName] && clusterGroups[clusterGroupName].hasLayer(cityMarkers[cityKey]);
+            
+            if (cityVisibility[cityKey] && isMarkerOnMap) {
                 visibleEventCount++;
             }
             
@@ -563,17 +637,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!isInBounds) {
                         shouldShowEyeAsVisible = false;
                         cityVisibility[cityKey] = false;
-                        // Remove marker if it's not manually hidden and not in bounds
-                        if (isManuallyVisible && cityMarkers[cityKey]._map) {
-                            map.removeLayer(cityMarkers[cityKey]);
+                        // Remove marker from cluster group if it's not in bounds
+                        if (isManuallyVisible && isMarkerOnMap) {
+                            clusterGroups[clusterGroupName].removeLayer(cityMarkers[cityKey]);
                         }
                     } else if (isManuallyVisible) {
                         // City is in bounds and manually visible
                         shouldShowEyeAsVisible = true;
                         cityVisibility[cityKey] = true;
-                        // Add marker back if it's not on the map
-                        if (!cityMarkers[cityKey]._map) {
-                            cityMarkers[cityKey].addTo(map);
+                        // Add marker back to cluster group if it's not on the map
+                        if (!isMarkerOnMap) {
+                            clusterGroups[clusterGroupName].addLayer(cityMarkers[cityKey]);
                         }
                     }
                     
@@ -583,13 +657,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     // When zoomed out, restore all cities based on manual visibility
                     if (isManuallyVisible) {
                         cityVisibility[cityKey] = true;
-                        if (!cityMarkers[cityKey]._map) {
-                            cityMarkers[cityKey].addTo(map);
+                        if (!isMarkerOnMap) {
+                            clusterGroups[clusterGroupName].addLayer(cityMarkers[cityKey]);
                         }
                     } else {
                         cityVisibility[cityKey] = false;
-                        if (cityMarkers[cityKey]._map) {
-                            map.removeLayer(cityMarkers[cityKey]);
+                        if (isMarkerOnMap) {
+                            clusterGroups[clusterGroupName].removeLayer(cityMarkers[cityKey]);
                         }
                     }
                     shouldShowEyeAsVisible = isManuallyVisible;
@@ -627,7 +701,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Count visible events after all processing is done
         visibleEventCount = 0;
         Object.keys(cities).forEach(cityKey => {
-            if (cityVisibility[cityKey] && cityMarkers[cityKey]._map) {
+            const color = cityColors[cityKey];
+            const clusterGroupName = colorToClusterGroup[color];
+            const isMarkerOnMap = clusterGroupName && clusterGroups[clusterGroupName] && clusterGroups[clusterGroupName].hasLayer(cityMarkers[cityKey]);
+            
+            if (cityVisibility[cityKey] && isMarkerOnMap) {
                 visibleEventCount++;
             }
         });

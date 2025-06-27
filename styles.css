@@ -425,6 +425,46 @@ body {
     border: none !important;
 }
 
+/* Colored cluster markers */
+.marker-cluster-blue div {
+    background-color: #43A7DD;
+}
+
+.marker-cluster-orange div {
+    background-color: #FC922D;
+}
+
+.marker-cluster-green div {
+    background-color: #819B2A;
+}
+
+.marker-cluster-pink div {
+    background-color: #DF5094;
+}
+
+.marker-cluster-blue div,
+.marker-cluster-orange div,
+.marker-cluster-green div,
+.marker-cluster-pink div {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 20px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.marker-cluster-blue span,
+.marker-cluster-orange span,
+.marker-cluster-green span,
+.marker-cluster-pink span {
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+
 #map .leaflet-popup-tip,
 #map .leaflet-popup-content-wrapper {
     background: white;
