@@ -786,23 +786,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventCountElement.textContent = `Showing ${visibleEventCount} events`;
         }
         
-        // Auto-expand accordion sections with cities in view
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        accordionHeaders.forEach(header => {
-            const sectionId = header.getAttribute('data-section');
-            const content = document.getElementById(sectionId);
-            
-            if (sectionsWithVisibleCities.has(sectionId)) {
-                // Expand this section as it has cities in view
-                header.classList.add('active');
-                content.classList.add('active');
-            } else if (shouldFilter) {
-                // When zoomed in, collapse sections with no cities in view
-                header.classList.remove('active');
-                content.classList.remove('active');
-            }
-            // When zoomed out, leave accordion state as is (don't auto-collapse)
-        });
+        // Accordion sections are now always visible - no auto-expansion needed
     }
 
     // Add map event listeners for viewport changes
@@ -812,28 +796,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial update
     updateSidebarVisibility();
 
-    // Add accordion functionality
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-            const sectionId = this.getAttribute('data-section');
-            const content = document.getElementById(sectionId);
-            const isActive = this.classList.contains('active');
-            
-            // Close all accordion sections
-            accordionHeaders.forEach(h => h.classList.remove('active'));
-            document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
-            
-            // Open clicked section if it wasn't already active
-            if (!isActive) {
-                this.classList.add('active');
-                content.classList.add('active');
-                
-                // Zoom to show all cities in this group
-                zoomToGroupCities(sectionId);
-            }
-        });
-    });
+    // Accordion sections are now always visible - no click handlers needed
     
     // Function to zoom to all cities in a specific group
     function zoomToGroupCities(sectionId) {
@@ -909,8 +872,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Open the first accordion section by default
-    if (accordionHeaders.length > 0) {
-        accordionHeaders[0].click();
-    }
+    // All accordion sections are now visible by default - no need to open first section
 });
