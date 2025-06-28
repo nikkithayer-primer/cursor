@@ -989,15 +989,15 @@ strong {
     padding: 12px 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 8px;
     font-weight: 500;
     text-align: left;
     font-size: 16px;
     color: var(--gray-11);
-    box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 .accordion-actions {
     display: flex;
     align-items: center;
@@ -1087,11 +1087,13 @@ strong {
     opacity: 0;
     transition: max-height 0.3s ease-in, opacity 0.2s ease-in;
 }
+=======
 
-.accordion-section.hidden .accordion-header {
-    opacity: 0.5;
-    background-color: var(--gray-2);
-}
+
+
+>>>>>>> parent of 2cb89ce (Hide layer)
+
+
 
 .accordion-count {
     color: var(--gray-7);
