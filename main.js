@@ -38,14 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Track manual visibility state (user-controlled) separately from viewport visibility
     const cityManualVisibility = {};
     
-    // Track section visibility state
-    const sectionVisibility = {
-        'north-america': true,
-        'europe': true,
-        'asia-south-america': true,
-        'africa': true
-    };
-    
     // Create cluster groups for each color
     const clusterGroups = {
         blue: L.markerClusterGroup({
@@ -285,61 +277,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add click handler for Show All button
     const showAllBtn = document.querySelector('.show-all-btn');
     
-    // Function to update Show All button text with visible section cities count
-    function updateShowAllButton() {
-        let totalVisibleSectionCities = 0;
-        const sectionToCities = {
-            'north-america': ['newyork', 'losangeles', 'sanfrancisco', 'mexicocity'],
-            'europe': ['london', 'stpetersburg', 'novgorod', 'pskov', 'petrozavodsk', 'murmansk'],
-            'asia-south-america': ['tokyo', 'saopaulo'],
-            'africa': ['cairo', 'omaha', 'iowacity', 'iran', 'cedarfalls']
-        };
-        
-        for (const [sectionId, cityList] of Object.entries(sectionToCities)) {
-            if (sectionVisibility[sectionId]) {
-                totalVisibleSectionCities += cityList.length;
-            }
-        }
-        
-        showAllBtn.textContent = `Show All (${totalVisibleSectionCities})`;
-    }
-    
-    // Initial update of Show All button text
-    updateShowAllButton();
+    // Update Show All button text with total city count
+    showAllBtn.textContent = `Show All (${totalCities})`;
     
     showAllBtn.addEventListener('click', function() {
         // Remove active class from all city links
         cityLinks.forEach(link => link.classList.remove('active'));
         
-        // Create a group of only visible section cities to fit bounds
-        const visibleMarkers = [];
-        const sectionToCities = {
-            'north-america': ['newyork', 'losangeles', 'sanfrancisco', 'mexicocity'],
-            'europe': ['london', 'stpetersburg', 'novgorod', 'pskov', 'petrozavodsk', 'murmansk'],
-            'asia-south-america': ['tokyo', 'saopaulo'],
-            'africa': ['cairo', 'omaha', 'iowacity', 'iran', 'cedarfalls']
-        };
+        // Create a group of all city coordinates to fit bounds
+        const allCoords = Object.values(cities).map(city => city.coords);
+        const group = new L.featureGroup(Object.values(cityMarkers));
         
-        for (const [sectionId, cityList] of Object.entries(sectionToCities)) {
-            if (sectionVisibility[sectionId]) {
-                cityList.forEach(cityKey => {
-                    if (cityMarkers[cityKey]) {
-                        visibleMarkers.push(cityMarkers[cityKey]);
-                    }
-                });
-            }
-        }
-        
-        if (visibleMarkers.length > 0) {
-            const group = new L.featureGroup(visibleMarkers);
-            
-            // Smoothly fly to show all visible cities
-            map.flyToBounds(group.getBounds(), {
-                animate: true,
-                duration: 1.5,
-                padding: [20, 20]
-            });
-        }
+        // Smoothly fly to show all cities
+        map.flyToBounds(group.getBounds(), {
+            animate: true,
+            duration: 1.5,
+            padding: [20, 20]
+        });
     });
 
     // Add click handler for Export KML button
@@ -814,32 +768,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Count visible events after all processing is done (only count cities in visible sections)
+        // Count visible events after all processing is done
         visibleEventCount = 0;
         Object.keys(cities).forEach(cityKey => {
             const color = cityColors[cityKey];
             const clusterGroupName = colorToClusterGroup[color];
             const isMarkerOnMap = clusterGroupName && clusterGroups[clusterGroupName] && clusterGroups[clusterGroupName].hasLayer(cityMarkers[cityKey]);
             
-            // Check if city's section is visible
-            let citySection = null;
-            const sectionToCities = {
-                'north-america': ['newyork', 'losangeles', 'sanfrancisco', 'mexicocity'],
-                'europe': ['london', 'stpetersburg', 'novgorod', 'pskov', 'petrozavodsk', 'murmansk'],
-                'asia-south-america': ['tokyo', 'saopaulo'],
-                'africa': ['cairo', 'omaha', 'iowacity', 'iran', 'cedarfalls']
-            };
-            
-            for (const [sectionId, cityList] of Object.entries(sectionToCities)) {
-                if (cityList.includes(cityKey)) {
-                    citySection = sectionId;
-                    break;
-                }
-            }
-            
-            const isSectionVisible = citySection && sectionVisibility[citySection];
-            
-            if (cityVisibility[cityKey] && isMarkerOnMap && isSectionVisible) {
+            if (cityVisibility[cityKey] && isMarkerOnMap) {
                 visibleEventCount++;
             }
         });
@@ -937,128 +873,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // All accordion sections are now visible by default - no need to open first section
-
-    // Add section visibility toggle functionality
-    const sectionToggleButtons = document.querySelectorAll('.section-visibility-toggle');
-    sectionToggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const sectionId = this.getAttribute('data-section');
-            const isVisible = sectionVisibility[sectionId];
-            const eyeVisible = this.querySelector('.eye-visible');
-            const eyeHidden = this.querySelector('.eye-hidden');
-            const accordionSection = this.closest('.accordion-section');
-            const accordionContent = document.getElementById(sectionId);
-            
-            // Toggle section visibility state
-            sectionVisibility[sectionId] = !isVisible;
-            
-            // Define which cities belong to which accordion sections
-            const sectionToCities = {
-                'north-america': ['newyork', 'losangeles', 'sanfrancisco', 'mexicocity'],
-                'europe': ['london', 'stpetersburg', 'novgorod', 'pskov', 'petrozavodsk', 'murmansk'],
-                'asia-south-america': ['tokyo', 'saopaulo'],
-                'africa': ['cairo', 'omaha', 'iowacity', 'iran', 'cedarfalls']
-            };
-            
-            const citiesInSection = sectionToCities[sectionId];
-            
-            if (!sectionVisibility[sectionId]) {
-                // Hide section
-                eyeVisible.style.display = 'none';
-                eyeHidden.style.display = 'block';
-                accordionSection.classList.add('hidden');
-                accordionContent.classList.add('hidden');
-                
-                // Hide all cities in this section from map and mark as manually hidden
-                citiesInSection.forEach(cityKey => {
-                    const marker = cityMarkers[cityKey];
-                    if (marker) {
-                        const color = cityColors[cityKey];
-                        const clusterGroupName = colorToClusterGroup[color];
-                        
-                        // Remove from map
-                        if (clusterGroupName && clusterGroups[clusterGroupName] && clusterGroups[clusterGroupName].hasLayer(marker)) {
-                            clusterGroups[clusterGroupName].removeLayer(marker);
-                        }
-                        
-                        // Mark as manually hidden
-                        cityManualVisibility[cityKey] = false;
-                        cityVisibility[cityKey] = false;
-                        
-                        // Update individual city visibility toggle to hidden state
-                        const cityVisibilityToggle = document.querySelector(`button[data-city="${cityKey}"]`);
-                        if (cityVisibilityToggle) {
-                            const cityEyeVisible = cityVisibilityToggle.querySelector('.eye-visible');
-                            const cityEyeHidden = cityVisibilityToggle.querySelector('.eye-hidden');
-                            if (cityEyeVisible && cityEyeHidden) {
-                                cityEyeVisible.style.display = 'none';
-                                cityEyeHidden.style.display = 'block';
-                                cityVisibilityToggle.classList.add('hidden');
-                            }
-                        }
-                        
-                        // Hide city details and disable city link
-                        const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
-                        if (cityLink) {
-                            cityLink.classList.add('disabled');
-                            const cityDetails = cityLink.querySelector('.city-details');
-                            if (cityDetails) {
-                                cityDetails.style.display = 'none';
-                            }
-                        }
-                    }
-                });
-            } else {
-                // Show section
-                eyeVisible.style.display = 'block';
-                eyeHidden.style.display = 'none';
-                accordionSection.classList.remove('hidden');
-                accordionContent.classList.remove('hidden');
-                
-                // Show all cities in this section on map and mark as manually visible
-                citiesInSection.forEach(cityKey => {
-                    const marker = cityMarkers[cityKey];
-                    if (marker) {
-                        const color = cityColors[cityKey];
-                        const clusterGroupName = colorToClusterGroup[color];
-                        
-                        // Add to map
-                        if (clusterGroupName && clusterGroups[clusterGroupName] && !clusterGroups[clusterGroupName].hasLayer(marker)) {
-                            clusterGroups[clusterGroupName].addLayer(marker);
-                        }
-                        
-                        // Mark as manually visible
-                        cityManualVisibility[cityKey] = true;
-                        cityVisibility[cityKey] = true;
-                        
-                        // Update individual city visibility toggle to visible state
-                        const cityVisibilityToggle = document.querySelector(`button[data-city="${cityKey}"]`);
-                        if (cityVisibilityToggle) {
-                            const cityEyeVisible = cityVisibilityToggle.querySelector('.eye-visible');
-                            const cityEyeHidden = cityVisibilityToggle.querySelector('.eye-hidden');
-                            if (cityEyeVisible && cityEyeHidden) {
-                                cityEyeVisible.style.display = 'block';
-                                cityEyeHidden.style.display = 'none';
-                                cityVisibilityToggle.classList.remove('hidden');
-                            }
-                        }
-                        
-                        // Show city details and enable city link
-                        const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
-                        if (cityLink) {
-                            cityLink.classList.remove('disabled');
-                            const cityDetails = cityLink.querySelector('.city-details');
-                            if (cityDetails) {
-                                cityDetails.style.display = 'block';
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // Update the event count and Show All button after toggling section visibility
-            updateSidebarVisibility();
-            updateShowAllButton();
-        });
-    });
 });
