@@ -988,19 +988,49 @@ strong {
     padding: 12px 10px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 8px;
     font-weight: 500;
     text-align: left;
     font-size: 16px;
     color: var(--gray-11);
+    box-sizing: border-box;
 }
 
+.section-visibility-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-7);
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
 
+.section-visibility-toggle:hover {
+    background-color: var(--gray-2);
+    color: var(--gray-9);
+    opacity: 1;
+    transform: scale(1.1);
+}
 
+.section-visibility-toggle svg {
+    width: 16px;
+    height: 16px;
+}
 
+.accordion-content.hidden {
+    display: none;
+}
 
-
+.accordion-section.hidden .accordion-header {
+    opacity: 0.5;
+    background-color: var(--gray-2);
+}
 
 .accordion-count {
     color: var(--gray-7);
