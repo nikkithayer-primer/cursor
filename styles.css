@@ -211,6 +211,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    border-bottom: 1px solid var(--gray-2);
     position: relative;
 }
 
@@ -1023,8 +1024,18 @@ strong {
     height: 16px;
 }
 
+.accordion-content {
+    background-color: white;
+    max-height: 1000px;
+    overflow: hidden;
+    opacity: 1;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
+
 .accordion-content.hidden {
-    display: none;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-in, opacity 0.2s ease-in;
 }
 
 .accordion-section.hidden .accordion-header {
@@ -1036,10 +1047,6 @@ strong {
     color: var(--gray-7);
     font-weight: 500;
     margin-left: 4px;
-}
-
-.accordion-content {
-    background-color: white;
 }
 
 .accordion-content .city-links {
