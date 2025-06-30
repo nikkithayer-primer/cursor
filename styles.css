@@ -135,8 +135,8 @@ body {
 }
 
 .location-name:hover {
-    color: var(--chart-blue);
-    text-decoration: underline;
+    color: var(--link-blue);
+    text-decoration: none;
 }
 
 .pin-icon {
