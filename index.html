@@ -32,7 +32,6 @@
             </label>
             Showing locations from 50 documents.             
             <button id="load-more-btn" class="btn load-more-btn">Load more</button>
-            <button id="show-all-btn" class="btn show-all-btn">Show all locations</button>
         </div>
         <div class="toolbar-right">
         </div>
@@ -40,7 +39,14 @@
     
     <div class="main-container">
         <div id="sidebar" class="sidebar">
-            <div id="location-list"></div>
+            <div class="sidebar-header">
+                <h2>Locations</h2>
+                <div class="sidebar-actions">
+                    <button id="show-all-btn" class="btn show-all-btn">Show all locations</button>
+                    <button id="new-layer-btn" class="btn btn-secondary">New layer</button>
+                </div>
+            </div>
+            <div id="location-list" class="location-list-container"></div>
         </div>
         <div id="map"></div>
     </div>
