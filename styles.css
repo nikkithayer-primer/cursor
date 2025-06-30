@@ -278,6 +278,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 4px;
 }
 
 /* Layer-specific left borders matching pin colors */
@@ -460,6 +461,7 @@ body {
 .toolbar-left {
     display: flex;
     align-items: center;
+    gap: 4px;
 }
 
 .toolbar-right {
@@ -553,5 +555,34 @@ body {
 
 .toggle-switch input:checked:hover + .toggle-slider {
     background-color: #2557d6;
+}
+
+.info-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    transition: background-color 0.2s ease;
+    margin-left: 8px;
+}
+
+.info-btn:hover {
+    background-color: var(--gray-2);
+}
+
+.info-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--gray-7);
+}
+
+.info-btn:hover svg {
+    fill: var(--gray-9);
 }
 
