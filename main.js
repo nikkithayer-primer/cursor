@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </button>
                         <span class="layer-name">${layerName}</span>
                     </div>
-                    <div class="layer-count">Showing ${locationsByLayer[layerName].length} of ${locationsByLayer[layerName].length} points</div>
+                    <div class="layer-count">Showing ${locationsByLayer[layerName].length} of ${locationsByLayer[layerName].length} locations</div>
                 </div>
                 <div class="layer-controls">
                     <button class="layer-control-btn eye-toggle" title="Toggle visibility">
@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const layerSection = document.querySelector(`[data-layer="${layerName}"]`);
             const countElement = layerSection.querySelector('.layer-count');
-            countElement.textContent = `Showing ${visibleCount} of ${totalCount} points`;
+            countElement.textContent = `Showing ${visibleCount} of ${totalCount} locations`;
         });
     }
 
