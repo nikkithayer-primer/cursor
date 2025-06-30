@@ -128,11 +128,42 @@ body {
     font-size: 18px;
     margin-bottom: 8px;
     transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .location-name:hover {
     color: var(--chart-blue);
     text-decoration: underline;
+}
+
+.pin-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+.pin-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.pin-icon.layer-a-f svg {
+    fill: var(--chart-blue);
+}
+
+.pin-icon.layer-g-m svg {
+    fill: var(--chart-orange);
+}
+
+.pin-icon.layer-n-s svg {
+    fill: var(--chart-green);
+}
+
+.pin-icon.layer-t-z svg {
+    fill: var(--chart-pink);
 }
 
 .location-headline {
