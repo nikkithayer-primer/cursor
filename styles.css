@@ -249,6 +249,90 @@ body {
     border-bottom: 2px solid var(--gray-2);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.layer-title {
+    flex: 1;
+}
+
+.layer-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.layer-control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.layer-control-btn:hover {
+    background-color: var(--gray-2);
+}
+
+.layer-control-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--gray-7);
+}
+
+.layer-control-btn:hover svg {
+    fill: var(--gray-9);
+}
+
+.layer-control-btn.eye-closed svg {
+    fill: var(--gray-5);
+}
+
+.layer-popover {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 150px;
+    z-index: 1000;
+    display: none;
+}
+
+.layer-popover.show {
+    display: block;
+}
+
+.layer-popover-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-9);
+    transition: background-color 0.2s ease;
+}
+
+.layer-popover-item:hover {
+    background-color: var(--gray-1);
+}
+
+.layer-popover-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.layer-popover-item:last-child {
+    border-radius: 0 0 6px 6px;
 }
 
 #map {
