@@ -200,6 +200,26 @@ body {
     margin-bottom: 20px;
 }
 
+.layer-section {
+    margin-bottom: 30px;
+}
+
+.layer-section:last-child {
+    margin-bottom: 0;
+}
+
+.layer-header {
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--gray-8);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--gray-2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 #map {
     flex: 1;
     height: 100%;

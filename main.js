@@ -47,59 +47,92 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add markers for each location and populate sidebar
-    locationsData.forEach((location, index) => {
-        // Create popup content
-        const popupContent = `
-            <div>
-                <h3>${location.headline}</h3>
-                <h4>${location.name}</h4>
-                <p>${location.description}</p>
-                <small>${location.date}</small>
-            </div>
-        `;
-        
-        // Create marker and add to cluster group instead of directly to map
-        const marker = L.marker([location.latitude, location.longitude])
-            .bindPopup(popupContent);
-        
-        // Add click event to marker to fly to location when clicked
-        marker.on('click', function(e) {
-            map.flyTo([location.latitude, location.longitude], 13, {
-                animate: true,
-                duration: 1.5
+    // Group locations by layer
+    const locationsByLayer = {};
+    const layerOrder = ['A-F', 'G-M', 'N-S', 'T-Z'];
+
+    locationsData.forEach(location => {
+        if (!locationsByLayer[location.layer]) {
+            locationsByLayer[location.layer] = [];
+        }
+        locationsByLayer[location.layer].push(location);
+    });
+
+    // Sort locations within each layer alphabetically
+    Object.keys(locationsByLayer).forEach(layer => {
+        locationsByLayer[layer].sort((a, b) => a.name.localeCompare(b.name));
+    });
+
+    // Add markers for each location and populate sidebar by layer
+    layerOrder.forEach(layerName => {
+        if (locationsByLayer[layerName]) {
+            // Create layer section
+            const layerSection = document.createElement('div');
+            layerSection.className = 'layer-section';
+            
+            // Create layer header
+            const layerHeader = document.createElement('div');
+            layerHeader.className = 'layer-header';
+            layerHeader.textContent = layerName;
+            layerSection.appendChild(layerHeader);
+
+            // Add locations for this layer
+            locationsByLayer[layerName].forEach((location, index) => {
+                // Create popup content
+                const popupContent = `
+                    <div>
+                        <h3>${location.headline}</h3>
+                        <h4>${location.name}</h4>
+                        <p>${location.description}</p>
+                        <small>${location.date}</small>
+                    </div>
+                `;
+                
+                // Create marker and add to cluster group instead of directly to map
+                const marker = L.marker([location.latitude, location.longitude])
+                    .bindPopup(popupContent);
+                
+                // Add click event to marker to fly to location when clicked
+                marker.on('click', function(e) {
+                    map.flyTo([location.latitude, location.longitude], 13, {
+                        animate: true,
+                        duration: 1.5
+                    });
+                });
+                
+                markers.addLayer(marker);
+
+                // Create sidebar item
+                const locationItem = document.createElement('div');
+                locationItem.className = 'location-item';
+                locationItem.innerHTML = `
+                    <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
+                        ${location.name}
+                    </div>
+                    <div class="location-headline">${location.headline}</div>
+                    <div class="location-date">${location.date}</div>
+                    <div class="location-description">${location.description}</div>
+                    <div class="location-coordinates">
+                        ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}
+                    </div>
+                `;
+
+                // Add click event to location name for flying to location
+                const locationNameElement = locationItem.querySelector('.location-name');
+                locationNameElement.addEventListener('click', function() {
+                    const lat = parseFloat(this.dataset.lat);
+                    const lng = parseFloat(this.dataset.lng);
+                    map.flyTo([lat, lng], 13, {
+                        animate: true,
+                        duration: 1.5
+                    });
+                });
+
+                layerSection.appendChild(locationItem);
             });
-        });
-        
-        markers.addLayer(marker);
 
-        // Create sidebar item
-        const locationItem = document.createElement('div');
-        locationItem.className = 'location-item';
-        locationItem.innerHTML = `
-            <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
-                ${location.name}
-            </div>
-            <div class="location-headline">${location.headline}</div>
-            <div class="location-date">${location.date}</div>
-            <div class="location-description">${location.description}</div>
-            <div class="location-coordinates">
-                ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}
-            </div>
-        `;
-
-        // Add click event to location name for flying to location
-        const locationNameElement = locationItem.querySelector('.location-name');
-        locationNameElement.addEventListener('click', function() {
-            const lat = parseFloat(this.dataset.lat);
-            const lng = parseFloat(this.dataset.lng);
-            map.flyTo([lat, lng], 13, {
-                animate: true,
-                duration: 1.5
-            });
-        });
-
-        locationList.appendChild(locationItem);
+            locationList.appendChild(layerSection);
+        }
     });
 
     // Add the marker cluster group to the map
