@@ -461,6 +461,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const marker = cityMarkers[cityKey];
             const cityLink = document.querySelector(`a[data-city="${cityKey}"]`);
             const cityDetails = cityLink.querySelector('.city-details');
+            const eyeVisible = this.querySelector('.eye-visible');
+            const eyeHidden = this.querySelector('.eye-hidden');
             
             if (cityManualVisibility[cityKey]) {
                 // Manually hide the city
@@ -481,6 +483,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cityDetails) {
                     cityDetails.style.display = 'none';
                 }
+                
+                // Update eye icon state to hidden
+                if (eyeVisible && eyeHidden) {
+                    eyeVisible.style.display = 'none';
+                    eyeHidden.style.display = 'block';
+                    this.classList.add('hidden');
+                    cityLink.classList.add('disabled');
+                }
             } else {
                 // Manually show the city
                 cityManualVisibility[cityKey] = true;
@@ -496,6 +506,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show city details
                 if (cityDetails) {
                     cityDetails.style.display = 'block';
+                }
+                
+                // Update eye icon state to visible
+                if (eyeVisible && eyeHidden) {
+                    eyeVisible.style.display = 'block';
+                    eyeHidden.style.display = 'none';
+                    this.classList.remove('hidden');
+                    cityLink.classList.remove('disabled');
                 }
             }
             
