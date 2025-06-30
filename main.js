@@ -250,7 +250,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const menuBtn = layerHeader.querySelector('.menu-btn');
             const popover = layerHeader.querySelector('.layer-popover');
 
-            targetBtn.addEventListener('click', () => zoomToLayer(layerName));
+            targetBtn.addEventListener('click', () => {
+                // If layer is hidden, show it first
+                if (!layerVisibility[layerName]) {
+                    toggleLayerVisibility(layerName);
+                }
+                zoomToLayer(layerName);
+            });
             eyeBtn.addEventListener('click', () => toggleLayerVisibility(layerName));
             
             menuBtn.addEventListener('click', (e) => {
