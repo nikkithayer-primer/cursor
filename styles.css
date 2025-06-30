@@ -121,15 +121,17 @@ body {
 }
 
 .location-name {
-    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
-    font-weight: 600;
-    color: var(--link-blue);
+    font-family: 'NeueHaasGroteskDisplayLight', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    color: var(--gray-9);
     cursor: pointer;
-    font-size: 18px;
+    font-size: 13px;
+    letter-spacing: 0.25px;
     margin-bottom: 8px;
     transition: color 0.2s ease;
     display: flex;
     align-items: center;
+    text-transform: uppercase;
     gap: 8px;
 }
 
@@ -168,28 +170,25 @@ body {
 
 .location-headline {
     font-weight: 600;
-    color: var(--gray-11);
+    color: var(--gray-10);
+    font-size: 16px;
     margin-bottom: 4px;
 }
 
-.location-date {
+.location-date, .location-coordinates {
     font-size: 12px;
-    color: var(--gray-7);
+    color: var(--gray-9);
     margin-bottom: 8px;
 }
 
 .location-description {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--gray-9);
-    line-height: 1.4;
+    line-height: 1.5;
+    letter-spacing: 0.25px;
     margin-bottom: 8px;
 }
 
-.location-coordinates {
-    font-size: 12px;
-    color: var(--gray-7);
-    font-family: 'Courier New', monospace;
-}
 
 /* Button styles */
 .btn {
@@ -338,5 +337,16 @@ body {
 #map {
     flex: 1;
     height: 100%;
+    background-color: #C4DFF8;
+}
+
+/* Override Leaflet map background */
+.leaflet-container {
+    background-color: #C4DFF8 !important;
+}
+
+/* Style for areas outside tile coverage */
+.leaflet-tile-pane {
+    background-color: #C4DFF8;
 }
 
