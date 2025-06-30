@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 padding: [20, 20],
                 duration: 1.5
             });
+            
+            // Update sidebar after animation completes
+            setTimeout(updateSidebarVisibility, 1600);
         }
     }
 
@@ -143,6 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
             padding: [20, 20],
             duration: 1.5
         });
+        
+        // Update sidebar after animation completes
+        setTimeout(updateSidebarVisibility, 1600);
     }
 
     // Function to toggle layer visibility
@@ -156,16 +162,13 @@ document.addEventListener('DOMContentLoaded', function() {
             map.removeLayer(markerClusters[layerName]);
         }
         
-        // Toggle sidebar items visibility
-        const layerSection = document.querySelector(`[data-layer="${layerName}"]`);
-        const locationItems = layerSection.querySelectorAll('.location-item');
-        locationItems.forEach(item => {
-            item.style.display = layerVisibility[layerName] ? 'block' : 'none';
-        });
-        
         // Update eye icon
+        const layerSection = document.querySelector(`[data-layer="${layerName}"]`);
         const eyeBtn = layerSection.querySelector('.eye-toggle');
         updateEyeIcon(eyeBtn, layerVisibility[layerName]);
+        
+        // Update sidebar visibility based on current map bounds
+        updateSidebarVisibility();
     }
 
     // Function to update eye icon
@@ -231,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </button>
                         <span class="layer-name">${layerName}</span>
                     </div>
-                    <div class="layer-count">${locationsByLayer[layerName].length} points</div>
+                    <div class="layer-count">Showing ${locationsByLayer[layerName].length} of ${locationsByLayer[layerName].length} points</div>
                 </div>
                 <div class="layer-controls">
                     <button class="layer-control-btn eye-toggle" title="Toggle visibility">
@@ -323,6 +326,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         animate: true,
                         duration: 1.5
                     });
+                    
+                    // Update sidebar after animation completes
+                    setTimeout(updateSidebarVisibility, 1600);
                 });
                 
                 // Add marker to the appropriate cluster group
@@ -353,6 +359,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         animate: true,
                         duration: 1.5
                     });
+                    
+                    // Update sidebar after animation completes
+                    setTimeout(updateSidebarVisibility, 1600);
                 });
 
                 layerSection.appendChild(locationItem);
@@ -370,8 +379,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close popovers when clicking outside
     document.addEventListener('click', closeAllPopovers);
 
+    // Function to update sidebar based on visible map bounds
+    function updateSidebarVisibility() {
+        const bounds = map.getBounds();
+        
+        // Update each location item's visibility
+        locationsData.forEach(location => {
+            const isInBounds = bounds.contains([location.latitude, location.longitude]);
+            const isLayerVisible = layerVisibility[location.layer];
+            
+            // Find the location item in the sidebar
+            const locationItems = document.querySelectorAll('.location-item');
+            locationItems.forEach(item => {
+                const locationName = item.querySelector('.location-name span:last-child');
+                if (locationName && locationName.textContent === location.name) {
+                    // Show item only if location is in bounds AND layer is visible
+                    item.style.display = (isInBounds && isLayerVisible) ? 'block' : 'none';
+                }
+            });
+        });
+        
+        // Update layer counts to show visible vs total locations
+        Object.keys(locationsByLayer).forEach(layerName => {
+            const visibleCount = locationsByLayer[layerName].filter(location => {
+                const isInBounds = bounds.contains([location.latitude, location.longitude]);
+                return isInBounds && layerVisibility[layerName];
+            }).length;
+            
+            const totalCount = locationsByLayer[layerName].length;
+            
+            const layerSection = document.querySelector(`[data-layer="${layerName}"]`);
+            const countElement = layerSection.querySelector('.layer-count');
+            countElement.textContent = `Showing ${visibleCount} of ${totalCount} points`;
+        });
+    }
+
+    // Add event listeners for map movement
+    map.on('moveend', updateSidebarVisibility);
+    map.on('zoomend', updateSidebarVisibility);
+    
     // Set initial view to show all locations (no animation for first load)
     fitAllLocations();
+    
+    // Initial sidebar update after map is loaded
+    setTimeout(updateSidebarVisibility, 100);
 
     // Add click handler for "Show All" button (with animation)
     document.getElementById('show-all-btn').addEventListener('click', showAllLocations);
