@@ -132,7 +132,7 @@ body {
 .location-list-container {
     flex: 1;
     overflow-y: auto;
-    padding: 20px 0;
+    padding: 0;
 }
 
 .location-item {
@@ -284,19 +284,19 @@ body {
 
 /* Layer-specific left borders matching pin colors */
 .layer-section[data-layer="A-F"] .layer-header {
-    border-left: 4px solid --chart-blue;
+    border-left: 4px solid var(--chart-blue);
 }
 
 .layer-section[data-layer="G-M"] .layer-header {
-    border-left: 4px solid --chart-orange;
+    border-left: 4px solid var(--chart-orange);
 }
 
 .layer-section[data-layer="N-S"] .layer-header {
-    border-left: 4px solid --chart-green;
+    border-left: 4px solid var(--chart-green);
 }
 
 .layer-section[data-layer="T-Z"] .layer-header {
-    border-left: 4px solid --chart-pink;
+    border-left: 4px solid var(--chart-pink);
 }
 
 .layer-title {
@@ -345,13 +345,17 @@ body {
     position: relative;
 }
 
+.layer-control-btn.target-btn {
+    padding: 0;
+}
+
 .layer-control-btn:hover {
     background-color: var(--gray-2);
 }
 
 .layer-control-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     fill: var(--gray-7);
 }
 
