@@ -284,19 +284,19 @@ body {
 
 /* Layer-specific left borders matching pin colors */
 .layer-section[data-layer="A-F"] .layer-header {
-    border-left: 4px solid #43A7DD;
+    border-left: 4px solid --chart-blue;
 }
 
 .layer-section[data-layer="G-M"] .layer-header {
-    border-left: 4px solid #FC922D;
+    border-left: 4px solid --chart-orange;
 }
 
 .layer-section[data-layer="N-S"] .layer-header {
-    border-left: 4px solid #819B2A;
+    border-left: 4px solid --chart-green;
 }
 
 .layer-section[data-layer="T-Z"] .layer-header {
-    border-left: 4px solid #DF5094;
+    border-left: 4px solid --chart-pink;
 }
 
 .layer-title {
@@ -555,7 +555,7 @@ body {
 }
 
 .toggle-switch input:checked:hover + .toggle-slider {
-    background-color: #2557d6;
+    background-color: var(--link-blue);
 }
 
 .info-btn {
