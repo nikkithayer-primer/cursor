@@ -62,7 +62,7 @@ body {
     font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     color: var(--gray-10);
     margin: 0;
-    padding-top: 96px;
+    padding-top: 144px;
     box-sizing: border-box;
 }
 
@@ -87,7 +87,8 @@ body {
 
 .main-container {
     display: flex;
-    height: calc(100vh - 96px);
+    height: calc(100vh - 144px);
+    border: 1px solid var(--gray-2)
 }
 
 .sidebar {
@@ -461,7 +462,7 @@ body {
 .toolbar-left {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
 }
 
 .toolbar-right {
@@ -569,7 +570,6 @@ body {
     width: 32px;
     height: 32px;
     transition: background-color 0.2s ease;
-    margin-left: 8px;
 }
 
 .info-btn:hover {
