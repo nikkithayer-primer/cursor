@@ -272,12 +272,27 @@ body {
 .layer-title {
     flex: 1;
     display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.layer-title-row {
+    display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .layer-name {
     flex: 1;
+}
+
+.layer-count {
+    color: var(--gray-9);
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 32px;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .layer-controls {
