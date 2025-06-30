@@ -418,6 +418,11 @@ document.addEventListener('DOMContentLoaded', function() {
     map.on('moveend', updateSidebarVisibility);
     map.on('zoomend', updateSidebarVisibility);
     
+    // Update Show All button text with total count
+    const showAllBtn = document.getElementById('show-all-btn');
+    const totalLocations = locationsData.length;
+    showAllBtn.textContent = `Show all ${totalLocations} locations`;
+
     // Set initial view to show all locations (no animation for first load)
     fitAllLocations();
     
@@ -425,5 +430,5 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(updateSidebarVisibility, 100);
 
     // Add click handler for "Show All" button (with animation)
-    document.getElementById('show-all-btn').addEventListener('click', showAllLocations);
+    showAllBtn.addEventListener('click', showAllLocations);
 });
