@@ -333,6 +333,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to highlight/unhighlight map marker when hovering over sidebar location names
+    function highlightMapMarker(locationName, highlight) {
+        // Find the location's marker
+        const location = locationsData.find(loc => loc.name === locationName);
+        if (location) {
+            const layerMarkers = markersByLayer[location.layer];
+            const marker = layerMarkers.find(m => {
+                const popup = m.getPopup();
+                return popup && popup.getContent().includes(locationName);
+            });
+            
+            if (marker && markerCluster.hasLayer(marker)) {
+                const markerElement = marker._icon;
+                if (markerElement) {
+                    if (highlight) {
+                        // Store the original transform if not already stored
+                        if (!markerElement.dataset.originalTransform) {
+                            markerElement.dataset.originalTransform = markerElement.style.transform || '';
+                        }
+                        
+                        // Get the current transform and add scale to it
+                        const originalTransform = markerElement.dataset.originalTransform;
+                        const newTransform = originalTransform + ' scale(1.2)';
+                        
+                        // Add highlight effect
+                        markerElement.style.transform = newTransform;
+                        markerElement.style.zIndex = '1000';
+                        markerElement.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
+                        markerElement.style.transition = 'all 0.2s ease';
+                    } else {
+                        // Restore original transform
+                        const originalTransform = markerElement.dataset.originalTransform || '';
+                        markerElement.style.transform = originalTransform;
+                        markerElement.style.zIndex = '';
+                        markerElement.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
+                        markerElement.style.transition = 'all 0.2s ease';
+                    }
+                }
+            }
+        }
+    }
+
     // SVG pin icon
     function getPinIcon() {
         return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -580,6 +622,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Update sidebar after animation completes
                         setTimeout(updateSidebarVisibility, 1600);
+                    });
+
+                    // Add hover events to location name to highlight corresponding map marker
+                    locationNameElement.addEventListener('mouseenter', function(e) {
+                        highlightMapMarker(location.name, true);
+                    });
+
+                    locationNameElement.addEventListener('mouseleave', function(e) {
+                        highlightMapMarker(location.name, false);
                     });
                 }
 
