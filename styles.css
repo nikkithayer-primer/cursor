@@ -193,19 +193,19 @@ body {
     height: 100%;
 }
 
-.pin-icon.layer-a-f svg {
+.pin-icon.layer-activities-extracted-from-search-results svg {
     fill: var(--chart-blue);
 }
 
-.pin-icon.layer-g-m svg {
+.pin-icon.layer-drone-attacks svg {
     fill: var(--chart-orange);
 }
 
-.pin-icon.layer-n-s svg {
+.pin-icon.layer-drones-witnessed svg {
     fill: var(--chart-green);
 }
 
-.pin-icon.layer-t-z svg {
+.pin-icon.layer-suspect-movement svg {
     fill: var(--chart-pink);
 }
 
@@ -431,27 +431,27 @@ body {
 }
 
 /* Layer-specific magnifying glass colors */
-.layer-control-btn.layer-af svg {
+.layer-control-btn.layer-activities-extracted-from-search-results svg {
     fill: #43A7DD !important;
 }
 
-.layer-control-btn.layer-gm svg {
+.layer-control-btn.layer-drone-attacks svg {
     fill: #FC922D !important;
 }
 
-.layer-control-btn.layer-ns svg {
+.layer-control-btn.layer-drones-witnessed svg {
     fill: #819B2A !important;
 }
 
-.layer-control-btn.layer-tz svg {
+.layer-control-btn.layer-suspect-movement svg {
     fill: #DF5094 !important;
 }
 
 /* Keep hover state for colored magnifying glass icons */
-.layer-control-btn.layer-af:hover svg,
-.layer-control-btn.layer-gm:hover svg,
-.layer-control-btn.layer-ns:hover svg,
-.layer-control-btn.layer-tz:hover svg {
+.layer-control-btn.layer-activities-extracted-from-search-results:hover svg,
+.layer-control-btn.layer-drone-attacks:hover svg,
+.layer-control-btn.layer-drones-witnessed:hover svg,
+.layer-control-btn.layer-suspect-movement:hover svg {
     opacity: 0.8;
 }
 
