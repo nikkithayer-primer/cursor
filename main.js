@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
             layerHeader.className = 'layer-header';
             layerHeader.innerHTML = `
                     <button class="layer-control-btn target-btn ${getLayerClass(layerName)}" title="Zoom to layer">
-                        <svg viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M20.94,11C20.7,6.73 17.27,3.3 13,3.06V1H11V3.06C6.73,3.3 3.3,6.73 3.06,11H1V13H3.06C3.3,17.27 6.73,20.7 11,20.94V23H13V20.94C17.27,20.7 20.7,17.27 20.94,13H23V11H20.94M12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19Z"/></svg>
                     </button>
                 <div class="layer-title">
                     <div class="layer-title-row">
@@ -642,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalLocations = locationsData.length;
     showAllBtn.innerHTML = `
         <svg viewBox="0 0 24 24" width="16" height="16">
-            <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" fill="currentColor"/>
+            <path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M20.94,11C20.7,6.73 17.27,3.3 13,3.06V1H11V3.06C6.73,3.3 3.3,6.73 3.06,11H1V13H3.06C3.3,17.27 6.73,20.7 11,20.94V23H13V20.94C17.27,20.7 20.7,17.27 20.94,13H23V11H20.94M12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19Z" fill="currentColor"/>
         </svg>
         Show all (${totalLocations})
     `;

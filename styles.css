@@ -379,7 +379,7 @@ body {
 }
 
 .layer-count {
-    color: var(--gray-9);
+    color: var(--gray-8);
     font-size: 13px;
     font-weight: 400;
     text-transform: none;
@@ -405,10 +405,6 @@ body {
     height: 24px;
     transition: background-color 0.2s ease;
     position: relative;
-}
-
-.layer-control-btn.target-btn {
-    padding: 0;
 }
 
 .layer-control-btn:hover {
