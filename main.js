@@ -355,10 +355,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Get the current transform and add scale to it
                         const originalTransform = markerElement.dataset.originalTransform;
-                        const newTransform = originalTransform + ' scale(1.2)';
+                        const newTransform = originalTransform + ' scale(1.1)';
                         
-                        // Add highlight effect
+                        // Add highlight effect with bottom center transform origin
                         markerElement.style.transform = newTransform;
+                        markerElement.style.transformOrigin = 'bottom center';
                         markerElement.style.zIndex = '1000';
                         markerElement.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
                         markerElement.style.transition = 'all 0.2s ease';
@@ -366,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Restore original transform
                         const originalTransform = markerElement.dataset.originalTransform || '';
                         markerElement.style.transform = originalTransform;
+                        markerElement.style.transformOrigin = '';
                         markerElement.style.zIndex = '';
                         markerElement.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
                         markerElement.style.transition = 'all 0.2s ease';
@@ -515,13 +517,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(updateSidebarVisibility, 1600);
                 });
 
-                // Add hover events to marker to highlight corresponding sidebar item
+                // Add hover events to marker to highlight corresponding sidebar item and the marker itself
                 marker.on('mouseover', function(e) {
                     highlightSidebarItem(location.name, true);
+                    highlightMapMarker(location.name, true);
                 });
 
                 marker.on('mouseout', function(e) {
                     highlightSidebarItem(location.name, false);
+                    highlightMapMarker(location.name, false);
                 });
                 
                 // Add marker to the appropriate cluster group
@@ -623,16 +627,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Update sidebar after animation completes
                         setTimeout(updateSidebarVisibility, 1600);
                     });
-
-                    // Add hover events to location name to highlight corresponding map marker
-                    locationNameElement.addEventListener('mouseenter', function(e) {
-                        highlightMapMarker(location.name, true);
-                    });
-
-                    locationNameElement.addEventListener('mouseleave', function(e) {
-                        highlightMapMarker(location.name, false);
-                    });
                 }
+
+                // Add hover events to entire location item to highlight corresponding map marker
+                locationItem.addEventListener('mouseenter', function(e) {
+                    highlightMapMarker(location.name, true);
+                });
+
+                locationItem.addEventListener('mouseleave', function(e) {
+                    highlightMapMarker(location.name, false);
+                });
 
                 layerSection.appendChild(locationItem);
             });
