@@ -286,8 +286,6 @@ body {
     padding: 12px;
     border: 1px solid var(--gray-2);
     background-color: var(--gray-1);
-    text-transform: uppercase;
-    letter-spacing: 0.25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -298,19 +296,19 @@ body {
 }
 
 /* Layer-specific left borders matching pin colors */
-.layer-section[data-layer="A-F"] .layer-header {
+.layer-section[data-layer="Activities extracted from search results"] .layer-header {
     border-left: 4px solid var(--chart-blue);
 }
 
-.layer-section[data-layer="G-M"] .layer-header {
+.layer-section[data-layer="Drone attacks"] .layer-header {
     border-left: 4px solid var(--chart-orange);
 }
 
-.layer-section[data-layer="N-S"] .layer-header {
+.layer-section[data-layer="Drones witnessed"] .layer-header {
     border-left: 4px solid var(--chart-green);
 }
 
-.layer-section[data-layer="T-Z"] .layer-header {
+.layer-section[data-layer="Suspect movement"] .layer-header {
     border-left: 4px solid var(--chart-pink);
 }
 

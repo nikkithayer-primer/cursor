@@ -7,7 +7,7 @@ const locationsData = [
         description: "The tech capital of the world, known for its iconic Golden Gate Bridge, steep hills, and vibrant culture.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Los Angeles",
@@ -16,7 +16,7 @@ const locationsData = [
         description: "The entertainment capital, home to Hollywood, beautiful beaches, and year-round sunshine.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "New York",
@@ -25,7 +25,7 @@ const locationsData = [
         description: "The city that never sleeps, featuring iconic landmarks like Times Square, Central Park, and the Statue of Liberty.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Camden",
@@ -34,7 +34,7 @@ const locationsData = [
         description: "A vibrant North London neighborhood famous for Camden Market, live music venues, and alternative culture scene.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "A-F"
+        layer: "Activities extracted from search results"
     },
     {
         name: "Shoreditch",
@@ -43,7 +43,7 @@ const locationsData = [
         description: "East London's creative hub known for street art, trendy bars, vintage shops, and innovative restaurants.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Notting Hill",
@@ -52,7 +52,7 @@ const locationsData = [
         description: "Charming West London area famous for colorful Victorian houses, Portobello Road Market, and the annual Carnival.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Greenwich",
@@ -61,7 +61,7 @@ const locationsData = [
         description: "Historic maritime district home to the Prime Meridian, Royal Observatory, and beautiful riverside views.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "Covent Garden",
@@ -70,7 +70,7 @@ const locationsData = [
         description: "Central London's theater and shopping district with street performers, boutique shops, and historic market buildings.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "A-F"
+        layer: "Activities extracted from search results"
     },
     {
         name: "Paris",
@@ -79,7 +79,7 @@ const locationsData = [
         description: "The City of Light, famous for the Eiffel Tower, Louvre Museum, romantic ambiance, and world-class cuisine.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Lyon",
@@ -88,7 +88,7 @@ const locationsData = [
         description: "France's gastronomic capital, known for its Renaissance architecture, silk industry heritage, and exceptional restaurants.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "Marseille",
@@ -97,7 +97,7 @@ const locationsData = [
         description: "France's oldest city and major Mediterranean port, famous for its diverse culture, bouillabaisse, and coastal beauty.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "Nice",
@@ -106,7 +106,7 @@ const locationsData = [
         description: "Glamorous French Riviera resort city known for its stunning coastline, Promenade des Anglais, and vibrant art scene.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Bordeaux",
@@ -115,7 +115,7 @@ const locationsData = [
         description: "World-renowned wine capital with elegant 18th-century architecture, prestigious vineyards, and exceptional gastronomy.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "A-F"
+        layer: "Activities extracted from search results"
     },
     {
         name: "Toulouse",
@@ -124,7 +124,7 @@ const locationsData = [
         description: "The Pink City, known for its rose-colored brick architecture, aerospace industry, and vibrant university atmosphere.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "T-Z"
+        layer: "Suspect movement"
     },
     {
         name: "Copacabana",
@@ -133,7 +133,7 @@ const locationsData = [
         description: "World-famous beach neighborhood in Rio de Janeiro, known for its stunning coastline, vibrant nightlife, and iconic promenade.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "A-F"
+        layer: "Activities extracted from search results"
     },
     {
         name: "Ipanema",
@@ -142,7 +142,7 @@ const locationsData = [
         description: "Sophisticated beachfront district in Rio, famous for its beautiful beach, upscale shops, and trendy restaurants.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "Santa Teresa",
@@ -151,7 +151,7 @@ const locationsData = [
         description: "Bohemian hilltop neighborhood in Rio known for its colonial architecture, art studios, and charming cobblestone streets.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "N-S"
+        layer: "Drones witnessed"
     },
     {
         name: "Baixa de Luanda",
@@ -160,7 +160,7 @@ const locationsData = [
         description: "Historic downtown district of Luanda, Angola's capital, featuring colonial architecture and the bustling city center.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "A-F"
+        layer: "Activities extracted from search results"
     },
     {
         name: "Miramar",
@@ -169,7 +169,7 @@ const locationsData = [
         description: "Upscale coastal neighborhood in Luanda known for its modern developments, restaurants, and Atlantic Ocean views.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "Talatona",
@@ -178,7 +178,7 @@ const locationsData = [
         description: "Modern suburban district in Luanda featuring shopping centers, residential complexes, and contemporary architecture.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "T-Z"
+        layer: "Suspect movement"
     },
     {
         name: "Istanbul",
@@ -187,7 +187,7 @@ const locationsData = [
         description: "Turkey's largest city straddling Europe and Asia, famous for the Hagia Sophia, Blue Mosque, and rich Byzantine and Ottoman heritage.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     },
     {
         name: "Ankara",
@@ -196,7 +196,7 @@ const locationsData = [
         description: "Turkey's capital city in central Anatolia, known for its modern government buildings, museums, and ancient Hittite ruins.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "A-F"
+        layer: "Activities extracted from search results"
     },
     {
         name: "Izmir",
@@ -205,6 +205,6 @@ const locationsData = [
         description: "Major port city on Turkey's Aegean coast, known for its ancient Agora, vibrant bazaars, and beautiful waterfront promenade.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "G-M"
+        layer: "Drone attacks"
     }
 ]; 

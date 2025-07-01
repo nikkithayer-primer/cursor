@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const children = cluster.getAllChildMarkers();
             const layerCounts = {};
             const layerColors = {
-                'A-F': '#43A7DD',
-                'G-M': '#FC922D', 
-                'N-S': '#819B2A',
-                'T-Z': '#DF5094'
+                'Activities extracted from search results': '#43A7DD',
+                'Drone attacks': '#FC922D', 
+                'Drones witnessed': '#819B2A',
+                'Suspect movement': '#DF5094'
             };
             
             // Count markers by layer
@@ -92,33 +92,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Store individual markers by layer for visibility control
     const markersByLayer = {
-        'A-F': [],
-        'G-M': [],
-        'N-S': [],
-        'T-Z': []
+        'Activities extracted from search results': [],
+        'Drone attacks': [],
+        'Drones witnessed': [],
+        'Suspect movement': []
     };
 
     // Create custom colored markers for each layer
     const layerIcons = {
-        'A-F': L.divIcon({
+        'Activities extracted from search results': L.divIcon({
             html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#43A7DD" /></svg>',
             className: 'custom-pin-icon',
             iconSize: [30, 30],
             iconAnchor: [15, 30]
         }),
-        'G-M': L.divIcon({
+        'Drone attacks': L.divIcon({
             html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#FC922D" /></svg>',
             className: 'custom-pin-icon',
             iconSize: [30, 30],
             iconAnchor: [15, 30]
         }),
-        'N-S': L.divIcon({
+        'Drones witnessed': L.divIcon({
             html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#819B2A" /></svg>',
             className: 'custom-pin-icon',
             iconSize: [30, 30],
             iconAnchor: [15, 30]
         }),
-        'T-Z': L.divIcon({
+        'Suspect movement': L.divIcon({
             html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#DF5094" /></svg>',
             className: 'custom-pin-icon',
             iconSize: [30, 30],
@@ -128,10 +128,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Layer visibility state
     const layerVisibility = {
-        'A-F': true,
-        'G-M': true,
-        'N-S': true,
-        'T-Z': true
+        'Activities extracted from search results': true,
+        'Drone attacks': true,
+        'Drones witnessed': true,
+        'Suspect movement': true
     };
 
     // Get sidebar container
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Group locations by layer
     const locationsByLayer = {};
-    const layerOrder = ['A-F', 'G-M', 'N-S', 'T-Z'];
+    const layerOrder = ['Activities extracted from search results', 'Drone attacks', 'Drones witnessed', 'Suspect movement'];
 
     locationsData.forEach(location => {
         if (!locationsByLayer[location.layer]) {
