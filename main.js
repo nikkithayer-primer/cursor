@@ -571,19 +571,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to toggle full screen mode
+    function toggleFullScreen() {
+        const mainContainer = document.querySelector('.main-container');
+        mainContainer.classList.toggle('collapsed');
+        
+        // Update button icon and text based on state
+        const isCollapsed = mainContainer.classList.contains('collapsed');
+        const content = isCollapsed ? 
+            '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,1c-.2761402,0-.5.22386-.5.5s.2238598.5.5.5h3.7929001l-4.14645,4.14645c-.1952696.19526-.1952696.5118399,0,.7070999.19526.1952701.5118399.1952701.7070999,0l4.14645-4.14644v3.7928901c0,.2761402.2238998.5.5.5s.5-.2238598.5-.5V1.5c0-.27614-.2238998-.5-.5-.5h-5ZM6.5,15c.2761402,0,.5-.2238998.5-.5s-.2238598-.5-.5-.5h-3.7928901l4.14644-4.14645c.1952701-.19526.1952701-.5118399,0-.7070999-.19526-.1952696-.5118399-.1952696-.7070999,0l-4.14645,4.14645v-3.7929001c0-.2761402-.22386-.5-.5-.5s-.5.2238598-.5.5v5c0,.2761002.22386.5.5.5h5Z" fill="currentColor" stroke-width="0"></path></g></svg> Open Full Screen' :
+            '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,7h5c.3000002,0,.5-.1999998.5-.5s-.1999998-.5-.5-.5h-3.8000002L14.7999992,1.9000001c.1999998-.2.1999998-.5,0-.7s-.5-.2-.6999998,0l-4.0999994,4.1000001V1.5c0-.3-.1999998-.5-.5-.5s-.5.2-.5.5v5c0,.3000002.1999998.5.5.5ZM1.5,9c-.3,0-.5.1999998-.5.5s.2.5.5.5h3.8000002L1.2000003,14.1000004c-.2.1999998-.2.5,0,.6999998s.5.1999998.7,0l4.0999997-4.1000004v3.8000002c0,.3000002.1999998.5.5.5s.5-.1999998.5-.5v-5c0-.3000002-.1999998-.5-.5-.5H1.5Z" fill="currentColor" stroke-width="0"></path></g></svg> Close Full Screen';
+        const collapseBtn = document.getElementById('collapse-btn');
+        if (collapseBtn) {
+            collapseBtn.innerHTML = content;
+        }
+    }
+
+    // Function to exit full screen mode
+    function exitFullScreen() {
+        const mainContainer = document.querySelector('.main-container');
+        if (mainContainer.classList.contains('collapsed')) {
+            mainContainer.classList.remove('collapsed');
+            
+            // Update button to show "Close Full Screen" state
+            const collapseBtn = document.getElementById('collapse-btn');
+            if (collapseBtn) {
+                collapseBtn.innerHTML = '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,7h5c.3000002,0,.5-.1999998.5-.5s-.1999998-.5-.5-.5h-3.8000002L14.7999992,1.9000001c.1999998-.2.1999998-.5,0-.7s-.5-.2-.6999998,0l-4.0999994,4.1000001V1.5c0-.3-.1999998-.5-.5-.5s-.5.2-.5.5v5c0,.3000002.1999998.5.5.5ZM1.5,9c-.3,0-.5.1999998-.5.5s.2.5.5.5h3.8000002L1.2000003,14.1000004c-.2.1999998-.2.5,0,.6999998s.5.1999998.7,0l4.0999997-4.1000004v3.8000002c0,.3000002.1999998.5.5.5s.5-.1999998.5-.5v-5c0-.3000002-.1999998-.5-.5-.5H1.5Z" fill="currentColor" stroke-width="0"></path></g></svg> Close Full Screen';
+            }
+        }
+    }
+
     // Add click handler for Collapse Screen button
     const collapseBtn = document.getElementById('collapse-btn');
     if (collapseBtn) {
-        collapseBtn.addEventListener('click', function() {
-            const mainContainer = document.querySelector('.main-container');
-            mainContainer.classList.toggle('collapsed');
-            
-            // Update button icon and text based on state
-            const isCollapsed = mainContainer.classList.contains('collapsed');
-            const content = isCollapsed ? 
-                '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,1c-.2761402,0-.5.22386-.5.5s.2238598.5.5.5h3.7929001l-4.14645,4.14645c-.1952696.19526-.1952696.5118399,0,.7070999.19526.1952701.5118399.1952701.7070999,0l4.14645-4.14644v3.7928901c0,.2761402.2238998.5.5.5s.5-.2238598.5-.5V1.5c0-.27614-.2238998-.5-.5-.5h-5ZM6.5,15c.2761402,0,.5-.2238998.5-.5s-.2238598-.5-.5-.5h-3.7928901l4.14644-4.14645c.1952701-.19526.1952701-.5118399,0-.7070999-.19526-.1952696-.5118399-.1952696-.7070999,0l-4.14645,4.14645v-3.7929001c0-.2761402-.22386-.5-.5-.5s-.5.2238598-.5.5v5c0,.2761002.22386.5.5.5h5Z" fill="currentColor" stroke-width="0"></path></g></svg> Open Full Screen' :
-                '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,7h5c.3000002,0,.5-.1999998.5-.5s-.1999998-.5-.5-.5h-3.8000002L14.7999992,1.9000001c.1999998-.2.1999998-.5,0-.7s-.5-.2-.6999998,0l-4.0999994,4.1000001V1.5c0-.3-.1999998-.5-.5-.5s-.5.2-.5.5v5c0,.3000002.1999998.5.5.5ZM1.5,9c-.3,0-.5.1999998-.5.5s.2.5.5.5h3.8000002L1.2000003,14.1000004c-.2.1999998-.2.5,0,.6999998s.5.1999998.7,0l4.0999997-4.1000004v3.8000002c0,.3000002.1999998.5.5.5s.5-.1999998.5-.5v-5c0-.3000002-.1999998-.5-.5-.5H1.5Z" fill="currentColor" stroke-width="0"></path></g></svg> Close Full Screen';
-            collapseBtn.innerHTML = content;
-        });
+        collapseBtn.addEventListener('click', toggleFullScreen);
     }
+
+    // Add keyboard event listener for Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            exitFullScreen();
+        }
+    });
 });

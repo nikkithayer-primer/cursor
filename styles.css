@@ -625,15 +625,16 @@ body {
 
 .info-tooltip {
     position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
+    top: calc(100% - 72px);
+    right: -6px;
+    transform: translateX(50%);
     background: var(--gray-10);
     color: white;
     padding: 8px 12px;
     border-radius: 6px;
     font-size: 14px;
     white-space: nowrap;
-    z-index: 1001;
+    z-index: 1000;
     display: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -645,10 +646,10 @@ body {
 .info-tooltip::before {
     content: '';
     position: absolute;
-    top: -4px;
-    right: 12px;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
     width: 8px;
     height: 8px;
     background: var(--gray-10);
-    transform: rotate(45deg);
 }
