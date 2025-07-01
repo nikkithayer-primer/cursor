@@ -104,9 +104,11 @@ body {
 }
 
 .sidebar-top {
-    background-color: var(--gray-0);
+    padding: 20px;
     border-bottom: 1px solid var(--gray-2);
-    padding: 20px 20px 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     flex-shrink: 0;
 }
 
@@ -125,9 +127,22 @@ body {
     flex-shrink: 0;
 }
 
+.sidebar-footer h3 {
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    color: var(--gray-11);
+    font-size: 16px;
+    margin: 0 0 12px 0;
+    letter-spacing: 0.25px;
+}
+
+.footer-buttons {
+    display: flex;
+    gap: 8px;
+}
+
 .sidebar-footer .btn {
-    width: 100%;
-    text-align: center;
+    flex: 1;
 }
 
 .location-list-container {
@@ -194,7 +209,8 @@ body {
     fill: var(--chart-pink);
 }
 
-.location-headline {
+.sidebar-top h2,.location-headline {
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
     font-weight: 600;
     color: var(--gray-10);
     font-size: 16px;
@@ -584,29 +600,3 @@ body {
 .info-btn:hover svg {
     fill: var(--gray-9);
 }
-
-.map-floating-btn {
-    position: absolute;
-    top: 24px;
-    left: 50%;
-    transform: translate(-50%, 24px);
-    z-index: 1000;
-    background-color: var(--gray-9);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 20px;
-    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.2s ease;
-}
-
-.map-floating-btn:hover {
-    background-color: var(--gray-10);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    transform: translate(-50%, 24px) translateY(-1px);
-}
-
