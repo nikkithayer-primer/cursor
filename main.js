@@ -390,11 +390,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="pin-icon ${getLayerClass(location.layer)}">${getPinIcon()}</span>
                         <span>${location.name}</span>
                     </div>
-                    <div class="location-headline">${location.headline}</div>
-                    <div class="location-date">${location.date}</div>
-                    <div class="location-description">${location.description}</div>
-                    <div class="location-coordinates">
-                        ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}
+                    <div class="location-info-wrapper">
+                        <div class="location-headline">${location.headline}</div>
+                        <div class="location-date">${location.date}</div>
+                        <div class="location-description">${location.description}</div>
+                        <div class="location-coordinates">
+                            ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}
+                        </div>
                     </div>
                 `;
 

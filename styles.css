@@ -209,6 +209,10 @@ body {
     fill: var(--chart-pink);
 }
 
+.location-info-wrapper {
+    margin-left: 24px;
+}
+
 .sidebar-top h2,.location-headline {
     font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
     font-weight: 600;
@@ -281,7 +285,7 @@ body {
     font-family: 'NeueHaasGroteskDisplayLight', 'Helvetica', 'Arial', sans-serif;
     font-weight: 400;
     font-size: 16px;
-    color: var(--gray-10);
+    color: var(--gray-11);
     padding-bottom: 6px;
     padding: 12px;
     border: 1px solid var(--gray-2);
@@ -327,6 +331,7 @@ body {
 
 .layer-name {
     flex: 1;
+    font-weight: 500;
 }
 
 .layer-count {
