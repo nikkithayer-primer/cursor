@@ -218,6 +218,10 @@ body {
     text-decoration: none;
 }
 
+.location-item:hover .location-controls {
+    opacity: 1;
+}
+
 .pin-icon {
     width: 16px;
     height: 16px;
@@ -251,6 +255,8 @@ body {
     align-items: center;
     gap: 4px;
     flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .location-info-wrapper {
@@ -343,6 +349,10 @@ body {
     z-index: 10;
 }
 
+.layer-header:hover .layer-controls {
+    opacity: 1;
+}
+
 /* Layer-specific left borders matching pin colors */
 .layer-section[data-layer="Activities extracted from search results"] .layer-header {
     border-left: 4px solid var(--chart-blue);
@@ -390,6 +400,8 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .layer-control-btn {
