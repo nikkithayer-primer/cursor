@@ -634,6 +634,6 @@ body {
     right: 12px;
     width: 8px;
     height: 8px;
-    background: var(--gray-11);
+    background: var(--gray-10);
     transform: rotate(45deg);
 }
