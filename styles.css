@@ -601,8 +601,8 @@ body {
 }
 
 .map-floating-btn:hover {
-    background-color: #2557d6;
+    background-color: var(--gray-10);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    transform: translate(-50%, -50%) translateY(-1px);
+    transform: translate(-50%, 24px) translateY(-1px);
 }
 

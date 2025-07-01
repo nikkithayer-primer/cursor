@@ -9,52 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
         maxZoom: 19
     }).addTo(map);
 
-    // Create separate marker cluster groups for each layer
-    const markerClusters = {
-        'A-F': L.markerClusterGroup({
-            chunkedLoading: true,
-            maxClusterRadius: 80,
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: '<div style="background-color: #43A7DD; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">' + cluster.getChildCount() + '</div>',
-                    className: 'custom-cluster-icon',
-                    iconSize: [30, 30]
-                });
-            }
-        }),
-        'G-M': L.markerClusterGroup({
-            chunkedLoading: true,
-            maxClusterRadius: 80,
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: '<div style="background-color: #FC922D; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">' + cluster.getChildCount() + '</div>',
-                    className: 'custom-cluster-icon',
-                    iconSize: [30, 30]
-                });
-            }
-        }),
-        'N-S': L.markerClusterGroup({
-            chunkedLoading: true,
-            maxClusterRadius: 80,
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: '<div style="background-color: #819B2A; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">' + cluster.getChildCount() + '</div>',
-                    className: 'custom-cluster-icon',
-                    iconSize: [30, 30]
-                });
-            }
-        }),
-        'T-Z': L.markerClusterGroup({
-            chunkedLoading: true,
-            maxClusterRadius: 80,
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: '<div style="background-color: #DF5094; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">' + cluster.getChildCount() + '</div>',
-                    className: 'custom-cluster-icon',
-                    iconSize: [30, 30]
-                });
-            }
-        })
+    // Create single marker cluster group for all markers
+    const markerCluster = L.markerClusterGroup({
+        chunkedLoading: true,
+        maxClusterRadius: 80,
+        iconCreateFunction: function(cluster) {
+            return L.divIcon({
+                html: '<div style="background-color: var(--gray-9); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">' + cluster.getChildCount() + '</div>',
+                className: 'custom-cluster-icon',
+                iconSize: [30, 30]
+            });
+        }
+    });
+
+    // Store individual markers by layer for visibility control
+    const markersByLayer = {
+        'A-F': [],
+        'G-M': [],
+        'N-S': [],
+        'T-Z': []
     };
 
     // Create custom colored markers for each layer
@@ -155,12 +128,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleLayerVisibility(layerName) {
         layerVisibility[layerName] = !layerVisibility[layerName];
         
-        // Toggle cluster group on map
-        if (layerVisibility[layerName]) {
-            map.addLayer(markerClusters[layerName]);
-        } else {
-            map.removeLayer(markerClusters[layerName]);
-        }
+        // Toggle individual markers in the single cluster
+        const layerMarkers = markersByLayer[layerName];
+        layerMarkers.forEach(marker => {
+            if (layerVisibility[layerName]) {
+                markerCluster.addLayer(marker);
+            } else {
+                markerCluster.removeLayer(marker);
+            }
+        });
         
         // Update eye icon
         const layerSection = document.querySelector(`[data-layer="${layerName}"]`);
@@ -332,7 +308,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 // Add marker to the appropriate cluster group
-                markerClusters[location.layer].addLayer(marker);
+                markerCluster.addLayer(marker);
+
+                // Store marker reference for layer visibility control
+                markersByLayer[location.layer].push(marker);
 
                 // Create sidebar item with SVG pin icon
                 const locationItem = document.createElement('div');
@@ -372,9 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add all cluster groups to the map
-    Object.values(markerClusters).forEach(clusterGroup => {
-        map.addLayer(clusterGroup);
-    });
+    map.addLayer(markerCluster);
 
     // Close popovers when clicking outside
     document.addEventListener('click', closeAllPopovers);
