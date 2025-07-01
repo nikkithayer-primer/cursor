@@ -62,7 +62,7 @@ body {
     font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     color: var(--gray-10);
     margin: 0;
-    padding-top: 48px;
+    padding-top: 72px;
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -94,9 +94,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     z-index: 999;
-    transition: max-width 0.3s ease, margin 0.3s ease;
+    flex-shrink: 0;
 }
 
 .main-toolbar-left {
@@ -119,16 +118,10 @@ body {
     gap: 12px;
 }
 
-.main-toolbar.collapsed {
-    max-width: 1380px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .main-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 48px - 60px); /* Subtract nav height and main toolbar height */
+    height: calc(100vh - 72px); /* Subtract total nav height including padding */
     transition: max-width 0.3s ease, margin 0.3s ease;
 }
 
