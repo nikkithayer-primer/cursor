@@ -46,17 +46,19 @@
     </div>
     
     <div class="main-container">
-        <div id="sidebar" class="sidebar">
-            <div class="sidebar-header">
+                <div id="sidebar" class="sidebar">
+            <div class="sidebar-top">
                 <h2>Locations</h2>
-                    <button id="new-layer-btn" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
-                        </svg>
-                        New layer
-                    </button>
             </div>
             <div id="location-list" class="location-list-container"></div>
+            <div class="sidebar-footer">
+                <button id="new-layer-btn" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
+                    </svg>
+                    New layer
+                </button>
+            </div>
         </div>
         <div id="map">
             <button id="show-all-btn" class="btn show-all-btn map-floating-btn">Show all locations</button>

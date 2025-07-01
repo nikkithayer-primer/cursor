@@ -103,25 +103,31 @@ body {
     flex-direction: column;
 }
 
-.sidebar-header {
+.sidebar-top {
     background-color: var(--gray-0);
     border-bottom: 1px solid var(--gray-2);
-    padding: 20px;
+    padding: 20px 20px 16px 20px;
     flex-shrink: 0;
 }
 
-.sidebar-header h2 {
-    margin: 0 0 16px 0;
+.sidebar-top h2 {
+    margin: 0;
     font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
     font-weight: 600;
     color: var(--gray-11);
     font-size: 24px;
 }
 
-.sidebar-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.sidebar-footer {
+    background-color: var(--gray-0);
+    border-top: 1px solid var(--gray-2);
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar-footer .btn {
+    width: 100%;
+    text-align: center;
 }
 
 .location-list-container {
@@ -581,7 +587,7 @@ body {
     left: 50%;
     transform: translate(-50%, 24px);
     z-index: 1000;
-    background-color: var(--link-blue);
+    background-color: var(--gray-9);
     color: white;
     border: none;
     border-radius: 6px;
