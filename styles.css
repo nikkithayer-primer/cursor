@@ -141,7 +141,7 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 350px;
     background-color: var(--gray-0);
     border-right: 1px solid var(--gray-2);
     padding: 0;
@@ -197,8 +197,20 @@ body {
     transition: color 0.2s ease;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     text-transform: uppercase;
+}
+
+.location-name-content {
+    display: flex;
+    align-items: center;
     gap: 8px;
+    flex: 1;
+}
+
+.location-name.location-hidden {
+    color: var(--gray-5);
+    opacity: 0.6;
 }
 
 .location-name:hover {
@@ -232,6 +244,13 @@ body {
 
 .pin-icon.layer-suspect-movement svg {
     fill: var(--chart-pink);
+}
+
+.location-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
 }
 
 .location-info-wrapper {
@@ -445,6 +464,45 @@ body {
 }
 
 .layer-popover-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+/* Location popover styles (same as layer popover) */
+.location-popover {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 150px;
+    z-index: 1000;
+    display: none;
+}
+
+.location-popover.show {
+    display: block;
+}
+
+.location-popover-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-9);
+    transition: background-color 0.2s ease;
+}
+
+.location-popover-item:hover {
+    background-color: var(--gray-1);
+}
+
+.location-popover-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.location-popover-item:last-child {
     border-radius: 0 0 6px 6px;
 }
 

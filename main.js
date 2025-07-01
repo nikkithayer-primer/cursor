@@ -134,6 +134,9 @@ document.addEventListener('DOMContentLoaded', function() {
         'Suspect movement': true
     };
 
+    // Location visibility state (indexed by location name)
+    const locationVisibility = {};
+
     // Get sidebar container
     const locationList = document.getElementById('location-list');
 
@@ -226,9 +229,79 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to close all popovers
     function closeAllPopovers() {
-        document.querySelectorAll('.layer-popover').forEach(popover => {
+        document.querySelectorAll('.layer-popover, .location-popover').forEach(popover => {
             popover.classList.remove('show');
         });
+    }
+
+    // Function to toggle individual location visibility
+    function toggleLocationVisibility(locationName) {
+        locationVisibility[locationName] = !locationVisibility[locationName];
+        
+        // Find the location's marker and toggle its visibility
+        const location = locationsData.find(loc => loc.name === locationName);
+        if (location) {
+            const layerMarkers = markersByLayer[location.layer];
+            const marker = layerMarkers.find(m => {
+                const popup = m.getPopup();
+                return popup && popup.getContent().includes(locationName);
+            });
+            
+            if (marker) {
+                if (locationVisibility[locationName]) {
+                    // Show marker
+                    if (!markerCluster.hasLayer(marker)) {
+                        markerCluster.addLayer(marker);
+                    }
+                } else {
+                    // Hide marker
+                    if (markerCluster.hasLayer(marker)) {
+                        markerCluster.removeLayer(marker);
+                    }
+                }
+            }
+        }
+        
+        // Update the location item's appearance
+        updateLocationItemAppearance(locationName);
+    }
+
+    // Function to update location item appearance based on visibility
+    function updateLocationItemAppearance(locationName) {
+        const locationItems = document.querySelectorAll('.location-item');
+        locationItems.forEach(item => {
+            const nameElement = item.querySelector('.location-name-content span:last-child');
+            if (nameElement && nameElement.textContent === locationName) {
+                const isVisible = locationVisibility[locationName];
+                const locationNameDiv = item.querySelector('.location-name');
+                const infoWrapper = item.querySelector('.location-info-wrapper');
+                const eyeBtn = item.querySelector('.location-eye-toggle');
+                
+                if (isVisible) {
+                    // Show state
+                    locationNameDiv.classList.remove('location-hidden');
+                    infoWrapper.style.display = 'block';
+                } else {
+                    // Hidden state
+                    locationNameDiv.classList.add('location-hidden');
+                    infoWrapper.style.display = 'none';
+                }
+                
+                // Update eye icon
+                if (eyeBtn) {
+                    updateLocationEyeIcon(eyeBtn, isVisible);
+                }
+            }
+        });
+    }
+
+    // Function to update location eye icon
+    function updateLocationEyeIcon(eyeBtn, isVisible) {
+        const eyeIcon = isVisible ? 
+            '<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>' :
+            '<svg viewBox="0 0 24 24"><path d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.09L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.76,7.13 11.37,7 12,7Z"/></svg>';
+        eyeBtn.innerHTML = eyeIcon;
+        eyeBtn.classList.toggle('eye-closed', !isVisible);
     }
 
     // Function to get CSS class for layer
@@ -240,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function highlightSidebarItem(locationName, highlight) {
         const locationItems = document.querySelectorAll('.location-item');
         locationItems.forEach(item => {
-            const nameElement = item.querySelector('.location-name span:last-child');
+            const nameElement = item.querySelector('.location-name-content span:last-child');
             if (nameElement && nameElement.textContent === locationName) {
                 if (highlight) {
                     // Find the location data to get the layer
@@ -415,13 +488,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Store marker reference for layer visibility control
                 markersByLayer[location.layer].push(marker);
 
-                // Create sidebar item with SVG pin icon
+                // Initialize location visibility (default to visible)
+                locationVisibility[location.name] = true;
+
+                // Create sidebar item with SVG pin icon and controls
                 const locationItem = document.createElement('div');
                 locationItem.className = 'location-item';
                 locationItem.innerHTML = `
                     <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
-                        <span class="pin-icon ${getLayerClass(location.layer)}">${getPinIcon()}</span>
-                        <span>${location.name}</span>
+                        <div class="location-name-content">
+                            <span class="pin-icon ${getLayerClass(location.layer)}">${getPinIcon()}</span>
+                            <span>${location.name}</span>
+                        </div>
+                        <div class="location-controls">
+                            <button class="layer-control-btn location-eye-toggle" title="Toggle visibility">
+                                <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            </button>
+                            <button class="layer-control-btn location-menu-btn" title="Location options">
+                                <svg viewBox="0 0 24 24"><path d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"/></svg>
+                                <div class="location-popover">
+                                    <div class="location-popover-item" data-action="zoom">Zoom to Location</div>
+                                    <div class="location-popover-item" data-action="hide">Hide Location</div>
+                                </div>
+                            </button>
+                        </div>
                     </div>
                     <div class="location-info-wrapper">
                         <div class="location-headline">${location.headline}</div>
@@ -433,19 +523,65 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
 
-                // Add click event to location name for flying to location
-                const locationNameElement = locationItem.querySelector('.location-name');
-                locationNameElement.addEventListener('click', function() {
-                    const lat = parseFloat(this.dataset.lat);
-                    const lng = parseFloat(this.dataset.lng);
-                    map.flyTo([lat, lng], 13, {
-                        animate: true,
-                        duration: 1.5
+                // Add click handlers for location controls
+                const locationEyeBtn = locationItem.querySelector('.location-eye-toggle');
+                const locationMenuBtn = locationItem.querySelector('.location-menu-btn');
+                const locationPopover = locationItem.querySelector('.location-popover');
+
+                if (locationEyeBtn) {
+                    locationEyeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleLocationVisibility(location.name);
                     });
-                    
-                    // Update sidebar after animation completes
-                    setTimeout(updateSidebarVisibility, 1600);
-                });
+                }
+                
+                if (locationMenuBtn && locationPopover) {
+                    locationMenuBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        closeAllPopovers();
+                        locationPopover.classList.toggle('show');
+                    });
+
+                    // Add popover menu handlers
+                    locationPopover.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const action = e.target.dataset.action;
+                        
+                        switch(action) {
+                            case 'zoom':
+                                map.flyTo([location.latitude, location.longitude], 13, {
+                                    animate: true,
+                                    duration: 1.5
+                                });
+                                setTimeout(updateSidebarVisibility, 1600);
+                                break;
+                            case 'hide':
+                                if (locationVisibility[location.name]) {
+                                    toggleLocationVisibility(location.name);
+                                }
+                                break;
+                        }
+                        closeAllPopovers();
+                    });
+                }
+
+                // Add click event to location name for flying to location (but not on controls)
+                const locationNameElement = locationItem.querySelector('.location-name-content span:last-child');
+                if (locationNameElement) {
+                    locationNameElement.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const nameDiv = locationItem.querySelector('.location-name');
+                        const lat = parseFloat(nameDiv.dataset.lat);
+                        const lng = parseFloat(nameDiv.dataset.lng);
+                        map.flyTo([lat, lng], 13, {
+                            animate: true,
+                            duration: 1.5
+                        });
+                        
+                        // Update sidebar after animation completes
+                        setTimeout(updateSidebarVisibility, 1600);
+                    });
+                }
 
                 layerSection.appendChild(locationItem);
             });
@@ -468,14 +604,15 @@ document.addEventListener('DOMContentLoaded', function() {
         locationsData.forEach(location => {
             const isInBounds = bounds.contains([location.latitude, location.longitude]);
             const isLayerVisible = layerVisibility[location.layer];
+            const isLocationVisible = locationVisibility[location.name];
             
             // Find the location item in the sidebar
             const locationItems = document.querySelectorAll('.location-item');
             locationItems.forEach(item => {
-                const locationName = item.querySelector('.location-name span:last-child');
+                const locationName = item.querySelector('.location-name-content span:last-child');
                 if (locationName && locationName.textContent === location.name) {
-                    // Show item only if location is in bounds AND layer is visible
-                    item.style.display = (isInBounds && isLayerVisible) ? 'block' : 'none';
+                    // Show item only if location is in bounds AND layer is visible AND location is visible
+                    item.style.display = (isInBounds && isLayerVisible && isLocationVisible) ? 'block' : 'none';
                 }
             });
         });
@@ -484,7 +621,8 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(locationsByLayer).forEach(layerName => {
             const visibleCount = locationsByLayer[layerName].filter(location => {
                 const isInBounds = bounds.contains([location.latitude, location.longitude]);
-                return isInBounds && layerVisibility[layerName];
+                const isLocationVisible = locationVisibility[location.name];
+                return isInBounds && layerVisibility[layerName] && isLocationVisible;
             }).length;
             
             const totalCount = locationsByLayer[layerName].length;
