@@ -380,29 +380,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function highlightCluster(clusterElement, highlight) {
         if (clusterElement) {
             if (highlight) {
-                // Store the original transform if not already stored
-                if (!clusterElement.dataset.originalTransform) {
-                    clusterElement.dataset.originalTransform = clusterElement.style.transform || '';
-                }
+                // Add highlight class for filter and z-index
+                clusterElement.classList.add('cluster-highlighted');
                 
-                // Get the current transform and add scale to it
-                const originalTransform = clusterElement.dataset.originalTransform;
-                const newTransform = originalTransform + ' scale(1.2)';
-                
-                // Add highlight effect
+                // Get current transform and add scale to it
+                const currentTransform = clusterElement.style.transform || '';
+                const newTransform = currentTransform + ' scale(1.2)';
                 clusterElement.style.transform = newTransform;
                 clusterElement.style.transformOrigin = 'center';
-                clusterElement.style.zIndex = '1000';
-                clusterElement.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
-                clusterElement.style.transition = 'all 0.2s ease';
             } else {
-                // Restore original transform
-                const originalTransform = clusterElement.dataset.originalTransform || '';
-                clusterElement.style.transform = originalTransform;
+                // Remove highlight class
+                clusterElement.classList.remove('cluster-highlighted');
+                
+                // Remove scale from current transform
+                const currentTransform = clusterElement.style.transform || '';
+                const newTransform = currentTransform.replace(/\s*scale\([^)]*\)/g, '');
+                clusterElement.style.transform = newTransform;
                 clusterElement.style.transformOrigin = '';
-                clusterElement.style.zIndex = '';
-                clusterElement.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
-                clusterElement.style.transition = 'all 0.2s ease';
             }
         }
     }
@@ -422,29 +416,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 const markerElement = marker._icon;
                 if (markerElement) {
                     if (highlight) {
-                        // Store the original transform if not already stored
-                        if (!markerElement.dataset.originalTransform) {
-                            markerElement.dataset.originalTransform = markerElement.style.transform || '';
-                        }
+                        // Add highlight class for filter and z-index
+                        markerElement.classList.add('marker-highlighted');
                         
-                        // Get the current transform and add scale to it
-                        const originalTransform = markerElement.dataset.originalTransform;
-                        const newTransform = originalTransform + ' scale(1.1)';
-                        
-                        // Add highlight effect with bottom center transform origin
+                        // Get current transform and add scale to it
+                        const currentTransform = markerElement.style.transform || '';
+                        const newTransform = currentTransform + ' scale(1.1)';
                         markerElement.style.transform = newTransform;
                         markerElement.style.transformOrigin = 'bottom center';
-                        markerElement.style.zIndex = '1000';
-                        markerElement.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
-                        markerElement.style.transition = 'all 0.2s ease';
                     } else {
-                        // Restore original transform
-                        const originalTransform = markerElement.dataset.originalTransform || '';
-                        markerElement.style.transform = originalTransform;
+                        // Remove highlight class
+                        markerElement.classList.remove('marker-highlighted');
+                        
+                        // Remove scale from current transform
+                        const currentTransform = markerElement.style.transform || '';
+                        const newTransform = currentTransform.replace(/\s*scale\([^)]*\)/g, '');
+                        markerElement.style.transform = newTransform;
                         markerElement.style.transformOrigin = '';
-                        markerElement.style.zIndex = '';
-                        markerElement.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
-                        markerElement.style.transition = 'all 0.2s ease';
                     }
                 } else {
                     // Marker might be in a cluster, try to find and highlight the cluster

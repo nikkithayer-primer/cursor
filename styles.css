@@ -719,3 +719,16 @@ body {
     height: 8px;
     background: var(--gray-10);
 }
+
+/* Map marker and cluster highlighting */
+.marker-highlighted {
+    z-index: 1000 !important;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3)) !important;
+    transition: all 0.2s ease !important;
+}
+
+.cluster-highlighted {
+    z-index: 1000 !important;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3)) !important;
+    transition: all 0.2s ease !important;
+}
