@@ -498,4 +498,41 @@ document.addEventListener('DOMContentLoaded', function() {
             infoTooltip.classList.remove('show');
         });
     }
+
+    // Add click handler for Map Layer Toggle (Street Map / Satellite)
+    const toolbarToggle = document.getElementById('toolbar-toggle');
+    if (toolbarToggle) {
+        toolbarToggle.addEventListener('change', function() {
+            // Toggle between different map tile layers
+            const currentTiles = map._layers;
+            const tileLayerKeys = Object.keys(currentTiles).filter(key => 
+                currentTiles[key] instanceof L.TileLayer
+            );
+            
+            if (tileLayerKeys.length > 0) {
+                const currentTileLayer = currentTiles[tileLayerKeys[0]];
+                map.removeLayer(currentTileLayer);
+                
+                // Check current tile URL to determine next layer
+                const currentUrl = currentTileLayer._url;
+                let newTileLayer;
+                
+                if (currentUrl.includes('openstreetmap.org')) {
+                    // Switch to satellite view
+                    newTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                        attribution: '© <a href="https://www.esri.com/">Esri</a>',
+                        maxZoom: 19
+                    });
+                } else {
+                    // Switch back to OpenStreetMap
+                    newTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        maxZoom: 19
+                    });
+                }
+                
+                newTileLayer.addTo(map);
+            }
+        });
+    }
 });

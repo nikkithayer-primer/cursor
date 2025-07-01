@@ -491,6 +491,7 @@ body {
     height: 32px;
     cursor: pointer;
     margin-right: 12px;
+    border: 1px solid var(--gray-2)
 }
 
 .toggle-switch input {
@@ -505,8 +506,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--gray-3);
-    border-radius: 32px;
+    background-color: var(--gray-0);
+    border-radius: 0px;
     transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
@@ -521,7 +522,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 0;
     transition: all 0.3s ease;
     z-index: 1;
 }
@@ -533,42 +534,23 @@ body {
 }
 
 .map-icon {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: #C4DFF8;
 }
 
-.table-icon {
+.satellite-icon {
     background-color: transparent;
 }
 
 .toggle-switch input:checked + .toggle-slider .map-icon {
     background-color: transparent;
-    box-shadow: none;
 }
 
-.toggle-switch input:checked + .toggle-slider .table-icon {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.toggle-switch input:checked + .toggle-slider {
-    background-color: var(--link-blue);
-}
-
-.toggle-switch input:checked + .toggle-slider .map-icon svg {
-    fill: white;
-}
-
-.toggle-switch input:checked + .toggle-slider .table-icon svg {
-    fill: var(--link-blue);
+.toggle-switch input:checked + .toggle-slider .satellite-icon {
+    background-color: #C4DFF8;
 }
 
 .toggle-switch:hover .toggle-slider {
-    background-color: var(--gray-4);
-}
-
-.toggle-switch input:checked:hover + .toggle-slider {
-    background-color: var(--link-blue);
+    background-color: var(--gray-0);
 }
 
 .info-btn {
