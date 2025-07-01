@@ -90,6 +90,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Add cluster hover events after the cluster group is created
+    markerCluster.on('clustermouseover', function(e) {
+        const clusterElement = e.layer._icon;
+        if (clusterElement) {
+            highlightCluster(clusterElement, true);
+            
+            // Highlight sidebar items for all markers in the cluster
+            const childMarkers = e.layer.getAllChildMarkers();
+            childMarkers.forEach(marker => {
+                const popup = marker.getPopup();
+                if (popup) {
+                    const content = popup.getContent();
+                    const nameMatch = content.match(/<h4>(.*?)<\/h4>/);
+                    if (nameMatch) {
+                        const locationName = nameMatch[1];
+                        highlightSidebarItem(locationName, true);
+                    }
+                }
+            });
+        }
+    });
+
+    markerCluster.on('clustermouseout', function(e) {
+        const clusterElement = e.layer._icon;
+        if (clusterElement) {
+            highlightCluster(clusterElement, false);
+            
+            // Remove highlight from sidebar items for all markers in the cluster
+            const childMarkers = e.layer.getAllChildMarkers();
+            childMarkers.forEach(marker => {
+                const popup = marker.getPopup();
+                if (popup) {
+                    const content = popup.getContent();
+                    const nameMatch = content.match(/<h4>(.*?)<\/h4>/);
+                    if (nameMatch) {
+                        const locationName = nameMatch[1];
+                        highlightSidebarItem(locationName, false);
+                    }
+                }
+            });
+        }
+    });
+
     // Store individual markers by layer for visibility control
     const markersByLayer = {
         'Activities extracted from search results': [],
@@ -333,6 +376,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to highlight/unhighlight clusters
+    function highlightCluster(clusterElement, highlight) {
+        if (clusterElement) {
+            if (highlight) {
+                // Store the original transform if not already stored
+                if (!clusterElement.dataset.originalTransform) {
+                    clusterElement.dataset.originalTransform = clusterElement.style.transform || '';
+                }
+                
+                // Get the current transform and add scale to it
+                const originalTransform = clusterElement.dataset.originalTransform;
+                const newTransform = originalTransform + ' scale(1.2)';
+                
+                // Add highlight effect
+                clusterElement.style.transform = newTransform;
+                clusterElement.style.transformOrigin = 'center';
+                clusterElement.style.zIndex = '1000';
+                clusterElement.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
+                clusterElement.style.transition = 'all 0.2s ease';
+            } else {
+                // Restore original transform
+                const originalTransform = clusterElement.dataset.originalTransform || '';
+                clusterElement.style.transform = originalTransform;
+                clusterElement.style.transformOrigin = '';
+                clusterElement.style.zIndex = '';
+                clusterElement.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
+                clusterElement.style.transition = 'all 0.2s ease';
+            }
+        }
+    }
+
     // Function to highlight/unhighlight map marker when hovering over sidebar location names
     function highlightMapMarker(locationName, highlight) {
         // Find the location's marker
@@ -372,6 +446,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         markerElement.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))';
                         markerElement.style.transition = 'all 0.2s ease';
                     }
+                } else {
+                    // Marker might be in a cluster, try to find and highlight the cluster
+                    const clusters = markerCluster._featureGroup._layers;
+                    Object.values(clusters).forEach(cluster => {
+                        if (cluster.getAllChildMarkers && cluster.getAllChildMarkers().includes(marker)) {
+                            const clusterElement = cluster._icon;
+                            if (clusterElement) {
+                                highlightCluster(clusterElement, highlight);
+                            }
+                        }
+                    });
                 }
             }
         }
