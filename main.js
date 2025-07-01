@@ -610,7 +610,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add keyboard event listener for Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            exitFullScreen();
+            const mainContainer = document.querySelector('.main-container');
+            if (!mainContainer.classList.contains('collapsed')) {
+                // If not in collapsed mode, enter collapsed mode (full screen)
+                toggleFullScreen();
+            } else {
+                // If in collapsed mode, exit full screen
+                exitFullScreen();
+            }
         }
     });
 });
