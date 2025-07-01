@@ -576,7 +576,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (collapseBtn) {
         collapseBtn.addEventListener('click', function() {
             const mainContainer = document.querySelector('.main-container');
+            const mainToolbar = document.querySelector('.main-toolbar');
+            
             mainContainer.classList.toggle('collapsed');
+            mainToolbar.classList.toggle('collapsed');
             
             // Update button icon based on state
             const isCollapsed = mainContainer.classList.contains('collapsed');
