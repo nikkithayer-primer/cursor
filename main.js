@@ -14,10 +14,78 @@ document.addEventListener('DOMContentLoaded', function() {
         chunkedLoading: true,
         maxClusterRadius: 80,
         iconCreateFunction: function(cluster) {
+            // Get all child markers and count by layer
+            const children = cluster.getAllChildMarkers();
+            const layerCounts = {};
+            const layerColors = {
+                'A-F': '#43A7DD',
+                'G-M': '#FC922D', 
+                'N-S': '#819B2A',
+                'T-Z': '#DF5094'
+            };
+            
+            // Count markers by layer
+            children.forEach(marker => {
+                const layer = marker.options.layer;
+                layerCounts[layer] = (layerCounts[layer] || 0) + 1;
+            });
+            
+            // Calculate proportions and create border segments
+            const totalCount = children.length;
+            const presentLayers = Object.keys(layerCounts);
+            
+            let clusterContent = '';
+            if (presentLayers.length > 1) {
+                // Create SVG with multi-colored border segments
+                let segments = [];
+                let currentAngle = -90; // Start from top
+                
+                presentLayers.forEach(layer => {
+                    const proportion = layerCounts[layer] / totalCount;
+                    const angleSize = proportion * 360;
+                    const color = layerColors[layer];
+                    
+                    // Create SVG arc path
+                    const startAngleRad = (currentAngle * Math.PI) / 180;
+                    const endAngleRad = ((currentAngle + angleSize) * Math.PI) / 180;
+                    const radius = 15;
+                    const centerX = 18;
+                    const centerY = 18;
+                    
+                    const x1 = centerX + radius * Math.cos(startAngleRad);
+                    const y1 = centerY + radius * Math.sin(startAngleRad);
+                    const x2 = centerX + radius * Math.cos(endAngleRad);
+                    const y2 = centerY + radius * Math.sin(endAngleRad);
+                    
+                    const largeArcFlag = angleSize > 180 ? 1 : 0;
+                    
+                    const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+                    
+                    segments.push(`<path d="${pathData}" fill="${color}" opacity="0.8"/>`);
+                    currentAngle += angleSize;
+                });
+                
+                clusterContent = `
+                    <div style="position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                        <svg width="36" height="36" viewBox="0 0 36 36" style="position: absolute; top: 0; left: 0; z-index: 1;">
+                            ${segments.join('')}
+                        </svg>
+                        <div style="background-color: var(--gray-9); color: white; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; position: relative; z-index: 2;">${cluster.getChildCount()}</div>
+                    </div>
+                `;
+            } else if (presentLayers.length === 1) {
+                // Single color border
+                const color = layerColors[presentLayers[0]];
+                clusterContent = `<div style="background-color: var(--gray-9); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; border: 3px solid ${color};">${cluster.getChildCount()}</div>`;
+            } else {
+                // Fallback for no layer info
+                clusterContent = `<div style="background-color: var(--gray-9); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">${cluster.getChildCount()}</div>`;
+            }
+            
             return L.divIcon({
-                html: '<div style="background-color: var(--gray-9); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">' + cluster.getChildCount() + '</div>',
+                html: clusterContent,
                 className: 'custom-cluster-icon',
-                iconSize: [30, 30]
+                iconSize: [36, 36]
             });
         }
     });
@@ -293,7 +361,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Create marker with custom colored icon and add to appropriate cluster group
                 const marker = L.marker([location.latitude, location.longitude], {
-                    icon: layerIcons[location.layer]
+                    icon: layerIcons[location.layer],
+                    layer: location.layer
                 }).bindPopup(popupContent);
                 
                 // Add click event to marker to fly to location when clicked
