@@ -482,4 +482,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add click handler for "Show All" button (with animation)
     showAllBtn.addEventListener('click', showAllLocations);
+
+    // Add click handler for info button tooltip
+    const infoBtn = document.getElementById('info-btn');
+    const infoTooltip = document.getElementById('info-tooltip');
+    
+    if (infoBtn && infoTooltip) {
+        infoBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            infoTooltip.classList.toggle('show');
+        });
+        
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function() {
+            infoTooltip.classList.remove('show');
+        });
+    }
 });

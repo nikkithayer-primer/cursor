@@ -600,3 +600,40 @@ body {
 .info-btn:hover svg {
     fill: var(--gray-9);
 }
+
+.load-more-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.info-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--gray-10);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1001;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.info-tooltip.show {
+    display: block;
+}
+
+.info-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    background: var(--gray-11);
+    transform: rotate(45deg);
+}
