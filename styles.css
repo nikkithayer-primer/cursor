@@ -62,7 +62,7 @@ body {
     font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     color: var(--gray-10);
     margin: 0;
-    padding-top: 144px;
+    padding-top: 120px;
     box-sizing: border-box;
 }
 
@@ -122,11 +122,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.sidebar-actions .btn {
-    width: 100%;
-    text-align: center;
 }
 
 .location-list-container {
@@ -218,13 +213,13 @@ body {
 /* Button styles */
 .btn {
     display: inline-block;
-    padding: 10px 16px;
-    background-color: var(--link-blue);
-    color: white;
-    border: none;
-    border-radius: 6px;
+    padding: 6px 12px;
+    background-color: var(--gray-0);
+    color: var(--gray-9);
+    border: 1px solid var(--gray-9);
+    border-radius: 4px;
     font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
@@ -233,8 +228,7 @@ body {
 }
 
 .btn:hover {
-    background-color: var(--chart-blue);
-    transform: translateY(-1px);
+    background-color: var(--gray-1);
 }
 
 .btn:active {
@@ -242,12 +236,7 @@ body {
 }
 
 .btn-secondary {
-    background-color: var(--gray-6);
-    color: var(--gray-11);
-}
-
-.btn-secondary:hover {
-    background-color: var(--gray-7);
+    border:none;
 }
 
 .show-all-btn {
@@ -409,11 +398,7 @@ body {
     flex: 1;
     height: 100%;
     background-color: #C4DFF8;
-}
-
-/* Override Leaflet map background */
-.leaflet-container {
-    background-color: #C4DFF8 !important;
+    position: relative;
 }
 
 /* Style for areas outside tile coverage */
@@ -588,5 +573,30 @@ body {
 
 .info-btn:hover svg {
     fill: var(--gray-9);
+}
+
+.map-floating-btn {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translate(-50%, 24px);
+    z-index: 1000;
+    background-color: var(--link-blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+.map-floating-btn:hover {
+    background-color: #2557d6;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%) translateY(-1px);
 }
 
