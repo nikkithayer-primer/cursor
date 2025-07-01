@@ -570,4 +570,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Add click handler for Collapse Screen button
+    const collapseBtn = document.getElementById('collapse-btn');
+    if (collapseBtn) {
+        collapseBtn.addEventListener('click', function() {
+            const mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.toggle('collapsed');
+            
+            // Update button icon based on state
+            const isCollapsed = mainContainer.classList.contains('collapsed');
+            const svg = isCollapsed ? 
+                '<svg viewBox="0 0 24 24"><path d="M10,12H2.12C1.82,11.96 1.5,12.06 1.29,12.29C0.9,12.68 0.9,13.31 1.29,13.7L3.3,15.71L0.77,18.24C0.38,18.63 0.38,19.26 0.77,19.65L4.35,23.23C4.74,23.62 5.37,23.62 5.76,23.23L8.29,20.7L10.3,22.71C10.69,23.1 11.32,23.1 11.71,22.71C11.94,22.5 12.04,22.18 12,21.88V14H19.88C20.18,14.04 20.5,13.94 20.71,13.71C21.1,13.32 21.1,12.69 20.71,12.3L18.7,10.29L21.23,7.76C21.62,7.37 21.62,6.74 21.23,6.35L17.65,2.77C17.26,2.38 16.63,2.38 16.24,2.77L13.71,5.3L11.7,3.29C11.31,2.9 10.68,2.9 10.29,3.29C10.06,3.5 9.96,3.82 10,4.12V12Z"/></svg>' :
+                '<svg viewBox="0 0 24 24"><path d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7L7.76,21.23C7.37,21.62 6.74,21.62 6.35,21.23L2.77,17.65C2.38,17.26 2.38,16.63 2.77,16.24L5.3,13.71L3.29,11.7C2.9,11.31 2.9,10.68 3.29,10.29C3.5,10.06 3.82,9.96 4.12,10H12V2.12C11.96,1.82 12.06,1.5 12.29,1.29C12.68,0.9 13.31,0.9 13.7,1.29L15.71,3.3L18.24,0.77C18.63,0.38 19.26,0.38 19.65,0.77L23.23,4.35C23.62,4.74 23.62,5.37 23.23,5.76L20.7,8.29L22.71,10.3C23.1,10.69 23.1,11.32 22.71,11.71C22.5,11.94 22.18,12.04 21.88,12H14Z"/></svg>';
+            collapseBtn.innerHTML = svg;
+            
+            // Update tooltip text
+            collapseBtn.title = isCollapsed ? 'Expand screen width' : 'Collapse screen width';
+        });
+    }
 });
