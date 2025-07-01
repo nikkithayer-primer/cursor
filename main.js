@@ -450,6 +450,107 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Create tooltip element
+    const mapTooltip = document.createElement('div');
+    mapTooltip.className = 'map-tooltip';
+    mapTooltip.style.display = 'none';
+    document.body.appendChild(mapTooltip);
+
+    // Function to show tooltip next to map marker or cluster
+    function showMapTooltip(locationName, x, y, isCluster = false, additionalCount = 0) {
+        const location = locationsData.find(loc => loc.name === locationName);
+        if (!location) return;
+
+        let tooltipContent = `
+            <div class="map-tooltip-location">${location.name}</div>
+            <div class="map-tooltip-headline">${location.headline}</div>
+        `;
+        
+        if (isCluster && additionalCount > 0) {
+            tooltipContent += `<div class="map-tooltip-additional">+${additionalCount} more locations</div>`;
+        }
+        
+        mapTooltip.innerHTML = tooltipContent;
+        mapTooltip.style.display = 'block';
+        
+        // Position tooltip next to the marker/cluster
+        const tooltipRect = mapTooltip.getBoundingClientRect();
+        const mapContainer = document.getElementById('map');
+        const mapRect = mapContainer.getBoundingClientRect();
+        
+        // Calculate position relative to map container
+        let left = x + 20; // Offset from marker
+        let top = y - (tooltipRect.height / 2); // Center vertically on marker
+        
+        // Adjust if tooltip would go outside map bounds
+        if (left + tooltipRect.width > mapRect.width) {
+            left = x - tooltipRect.width - 20; // Show on left side
+        }
+        if (top < 0) {
+            top = 10;
+        }
+        if (top + tooltipRect.height > mapRect.height) {
+            top = mapRect.height - tooltipRect.height - 10;
+        }
+        
+        mapTooltip.style.left = (mapRect.left + left) + 'px';
+        mapTooltip.style.top = (mapRect.top + top) + 'px';
+    }
+
+    // Function to hide tooltip
+    function hideMapTooltip() {
+        mapTooltip.style.display = 'none';
+    }
+
+    // Function to show tooltip for sidebar hover
+    function showTooltipForLocation(locationName) {
+        const location = locationsData.find(loc => loc.name === locationName);
+        if (!location) return;
+
+        const layerMarkers = markersByLayer[location.layer];
+        const marker = layerMarkers.find(m => {
+            const popup = m.getPopup();
+            return popup && popup.getContent().includes(locationName);
+        });
+        
+        if (marker && markerCluster.hasLayer(marker)) {
+            const markerElement = marker._icon;
+            if (markerElement) {
+                // Individual marker - show tooltip next to it
+                const markerRect = markerElement.getBoundingClientRect();
+                const mapContainer = document.getElementById('map');
+                const mapRect = mapContainer.getBoundingClientRect();
+                
+                const x = markerRect.left + markerRect.width / 2 - mapRect.left;
+                const y = markerRect.top + markerRect.height / 2 - mapRect.top;
+                
+                showMapTooltip(locationName, x, y, false, 0);
+            } else {
+                // Marker is in a cluster - find the cluster and show tooltip
+                const clusters = markerCluster._featureGroup._layers;
+                Object.values(clusters).forEach(cluster => {
+                    if (cluster.getAllChildMarkers && cluster.getAllChildMarkers().includes(marker)) {
+                        const clusterElement = cluster._icon;
+                        if (clusterElement) {
+                            const clusterRect = clusterElement.getBoundingClientRect();
+                            const mapContainer = document.getElementById('map');
+                            const mapRect = mapContainer.getBoundingClientRect();
+                            
+                            const x = clusterRect.left + clusterRect.width / 2 - mapRect.left;
+                            const y = clusterRect.top + clusterRect.height / 2 - mapRect.top;
+                            
+                            // Count additional locations in cluster
+                            const allMarkersInCluster = cluster.getAllChildMarkers();
+                            const additionalCount = allMarkersInCluster.length - 1;
+                            
+                            showMapTooltip(locationName, x, y, true, additionalCount);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     // SVG pin icon
     function getPinIcon() {
         return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -594,11 +695,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 marker.on('mouseover', function(e) {
                     highlightSidebarItem(location.name, true);
                     highlightMapMarker(location.name, true);
+                    
+                    // Show tooltip next to the marker
+                    const markerElement = marker._icon;
+                    if (markerElement) {
+                        const markerRect = markerElement.getBoundingClientRect();
+                        const mapContainer = document.getElementById('map');
+                        const mapRect = mapContainer.getBoundingClientRect();
+                        
+                        const x = markerRect.left + markerRect.width / 2 - mapRect.left;
+                        const y = markerRect.top + markerRect.height / 2 - mapRect.top;
+                        
+                        showMapTooltip(location.name, x, y, false, 0);
+                    }
                 });
 
                 marker.on('mouseout', function(e) {
                     highlightSidebarItem(location.name, false);
                     highlightMapMarker(location.name, false);
+                    hideMapTooltip();
                 });
                 
                 // Add marker to the appropriate cluster group
@@ -705,10 +820,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add hover events to entire location item to highlight corresponding map marker
                 locationItem.addEventListener('mouseenter', function(e) {
                     highlightMapMarker(location.name, true);
+                    showTooltipForLocation(location.name);
                 });
 
                 locationItem.addEventListener('mouseleave', function(e) {
                     highlightMapMarker(location.name, false);
+                    hideMapTooltip();
                 });
 
                 layerSection.appendChild(locationItem);
