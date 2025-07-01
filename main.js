@@ -236,6 +236,30 @@ document.addEventListener('DOMContentLoaded', function() {
         return 'layer-' + layer.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     }
 
+    // Function to highlight/unhighlight sidebar item when hovering over map markers
+    function highlightSidebarItem(locationName, highlight) {
+        const locationItems = document.querySelectorAll('.location-item');
+        locationItems.forEach(item => {
+            const nameElement = item.querySelector('.location-name span:last-child');
+            if (nameElement && nameElement.textContent === locationName) {
+                if (highlight) {
+                    // Find the location data to get the layer
+                    const location = locationsData.find(loc => loc.name === locationName);
+                    if (location) {
+                        const layerClass = getLayerClass(location.layer);
+                        item.classList.add('location-item-highlighted', layerClass);
+                    }
+                } else {
+                    // Remove both highlighted class and any layer classes
+                    item.classList.remove('location-item-highlighted');
+                    ['layer-activities-extracted-from-search-results', 'layer-drone-attacks', 'layer-drones-witnessed', 'layer-suspect-movement'].forEach(cls => {
+                        item.classList.remove(cls);
+                    });
+                }
+            }
+        });
+    }
+
     // SVG pin icon
     function getPinIcon() {
         return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -374,6 +398,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Update sidebar after animation completes
                     setTimeout(updateSidebarVisibility, 1600);
+                });
+
+                // Add hover events to marker to highlight corresponding sidebar item
+                marker.on('mouseover', function(e) {
+                    highlightSidebarItem(location.name, true);
+                });
+
+                marker.on('mouseout', function(e) {
+                    highlightSidebarItem(location.name, false);
                 });
                 
                 // Add marker to the appropriate cluster group
