@@ -98,20 +98,15 @@ body {
     z-index: 999;
 }
 
-.sub-nav h2 {
-    margin: 0;
-    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
-    font-size: 30px;
-    font-weight: 600;
-    letter-spacing: 0.9px;
-    line-height: 42px;
-}
 
 /* Search Navigation */
 .search-nav {
-    background: var(--gray-1);
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
     border-bottom: 1px solid var(--gray-2);
-    padding: 16px 24px;
+    padding:8px;
     display: flex;
     justify-content: center;
     z-index: 999;
@@ -122,11 +117,11 @@ body {
     background: white;
     border: 1px solid var(--gray-2);
     border-radius: 12px;
-    padding: 8px 12px;
+    padding: 0 8px;
     display: flex;
     align-items: center;
     gap: 12px;
-    min-width: 400px;
+    min-height: 48px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -134,14 +129,28 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 800px;
 }
 
 .date-range-picker {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-8);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.date-range-picker:hover {
+    background-color: var(--gray-1);
+    color: var(--gray-10);
 }
 
 .calendar-icon {
@@ -154,6 +163,27 @@ body {
     color: var(--gray-10);
     font-weight: 400;
     white-space: nowrap;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--gray-10);
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    background: transparent;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: var(--gray-6);
+}
+
+.search-input:focus {
+    background-color: var(--gray-0);
 }
 
 .search-controls {
@@ -169,11 +199,12 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 8px;
+    padding: 8px 12px;
     border-radius: 6px;
     font-size: 14px;
     color: var(--gray-8);
     transition: background-color 0.2s ease, color 0.2s ease;
+    position: relative;
 }
 
 .advanced-options-btn:hover {
@@ -229,27 +260,47 @@ body {
     padding: 12px 24px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     z-index: 999;
     flex-shrink: 0;
 }
 
+.main-toolbar h2 {
+    margin: 0;
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    line-height: 42px;
+}
+
 .main-toolbar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toolbar-header-row {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.main-toolbar-right {
+.toolbar-controls-row {
     display: flex;
     align-items: center;
+}
+
+.main-toolbar-right {
+    display: flex;
+    align-items: flex-end;
     gap: 12px;
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 198px); /* Subtract total nav height including new search-nav */
+    height: calc(100vh - 256px); /* Subtract total nav height for fixed navigation */
     transition: max-width 0.3s ease, margin 0.3s ease;
 }
 
@@ -474,20 +525,17 @@ body {
 }
 
 #back-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    color: #0066cc;
-    background: none;
-    border: none;
-    padding: 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--link-blue);
+    text-decoration: none;
+    padding: 0;
+    transition: color 0.2s ease;
 }
 
 #back-btn:hover {
-    background-color: rgba(0, 102, 204, 0.1);
     color: #0052a3;
+    text-decoration: none;
 }
 
 #back-btn svg {
@@ -682,6 +730,112 @@ body {
 
 .location-popover-item:last-child {
     border-radius: 0 0 6px 6px;
+}
+
+/* Date Range Popover */
+.date-range-popover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    min-width: 280px;
+    z-index: 1000;
+    display: none;
+}
+
+.date-range-popover.show {
+    display: block;
+}
+
+.date-range-popover-header {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-10);
+    margin-bottom: 12px;
+}
+
+.date-range-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-input-label {
+    font-size: 12px;
+    color: var(--gray-7);
+    font-weight: 500;
+}
+
+.date-input {
+    padding: 8px 12px;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-10);
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: var(--link-blue);
+}
+
+/* Advanced Options Popover */
+.advanced-options-popover {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 200px;
+    z-index: 1000;
+    display: none;
+}
+
+.advanced-options-popover.show {
+    display: block;
+}
+
+.advanced-options-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-9);
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.advanced-options-item:hover {
+    background-color: var(--gray-1);
+}
+
+.advanced-options-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.advanced-options-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+.advanced-options-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--gray-7);
 }
 
 /* Map Container */
