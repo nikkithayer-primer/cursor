@@ -15,45 +15,54 @@
 <body>
     <nav class="top-nav">
         <img src="img/logo.png" alt="Logo" class="nav-logo">
-    </nav>
-    <nav class="sub-nav">
-        <button class="btn btn-secondary" id="back-btn">
-            <svg viewBox="0 0 24 24" width="16" height="16">
-                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" fill="currentColor"/>
-            </svg>
-            Back
+        <button class="btn btn-secondary" id="projects-btn">
+            <svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M14,2.5h-5.6999998l-.7000003-1.1c-.1999998-.1999999-.5-.4-.9000001-.4H2c-.6,0-1,.4-1,1v12c0,.6000004.4,1,1,1h12c.6000004,0,1-.3999996,1-1V3.5c0-.5999999-.3999996-1-1-1ZM14,14H2V5.5h12v8.5ZM14,4.5H2v-2.5h4.6999998l.6999998,1.0999999c.1999998.3.5.4000001.8000002.4000001h5.8000002v1Z" fill="currentColor" stroke-width="0"></path></g></svg>
+            Projects
         </button>
-        <h2>Activities Map</h2>
-    <div class="search-container">
-        <div class="search-content">
-            <div class="date-range-picker">
-                <svg class="calendar-icon" viewBox="0 0 24 24" width="16" height="16">
-                    <path d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" fill="currentColor"/>
-                </svg>
-                <span class="date-range-text">Jun 18, 2025 - Jun 25, 2025</span>
-            </div>
-            <div class="search-controls">
-                <button class="advanced-options-btn">
-                    <svg class="filter-icon" viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z" fill="currentColor"/>
+        <button class="btn btn-secondary" id="sources-btn">
+            <svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M11.6999998,13.8999996c-.1999998.1000004-.3000002.3999996-.1999998.6000004.1000004.3000002.3999996.3999996.6999998.3000002,2.3000002-1.4000006,3.8000002-3.9000006,3.8000002-6.8000002C16,3.5999999,12.3999996,0,8,0S0,3.5999999,0,8c0,2.8999996,1.5,5.3999996,3.8,6.8000002.3.1999998.6000001,0,.7-.3000002.0999999-.1999998,0-.5-.1999998-.6000004-2.0000002-1.1999998-3.3000002-3.3999996-3.3000002-5.8999996,0-3.9000001,3.0999999-7,7-7s7,3.0999999,7,7c0,2.5-1.3000002,4.6999998-3.3000002,5.8999996ZM11.1000004,11.8999996c-.1999998.1999998-.6000004.1000004-.6999998-.1999998h0c-.1000004-.1999998,0-.3999996.1999998-.6000004.8999996-.6999998,1.3999996-1.8000002,1.3999996-3,0-2.1999998-1.8000002-4-4-4-2.1999998-.0999994-4,1.7000008-4,3.9000006,0,1.1999998.5,2.3000002,1.4000001,3,.1999998.1000004.3000002.3999996.1999998.6000004h0c-.0999999.3000002-.5.3999996-.6999998.1999998-1.2-.8000002-1.9000001-2.1999998-1.9000001-3.8000002,0-2.8000002,2.1999998-5,5-5s5,2.1999998,5,5c0,1.6000004-.6999998,3-1.8999996,3.8999996ZM10,8c0,.8999996-.6000004,1.6999998-1.5,1.8999996v5.6000004c0,.3000002-.1999998.5-.5.5s-.5-.1999998-.5-.5v-5.6000004c-.9000001-.1999998-1.5-1-1.5-1.8999996,0-1.0999999.9000001-2,2-2s2,.9000001,2,2ZM8,9c.6000004,0,1-.3999996,1-1s-.3999996-1-1-1-1,.4000001-1,1c0,.6000004.4000001,1,1,1Z" fill="currentColor" stroke-width="0"></path></g></svg>
+            Sources
+        </button>
+    </nav>
+    <nav class="search-nav">
+        <div class="search-container">
+            <div class="search-content">
+                <div class="date-range-picker">
+                    <svg class="calendar-icon" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" fill="currentColor"/>
                     </svg>
-                    <span>Advanced Options</span>
-                </button>
-                <button class="search-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" fill="currentColor"/>
-                    </svg>
-                </button>
-                <button class="close-search-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="currentColor"/>
-                    </svg>
-                </button>
+                    <span class="date-range-text">Jun 18, 2025 - Jun 25, 2025</span>
+                </div>
+                <div class="search-controls">
+                    <button class="advanced-options-btn">
+                        <svg class="filter-icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z" fill="currentColor"/>
+                        </svg>
+                        <span>Advanced Options</span>
+                    </button>
+                    <button class="search-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <button class="close-search-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-
     </nav>    
+
+    <nav class="sub-nav">
+                 <button class="btn btn-secondary" id="back-btn">
+             <svg viewBox="0 0 24 24" width="20" height="20">
+                 <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" fill="currentColor"/>
+             </svg>
+         </button>
+        <h2>Activities Map</h2>
+    </nav>
     <div class="main-container">
         <div class="main-toolbar">
             <div class="main-toolbar-left">

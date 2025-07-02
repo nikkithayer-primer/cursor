@@ -34,14 +34,6 @@ h1 {
     line-height: 1.6;
 }
 
-.version-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.version-description {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    line-height: 1.4;
+div.version-description {
+    margin-bottom: 40px;
 }
