@@ -98,7 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Highlight sidebar items for all markers in the cluster
             const childMarkers = e.layer.getAllChildMarkers();
-            childMarkers.forEach(marker => {
+            let firstLocationName = null;
+            let additionalCount = 0;
+            
+            childMarkers.forEach((marker, index) => {
                 const popup = marker.getPopup();
                 if (popup) {
                     const content = popup.getContent();
@@ -106,9 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (nameMatch) {
                         const locationName = nameMatch[1];
                         highlightSidebarItem(locationName, true);
+                        
+                        // Store the first location for tooltip
+                        if (index === 0) {
+                            firstLocationName = locationName;
+                        }
                     }
                 }
             });
+            
+            // Calculate additional locations count
+            additionalCount = childMarkers.length - 1;
+            
+            // Show tooltip for the first location with additional count
+            if (firstLocationName) {
+                const clusterRect = clusterElement.getBoundingClientRect();
+                const mapContainer = document.getElementById('map');
+                const mapRect = mapContainer.getBoundingClientRect();
+                
+                const x = clusterRect.left + clusterRect.width / 2 - mapRect.left;
+                const y = clusterRect.top + clusterRect.height / 2 - mapRect.top;
+                
+                showMapTooltip(firstLocationName, x, y, true, additionalCount);
+            }
         }
     });
 
@@ -130,6 +153,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
+            
+            // Hide tooltip
+            hideMapTooltip();
         }
     });
 
@@ -467,7 +493,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         
         if (isCluster && additionalCount > 0) {
-            tooltipContent += `<div class="map-tooltip-additional">+${additionalCount} more locations</div>`;
+            const locationText = additionalCount === 1 ? 'location' : 'locations';
+            tooltipContent += `<div class="map-tooltip-additional">+${additionalCount} more ${locationText}</div>`;
         }
         
         mapTooltip.innerHTML = tooltipContent;
