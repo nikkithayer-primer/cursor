@@ -3,141 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Primer Design Sandbox</title>
+    <title>Search Application Versions</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏖️</text></svg>">
     <link rel="stylesheet" href="styles.css">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <!-- Leaflet MarkerCluster CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
 </head>
 <body>
-    <nav class="top-nav">
-        <img src="img/logo.png" alt="Logo" class="nav-logo">
-    </nav>
-    <nav class="sub-nav">
-        <button class="btn btn-secondary" id="back-btn">
-            <svg viewBox="0 0 24 24" width="16" height="16">
-                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" fill="currentColor"/>
-            </svg>
-            Back
-        </button>
-        <h2>Activities Map</h2>
-    <div class="search-container">
-        <div class="search-content">
-            <div class="date-range-picker">
-                <svg class="calendar-icon" viewBox="0 0 24 24" width="16" height="16">
-                    <path d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" fill="currentColor"/>
-                </svg>
-                <span class="date-range-text">Jun 18, 2025 - Jun 25, 2025</span>
-            </div>
-            <div class="search-controls">
-                <button class="advanced-options-btn">
-                    <svg class="filter-icon" viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z" fill="currentColor"/>
-                    </svg>
-                    <span>Advanced Options</span>
-                </button>
-                <button class="search-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" fill="currentColor"/>
-                    </svg>
-                </button>
-                <button class="close-search-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="currentColor"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    </nav>    
-    <div class="main-container">
-        <div class="main-toolbar">
-            <div class="main-toolbar-left">
-                <button id="show-all-btn" class="btn show-all-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" fill="currentColor"/>
-                    </svg>
-                    Show all locations
-                </button>
-            </div>
-            <div class="main-toolbar-right">
-                <button id="new-layer-btn" class="btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
-                    </svg>
-                    Add Layer
-                </button>
-                <button id="add-point-btn" class="btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
-                    </svg>
-                    Add Point
-                </button>
-            </div>
-        </div>
-        <div class="content-area">
-            <div id="sidebar" class="sidebar">
-                <div id="location-list" class="location-list-container"></div>
-            </div>
-            <div class="map-container">
-                <div id="map">
+    <div class="container">
+        <h1>Maps + Search Prototype</h1>
+        <p class="subtitle">
+            Choose which version of the map-based search application you'd like to explore. 
+        </p>
+        
+            <a href="search-v1/" class="version-card">
+                <div class="version-title">Version 1</div>
+                <div class="version-description">
+                    Original implementation with core features and interactive map functionality
                 </div>
-            </div>
-        </div>
-        <div class="bottom-toolbar">
-            <div class="toolbar-left">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="toolbar-toggle">
-                    <span class="toggle-slider">
-                        <span class="toggle-icon map-icon">
-                            <svg viewBox="0 0 24 24"><path d="M20.5,3L20.34,3.03L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21L3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19.03 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3M10,5.47L14,6.87V18.53L10,17.13V5.47M5,6.46L8,5.45V17.15L5,18.31V6.46M16,18.54L19,17.55V5.85L16,6.69V18.54Z"/></svg>
-                        </span>
-                        <span class="toggle-icon satellite-icon">
-                            <svg viewBox="0 0 24 24"><path d="M5.51,19L12,14.64L18.49,19V5H5.51M5.51,3H18.49A2,2 0 0,1 20.49,5V19A2,2 0 0,1 18.49,21H5.51A2,2 0 0,1 3.51,19V5A2,2 0 0,1 5.51,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8Z"/></svg>
-                        </span>
-                    </span>
-                </label>
-                Showing results from 50 documents.             
-                <div class="load-more-group">
-                    <button id="load-more-btn" class="btn load-more-btn btn-secondary">
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
-                        </svg>
-                        Load More
-                    </button>
-                    <button class="info-btn" id="info-btn">
-                        <svg viewBox="0 0 24 24"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
-                    </button>
-                    <div id="info-tooltip" class="info-tooltip">Add events from 50 more documents.</div>
+            </a>
+            
+            <a href="search-v2/" class="version-card">
+                <div class="version-title">Version 2</div>
+                <div class="version-description">
+                    Enhanced version with improved styling and additional features
                 </div>
-            </div>
-            <div class="toolbar-right">
-                <button class="btn btn-secondary" id="kml-btn">
-                    Export KML
-                    <svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M7.64645,1.1464498c.19526-.1952661.5118399-.1952661.7070999,0l3.5000496,3.5c.1952009.19526.1952009.5118399,0,.7070999-.1952991.1952701-.5118999.1952701-.7071991,0l-2.6464005-2.64644v7.7928901c0,.2761002-.2238598.5-.5.5s-.5-.2238998-.5-.5V2.7071097l-2.64645,2.64644c-.19526.1952701-.5118399.1952701-.7070999,0-.1952701-.19526-.1952701-.5118399,0-.7070999l3.5-3.5ZM2.5,10.4999998c.27614,0,.5.2238998.5.5v2c0,.5523005.4477201,1,1,1h8c.5523005,0,1-.4476995,1-1v-2c0-.2761002.2238998-.5.5-.5s.5.2238998.5.5v2c0,1.1046-.8954,2-2,2H4c-1.1045699,0-2-.8954-2-2v-2c0-.2761002.22386-.5.5-.5Z" fill="currentColor" stroke-width="0"></path></g></svg>
-                </button>
-                <button class="btn btn-secondary" id="settings-btn">
-                    Map Settings
-                    <svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M6.3277402,1.22418c.1166-.427562.5049496-.72418.9481297-.72418h1.4482703c.4431801,0,.8315296.296617.9481297.72418l.3633299,1.33218c.1269007.0474701.2516003.0992301.3741007.1551199l1.1990995-.68521c.3848-.2198799.8691998-.1550199,1.1826.15836l1.0240002,1.02408c.3134003.31337.3782997.7977202.1583996,1.1825001l-.6851997,1.1991601c.0558004.1224499.1076002.24719.1549997.3740396l1.3322001.3633304c.4275999.1166.7242002.5049496.7242002.9481297v1.4482703c0,.4431801-.2966003.8315296-.7242002.9481297l-1.3322001.3633299c-.0473995.1269007-.0991993.2516003-.1550999.3741007l.6851997,1.1989994c.2199001.3848.1550007.8691998-.1582994,1.1824999l-1.0241003,1.0241003c-.3134003.3134003-.7976999.3782997-1.1824999.1583996l-1.1990995-.6851997c-.1224003.0559006-.2472.1077003-.3741007.1550999l-.3633394,1.3322001c-.1166.4275999-.5049505.7242002-.9481306.7242002h-1.4482698c-.4431796,0-.8315296-.2966003-.9481297-.7242002l-.3633204-1.3322001c-.1269097-.0473995-.2516899-.0991993-.3741899-.1550999l-1.19907.6851997c-.3847799.2198-.8691299.1550007-1.1824999-.1583996l-1.0240901-1.0241003c-.3133701-.3133001-.3782301-.7976999-.15835-1.1824999l.68522-1.1990995c-.0558701-.1224003-.10762-.2472-.1550701-.3740005l-1.33218-.3633394c-.427563-.1166-.72418-.5049505-.72418-.9481306v-1.4482698c0-.4431796.296617-.8315296.72418-.9481297l1.33218-.3633304c.0474601-.1268497.09922-.2515998.1550901-.3740597l-.6851802-1.19907c-.2198799-.3847899-.1550199-.8691301.15836-1.1825001l1.02408-1.0240901c.31337-.31337.7977202-.37823,1.1825001-.15836l1.1990499.6851699c.1224799-.0558898.2472601-.1076598.3741498-.1551299l.3633304-1.33218ZM7.2890301,1.5l-.4291701,1.5736599c-.0445299.1632602-.1686201.2929201-.3297701.3445802-.2530398.08111-.4969997.1826298-.72996.30266-.1505198.0775599-.33007.0736599-.4770799-.01035l-1.4165399-.8094501-1.00546,1.00546.8094599,1.4165702c.0840099.1470098.0878999.32655.01035.4770699-.1200099.2329402-.2215199.4768701-.3026199.7298799-.05165.16115-.1813102.2852402-.3445802.3297701l-1.5736599.4291801v1.4219303l1.5736599.4291792c.1632602.0445309.2929201.1686201.3445802.3297701.08109.2529907.18259.4969101.3025999.7297907.0775399.1505995.0736501.3301001-.01036.4770994l-.8095,1.4166002,1.00547,1.0054998,1.4165599-.8094997c.1470199-.0839996.32656-.0879002.4770799-.0102997.2329702.1199999.4769402.2214994.72999.3027.16115.0515995.2852402.1812992.3297701.3444996l.4291801,1.5737h1.4219303l.4291792-1.5737c.0445309-.1632004.1686201-.2929001.3297701-.3444996.2530403-.0811005.4970007-.1827002.72999-.3027.1505003-.0776005.3299999-.0737.4771004.0102997l1.4165001.8094997,1.0054998-1.0054998-.8094997-1.4165001c-.0840006-.1470003-.0879002-.3266001-.0103998-.4771004.1201-.2329397.2215996-.4768696.3027-.7298794.0515995-.16115.1812992-.2852402.3444996-.3297701l1.5737-.4291801v-1.4219398l-1.5737-.4291701c-.1632004-.0445299-.2929001-.1686201-.3444996-.3297701-.0811005-.2529998-.1826-.4969296-.3026009-.7298698-.0775995-.1505098-.0737-.33005.0103006-.4770699l.8094997-1.41664-1.0053997-1.00546-1.4167004.80949c-.1470003.0840099-.3264999.0879099-.4770002.01035-.2329998-.1200299-.4769497-.22154-.7299795-.30265-.16115-.05165-.2852402-.1813102-.3297701-.3445802l-.4291801-1.5736599h-1.4219398ZM8,6.0862098c-1.0569601,0-1.9137902.8568301-1.9137902,1.9137902s.8568301,1.9137897,1.9137902,1.9137897,1.9137897-.8568296,1.9137897-1.9137897-.8568296-1.9137902-1.9137897-1.9137902ZM5.0862098,8c0-1.6092401,1.3045502-2.9137902,2.9137902-2.9137902s2.9138002,1.3045502,2.9138002,2.9137902-1.3045607,2.9138002-2.9138002,2.9138002-2.9137902-1.3045607-2.9137902-2.9138002Z" fill="currentColor" stroke-width="0"></path></g></svg>
-                </button>
-                <button class="btn btn-secondary" id="collapse-btn">
-                    <svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,7h5c.3000002,0,.5-.1999998.5-.5s-.1999998-.5-.5-.5h-3.8000002L14.7999992,1.9000001c.1999998-.2.1999998-.5,0-.7s-.5-.2-.6999998,0l-4.0999994,4.1000001V1.5c0-.3-.1999998-.5-.5-.5s-.5.2-.5.5v5c0-.3000002.1999998.5.5.5ZM1.5,9c-.3,0-.5.1999998-.5.5s.2.5.5.5h3.8000002L1.2000003,14.1000004c-.2.1999998-.2.5,0,.6999998s.5.1999998.7,0l4.0999997-4.1000004v3.8000002c0,.3000002.1999998.5.5.5s.5-.1999998.5-.5v-5c0-.3000002-.1999998-.5-.5-.5H1.5Z" fill="currentColor" stroke-width="0"></path></g></svg>
-                    Close Full Screen
-                </button>
-            </div>
-        </div>
+            </a>
     </div>
-
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Leaflet MarkerCluster JavaScript -->
-    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <!-- Locations data -->
-    <script src="locations.js"></script>
-    <script src="main.js"></script>
 </body>
 </html> 
