@@ -1030,4 +1030,175 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Search section functionality
+    const searchSection = document.getElementById('search-section');
+    const searchInput = document.getElementById('search-input');
+    const condensedSearchText = document.getElementById('condensed-search-text');
+    const condensedDateRange = document.getElementById('condensed-date-range');
+    const dateRangeBtn = document.getElementById('date-range-btn');
+    const dateRangePopover = document.getElementById('date-range-popover');
+    const advancedOptionsBtn = document.getElementById('advanced-options-btn');
+    const advancedOptionsPopover = document.getElementById('advanced-options-popover');
+    const closeSearchBtn = document.getElementById('close-search-btn');
+
+    // Start in condensed state
+    if (searchSection) {
+        searchSection.classList.add('condensed');
+    }
+
+    // Expand search when clicking on condensed state
+    if (searchSection) {
+        searchSection.addEventListener('click', function(e) {
+            if (searchSection.classList.contains('condensed')) {
+                expandSearch();
+                // Focus the search input after expansion
+                setTimeout(() => {
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
+                }, 300);
+            }
+        });
+    }
+
+    // Collapse search when clicking close button
+    if (closeSearchBtn) {
+        closeSearchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            collapseSearch();
+        });
+    }
+
+    // Update condensed text when typing in search input
+    if (searchInput && condensedSearchText) {
+        searchInput.addEventListener('input', function() {
+            const value = this.value.trim();
+            condensedSearchText.textContent = value || 'Search activities...';
+        });
+    }
+
+    function expandSearch() {
+        if (searchSection) {
+            searchSection.classList.remove('condensed');
+        }
+    }
+
+    function collapseSearch() {
+        if (searchSection) {
+            searchSection.classList.add('condensed');
+            // Close any open popovers
+            if (dateRangePopover) {
+                dateRangePopover.classList.remove('show');
+            }
+            if (advancedOptionsPopover) {
+                advancedOptionsPopover.classList.remove('show');
+            }
+        }
+    }
+
+    // Date range picker functionality
+    if (dateRangeBtn && dateRangePopover) {
+        dateRangeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Close advanced options popover if open
+            if (advancedOptionsPopover) {
+                advancedOptionsPopover.classList.remove('show');
+            }
+            // Toggle date range popover
+            dateRangePopover.classList.toggle('show');
+        });
+
+        // Handle date input changes
+        const dateInputs = dateRangePopover.querySelectorAll('.date-input');
+        dateInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                updateDateRangeDisplay();
+            });
+        });
+
+        function updateDateRangeDisplay() {
+            const startDateInput = dateRangePopover.querySelector('.date-input');
+            const endDateInput = dateRangePopover.querySelectorAll('.date-input')[1];
+            const dateRangeText = dateRangeBtn.querySelector('.date-range-text');
+            
+            if (startDateInput.value && endDateInput.value) {
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+                
+                const options = { month: 'short', day: 'numeric', year: 'numeric' };
+                const startFormatted = startDate.toLocaleDateString('en-US', options);
+                const endFormatted = endDate.toLocaleDateString('en-US', options);
+                
+                const newDateRange = `${startFormatted} - ${endFormatted}`;
+                dateRangeText.textContent = newDateRange;
+                
+                // Update condensed date range as well
+                if (condensedDateRange) {
+                    condensedDateRange.textContent = newDateRange;
+                }
+            }
+        }
+    }
+
+    // Advanced options functionality
+    if (advancedOptionsBtn && advancedOptionsPopover) {
+        advancedOptionsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Close date range popover if open
+            if (dateRangePopover) {
+                dateRangePopover.classList.remove('show');
+            }
+            // Toggle advanced options popover
+            advancedOptionsPopover.classList.toggle('show');
+        });
+
+        // Handle advanced options item clicks
+        const optionItems = advancedOptionsPopover.querySelectorAll('.advanced-options-item');
+        optionItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                console.log('Advanced option clicked:', this.textContent.trim());
+                // Close popover after selection
+                advancedOptionsPopover.classList.remove('show');
+                // Add your custom logic here for each option
+            });
+        });
+    }
+
+    // Close search when clicking outside
+    document.addEventListener('click', function(e) {
+        // Check if click is outside the search section
+        if (searchSection && !searchSection.contains(e.target)) {
+            collapseSearch();
+        }
+        
+        // Close popovers when clicking outside them
+        if (dateRangePopover && !dateRangeBtn.contains(e.target) && !dateRangePopover.contains(e.target)) {
+            dateRangePopover.classList.remove('show');
+        }
+        if (advancedOptionsPopover && !advancedOptionsBtn.contains(e.target) && !advancedOptionsPopover.contains(e.target)) {
+            advancedOptionsPopover.classList.remove('show');
+        }
+    });
+
+    // Prevent clicks inside expanded content from propagating
+    const searchExpandedContent = document.getElementById('search-expanded-content');
+    if (searchExpandedContent) {
+        searchExpandedContent.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    // Prevent popover content clicks from closing the popover
+    if (dateRangePopover) {
+        dateRangePopover.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    if (advancedOptionsPopover) {
+        advancedOptionsPopover.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
 });
