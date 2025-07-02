@@ -63,7 +63,7 @@ body {
     font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     color: var(--gray-10);
     margin: 0;
-    padding-top: 72px;
+    padding-top: 146px;
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -87,6 +87,131 @@ body {
     width: auto;
 }
 
+/* Sub Navigation */
+.sub-nav {
+    background: white;
+    border-bottom: 1px solid var(--gray-2);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 999;
+}
+
+.sub-nav h2 {
+    margin: 0;
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    line-height: 42px;
+}
+
+/* Search Container */
+.search-container {
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 400px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date-range-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.calendar-icon {
+    color: var(--gray-7);
+    flex-shrink: 0;
+}
+
+.date-range-text {
+    font-size: 14px;
+    color: var(--gray-10);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.search-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.advanced-options-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-8);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.advanced-options-btn:hover {
+    background-color: var(--gray-1);
+    color: var(--gray-10);
+}
+
+.filter-icon {
+    color: var(--gray-7);
+    flex-shrink: 0;
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-7);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.search-btn:hover {
+    background-color: var(--gray-1);
+    color: var(--gray-9);
+}
+
+.close-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-7);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.close-search-btn:hover {
+    background-color: var(--gray-1);
+    color: var(--gray-9);
+}
+
 /* Main Toolbar */
 .main-toolbar {
     background: white;
@@ -105,14 +230,6 @@ body {
     gap: 16px;
 }
 
-.main-toolbar-left h2 {
-    margin: 0;
-    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
-    font-weight: 600;
-    color: var(--gray-11);
-    font-size: 24px;
-}
-
 .main-toolbar-right {
     display: flex;
     align-items: center;
@@ -122,7 +239,7 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 72px); /* Subtract total nav height including padding */
+    height: calc(100vh - 146px); /* Subtract total nav height including padding */
     transition: max-width 0.3s ease, margin 0.3s ease;
 }
 
@@ -323,6 +440,20 @@ body {
 
 .new-layer-btn {
     margin: 0;
+}
+
+/* Button-specific flex layouts */
+#show-all-btn,
+#new-layer-btn,
+#add-point-btn,
+#load-more-btn,
+#kml-btn,
+#settings-btn,
+#collapse-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .layer-section {
@@ -572,6 +703,10 @@ body {
     align-items: center;
     box-sizing: border-box;
     flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
 .toolbar-left {
@@ -692,7 +827,7 @@ body {
 
 .info-tooltip {
     position: absolute;
-    top: calc(100% - 72px);
+    top: calc(100% - 146px);
     right: -6px;
     transform: translateX(50%);
     background: var(--gray-10);
