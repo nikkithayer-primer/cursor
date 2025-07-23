@@ -105,26 +105,11 @@ body {
     cursor: pointer;
 }
 
-.search-section-content {
+/* Search Container */
+.search-container {
     position: relative;
     max-width: 800px;
     margin: 0 auto;
-}
-
-/* Expanded State */
-.search-expanded-content {
-    opacity: 1;
-    visibility: visible;
-    transition: all 0.3s ease;
-}
-
-.search-section.condensed .search-expanded-content {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.search-container-expanded {
     background: white;
     border: 1px solid var(--gray-2);
     border-radius: 12px;
@@ -133,6 +118,19 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+/* Expanded State */
+.search-container.expanded {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+}
+
+.search-section.condensed .search-container.expanded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .search-input-row {
@@ -174,7 +172,7 @@ body {
     color: var(--gray-9);
 }
 
-.search-controls-row {
+.search-controls {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -184,7 +182,7 @@ body {
 
 
 /* Condensed State */
-.search-condensed-content {
+.search-container.condensed {
     position: absolute;
     top: 0px;
     left: 0;
@@ -196,15 +194,11 @@ body {
     display: flex;
     align-items: center;
     gap: 24px;
-    background: white;
-    border: 1px solid var(--gray-2);
-    border-radius: 12px;
     padding: 6px 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     height: 30px;
 }
 
-.search-section.condensed .search-condensed-content {
+.search-section.condensed .search-container.condensed {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -316,9 +310,6 @@ body {
     background: var(--gray-0);
     border-bottom: 1px solid var(--gray-2);
     padding: 0 24px;
-}
-
-.tabs-container {
     max-width: 800px;
     margin: 0 auto;
     display: flex;
@@ -388,13 +379,9 @@ body {
     font-size: 16px;
 }
 
-.main-toolbar-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
 
-.main-toolbar-right {
+
+.toolbar-actions {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -433,7 +420,7 @@ body {
     min-height: 0;
 }
 
-.location-list-container {
+#location-list {
     flex: 1;
     overflow-y: auto;
     padding: 0;

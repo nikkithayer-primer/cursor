@@ -159,12 +159,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Store individual markers by layer for visibility control
+    // Store individual markers and shapes by layer for visibility control
     const markersByLayer = {
         'Activities extracted from search results': [],
         'Drone attacks': [],
         'Drones witnessed': [],
         'Suspect movement': []
+    };
+
+    // Store individual geoshapes separately for different handling
+    const shapesByLayer = {
+        'Activities extracted from search results': [],
+        'Drone attacks': [],
+        'Drones witnessed': [],
+        'Suspect movement': []
+    };
+
+    // Layer colors for both markers and polygons
+    const layerColors = {
+        'Activities extracted from search results': '#43A7DD',
+        'Drone attacks': '#FC922D', 
+        'Drones witnessed': '#819B2A',
+        'Suspect movement': '#DF5094'
     };
 
     // Create custom colored markers for each layer
@@ -195,6 +211,68 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     };
 
+    // Function to create a geoshape (polygon) for locations with boundary data
+    function createGeoshape(location) {
+        const color = layerColors[location.layer];
+        
+        const polygon = L.polygon(location.boundaries, {
+            color: color,
+            weight: 2,
+            opacity: 0.8,
+            fillColor: color,
+            fillOpacity: 0.3,
+            layer: location.layer
+        });
+
+        // Create popup content
+        const popupContent = `
+            <div>
+                <h3>${location.headline}</h3>
+                <h4>${location.name}</h4>
+                <p>${location.description}</p>
+                <small>${location.date}</small>
+            </div>
+        `;
+        
+        polygon.bindPopup(popupContent);
+
+        // Add hover effects for highlighting
+        polygon.on('mouseover', function(e) {
+            this.setStyle({
+                weight: 3,
+                fillOpacity: 0.5
+            });
+            highlightSidebarItem(location.name, true);
+            
+            // Show tooltip at polygon center
+            const center = polygon.getBounds().getCenter();
+            const point = map.latLngToContainerPoint(center);
+            showMapTooltip(location.name, point.x, point.y, false, 0);
+        });
+
+        polygon.on('mouseout', function(e) {
+            this.setStyle({
+                weight: 2,
+                fillOpacity: 0.3
+            });
+            highlightSidebarItem(location.name, false);
+            hideMapTooltip();
+        });
+
+        // Add click event to fly to polygon bounds
+        polygon.on('click', function(e) {
+            map.flyToBounds(polygon.getBounds(), {
+                padding: [20, 20],
+                duration: 1.5
+            });
+            
+            // Update sidebar after animation completes
+            setTimeout(updateSidebarVisibility, 1600);
+        });
+
+        return polygon;
+    }
+
     // Layer visibility state
     const layerVisibility = {
         'Activities extracted from search results': true,
@@ -215,7 +293,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const group = new L.featureGroup();
         locationsData.forEach(location => {
             if (layerVisibility[location.layer]) {
-                group.addLayer(L.marker([location.latitude, location.longitude]));
+                if (location.boundaries && location.boundaries.length > 0) {
+                    // Add polygon bounds
+                    group.addLayer(L.polygon(location.boundaries));
+                } else {
+                    // Add marker point
+                    group.addLayer(L.marker([location.latitude, location.longitude]));
+                }
             }
         });
         
@@ -236,7 +320,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculate bounds from all locations
         const group = new L.featureGroup();
         locationsData.forEach(location => {
-            group.addLayer(L.marker([location.latitude, location.longitude]));
+            if (location.boundaries && location.boundaries.length > 0) {
+                // Add polygon bounds
+                group.addLayer(L.polygon(location.boundaries));
+            } else {
+                // Add marker point
+                group.addLayer(L.marker([location.latitude, location.longitude]));
+            }
         });
         
         // Fit map to show all locations with padding (no animation for initial load)
@@ -252,7 +342,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const group = new L.featureGroup();
         layerLocations.forEach(location => {
-            group.addLayer(L.marker([location.latitude, location.longitude]));
+            if (location.boundaries && location.boundaries.length > 0) {
+                // Add polygon bounds
+                group.addLayer(L.polygon(location.boundaries));
+            } else {
+                // Add marker point
+                group.addLayer(L.marker([location.latitude, location.longitude]));
+            }
         });
         
         map.flyToBounds(group.getBounds(), {
@@ -275,6 +371,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 markerCluster.addLayer(marker);
             } else {
                 markerCluster.removeLayer(marker);
+            }
+        });
+
+        // Toggle individual shapes
+        const layerShapes = shapesByLayer[layerName];
+        layerShapes.forEach(shape => {
+            if (layerVisibility[layerName]) {
+                map.addLayer(shape);
+            } else {
+                map.removeLayer(shape);
             }
         });
         
@@ -691,66 +797,77 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Add locations for this layer
             locationsByLayer[layerName].forEach((location, index) => {
-                // Create popup content
-                const popupContent = `
-                    <div>
-                        <h3>${location.headline}</h3>
-                        <h4>${location.name}</h4>
-                        <p>${location.description}</p>
-                        <small>${location.date}</small>
-                    </div>
-                `;
-                
-                // Create marker with custom colored icon and add to appropriate cluster group
-                const marker = L.marker([location.latitude, location.longitude], {
-                    icon: layerIcons[location.layer],
-                    layer: location.layer
-                }).bindPopup(popupContent);
-                
-                // Add click event to marker to fly to location when clicked
-                marker.on('click', function(e) {
-                    map.flyTo([location.latitude, location.longitude], 13, {
-                        animate: true,
-                        duration: 1.5
-                    });
-                    
-                    // Update sidebar after animation completes
-                    setTimeout(updateSidebarVisibility, 1600);
-                });
-
-                // Add hover events to marker to highlight corresponding sidebar item and the marker itself
-                marker.on('mouseover', function(e) {
-                    highlightSidebarItem(location.name, true);
-                    highlightMapMarker(location.name, true);
-                    
-                    // Show tooltip next to the marker
-                    const markerElement = marker._icon;
-                    if (markerElement) {
-                        const markerRect = markerElement.getBoundingClientRect();
-                        const mapContainer = document.getElementById('map');
-                        const mapRect = mapContainer.getBoundingClientRect();
-                        
-                        const x = markerRect.left + markerRect.width / 2 - mapRect.left;
-                        const y = markerRect.top + markerRect.height / 2 - mapRect.top;
-                        
-                        showMapTooltip(location.name, x, y, false, 0);
-                    }
-                });
-
-                marker.on('mouseout', function(e) {
-                    highlightSidebarItem(location.name, false);
-                    highlightMapMarker(location.name, false);
-                    hideMapTooltip();
-                });
-                
-                // Add marker to the appropriate cluster group
-                markerCluster.addLayer(marker);
-
-                // Store marker reference for layer visibility control
-                markersByLayer[location.layer].push(marker);
-
                 // Initialize location visibility (default to visible)
                 locationVisibility[location.name] = true;
+
+                // Check if location has boundary data for geoshape rendering
+                if (location.boundaries && location.boundaries.length > 0) {
+                    // Create geoshape (polygon) for cities, states, countries
+                    const polygon = createGeoshape(location);
+                    
+                    // Add polygon to map
+                    map.addLayer(polygon);
+                    
+                    // Store polygon reference for layer visibility control
+                    shapesByLayer[location.layer].push(polygon);
+                } else {
+                    // Create marker for point locations
+                    const popupContent = `
+                        <div>
+                            <h3>${location.headline}</h3>
+                            <h4>${location.name}</h4>
+                            <p>${location.description}</p>
+                            <small>${location.date}</small>
+                        </div>
+                    `;
+                    
+                    const marker = L.marker([location.latitude, location.longitude], {
+                        icon: layerIcons[location.layer],
+                        layer: location.layer
+                    }).bindPopup(popupContent);
+                    
+                    // Add click event to marker to fly to location when clicked
+                    marker.on('click', function(e) {
+                        map.flyTo([location.latitude, location.longitude], 13, {
+                            animate: true,
+                            duration: 1.5
+                        });
+                        
+                        // Update sidebar after animation completes
+                        setTimeout(updateSidebarVisibility, 1600);
+                    });
+
+                    // Add hover events to marker to highlight corresponding sidebar item and the marker itself
+                    marker.on('mouseover', function(e) {
+                        highlightSidebarItem(location.name, true);
+                        highlightMapMarker(location.name, true);
+                        
+                        // Show tooltip next to the marker
+                        const markerElement = marker._icon;
+                        if (markerElement) {
+                            const markerRect = markerElement.getBoundingClientRect();
+                            const mapContainer = document.getElementById('map');
+                            const mapRect = mapContainer.getBoundingClientRect();
+                            
+                            const x = markerRect.left + markerRect.width / 2 - mapRect.left;
+                            const y = markerRect.top + markerRect.height / 2 - mapRect.top;
+                            
+                            showMapTooltip(location.name, x, y, false, 0);
+                        }
+                    });
+
+                    marker.on('mouseout', function(e) {
+                        highlightSidebarItem(location.name, false);
+                        highlightMapMarker(location.name, false);
+                        hideMapTooltip();
+                    });
+                    
+                    // Add marker to the appropriate cluster group
+                    markerCluster.addLayer(marker);
+
+                    // Store marker reference for layer visibility control
+                    markersByLayer[location.layer].push(marker);
+                }
 
                 // Create sidebar item with SVG pin icon and controls
                 const locationItem = document.createElement('div');
