@@ -93,8 +93,6 @@ body {
 
 /* Search Section */
 .search-section {
-    background: var(--gray-1);
-    border-bottom: 1px solid var(--gray-2);
     padding: 16px 24px;
     position: relative;
     transition: all 0.3s ease;
@@ -313,6 +311,49 @@ body {
     color: var(--gray-9);
 }
 
+/* Tabs Section */
+.tabs-section {
+    background: var(--gray-0);
+    border-bottom: 1px solid var(--gray-2);
+    padding: 0 24px;
+}
+
+.tabs-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.tab-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px 20px;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-7);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tab-item:hover {
+    color: var(--gray-9);
+    background-color: var(--gray-1);
+}
+
+.tab-item.active {
+    color: var(--link-blue);
+    border-bottom-color: var(--link-blue);
+}
+
+.tab-item.active:hover {
+    background-color: transparent;
+}
+
 /* Main Toolbar */
 .main-toolbar {
     background: white;
@@ -362,7 +403,7 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 90px); /* Account for top nav (48px) + search section (42px) */
+    height: calc(100vh - 137px); /* Account for top nav (48px) + search section (42px) + tabs section (47px) */
     transition: max-width 0.3s ease, margin 0.3s ease;
 }
 
