@@ -1030,4 +1030,78 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Search section functionality
+    const searchSection = document.getElementById('search-section');
+    const searchInput = document.getElementById('search-input');
+    const condensedSearchText = document.getElementById('condensed-search-text');
+    const closeSearchBtn = document.getElementById('close-search-btn');
+
+    // Start in condensed state
+    if (searchSection) {
+        searchSection.classList.add('condensed');
+    }
+
+    // Expand search when clicking on condensed state
+    if (searchSection) {
+        searchSection.addEventListener('click', function(e) {
+            if (searchSection.classList.contains('condensed')) {
+                expandSearch();
+                // Focus the search input after expansion
+                setTimeout(() => {
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
+                }, 300);
+            }
+        });
+    }
+
+    // Collapse search when clicking close button
+    if (closeSearchBtn) {
+        closeSearchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            collapseSearch();
+        });
+    }
+
+    // Update condensed text when typing in search input
+    if (searchInput && condensedSearchText) {
+        searchInput.addEventListener('input', function() {
+            const value = this.value.trim();
+            condensedSearchText.textContent = value || 'Locations across the world';
+        });
+    }
+
+    function expandSearch() {
+        if (searchSection) {
+            searchSection.classList.remove('condensed');
+        }
+    }
+
+    function collapseSearch() {
+        if (searchSection) {
+            searchSection.classList.add('condensed');
+        }
+    }
+
+
+
+    // Close search when clicking outside
+    document.addEventListener('click', function(e) {
+        // Check if click is outside the search section
+        if (searchSection && !searchSection.contains(e.target)) {
+            collapseSearch();
+        }
+    });
+
+    // Prevent clicks inside expanded content from propagating
+    const searchExpandedContent = document.getElementById('search-expanded-content');
+    if (searchExpandedContent) {
+        searchExpandedContent.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+
 });
