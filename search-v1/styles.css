@@ -325,7 +325,11 @@ body {
     flex-shrink: 0;
 }
 
-.main-toolbar h2 {
+.toolbar-header-row{
+    padding: 12px 24px 0;
+}
+
+.main-container h2 {
     margin: 0;
     font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
     font-size: 30px;
@@ -334,8 +338,13 @@ body {
     line-height: 42px;
 }
 
-.main-toolbar a{
+#back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0px;
     color: var(--link-blue);
+    text-decoration: none;
+    font-size: 16px;
 }
 
 .main-toolbar-left {
