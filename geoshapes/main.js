@@ -293,10 +293,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentZoom = map.getZoom();
         const bounds = map.getBounds();
         
-        // If showAllZoomLevel hasn't been set yet, skip
-        if (showAllZoomLevel === null) return;
-        
-        const shouldShowAsPins = currentZoom <= showAllZoomLevel;
+        // Use fixed zoom level 9 as threshold - show as pins until zoom 9, then show as geoshapes
+        const shouldShowAsPins = currentZoom <= 9;
         
         geoshapeData.forEach((location, index) => {
             const polygon = shapesByLayer[location.layer].find(shape => 
@@ -304,12 +302,15 @@ document.addEventListener('DOMContentLoaded', function() {
             );
             const pinMarker = geoshapePinsByLayer[location.layer][geoshapeData.filter(loc => loc.layer === location.layer).indexOf(location)];
             
+            // Check if this location should be visible based on individual location visibility
+            const isLocationVisible = locationVisibility[location.name] !== false; // Default to true if not set
+            
             if (shouldShowAsPins) {
                 // Show as pin, hide polygon
                 if (polygon && map.hasLayer(polygon)) {
                     map.removeLayer(polygon);
                 }
-                if (pinMarker && !markerCluster.hasLayer(pinMarker) && layerVisibility[location.layer]) {
+                if (pinMarker && !markerCluster.hasLayer(pinMarker) && layerVisibility[location.layer] && isLocationVisible) {
                     markerCluster.addLayer(pinMarker);
                 }
             } else {
@@ -318,8 +319,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     markerCluster.removeLayer(pinMarker);
                 }
                 
-                // Only show polygon if its center is visible and layer is visible
-                if (polygon && layerVisibility[location.layer]) {
+                // Only show polygon if its center is visible, layer is visible, and location is visible
+                if (polygon && layerVisibility[location.layer] && isLocationVisible) {
                     const center = L.polygon(location.boundaries).getBounds().getCenter();
                     if (bounds.contains(center)) {
                         if (!map.hasLayer(polygon)) {
@@ -495,22 +496,47 @@ document.addEventListener('DOMContentLoaded', function() {
         // Find the location's marker and toggle its visibility
         const location = locationsData.find(loc => loc.name === locationName);
         if (location) {
+            // First check in regular markers
             const layerMarkers = markersByLayer[location.layer];
-            const marker = layerMarkers.find(m => {
+            let marker = layerMarkers.find(m => {
                 const popup = m.getPopup();
                 return popup && popup.getContent().includes(locationName);
             });
             
+            // If not found in regular markers, check in geoshape pins
+            if (!marker && location.boundaries && location.boundaries.length > 0) {
+                const geoshapePins = geoshapePinsByLayer[location.layer];
+                const locationIndex = geoshapeData.filter(loc => loc.layer === location.layer).findIndex(loc => loc.name === locationName);
+                if (locationIndex >= 0 && locationIndex < geoshapePins.length) {
+                    marker = geoshapePins[locationIndex];
+                }
+            }
+            
             if (marker) {
                 if (locationVisibility[locationName]) {
-                    // Show marker
-                    if (!markerCluster.hasLayer(marker)) {
-                        markerCluster.addLayer(marker);
+                    // Show marker - but respect zoom level for geoshapes
+                    if (location.boundaries && location.boundaries.length > 0) {
+                        // For geoshapes, let updateGeoshapeVisibility manage the actual visibility
+                        updateGeoshapeVisibility();
+                    } else {
+                        // For regular markers, add directly to cluster
+                        if (!markerCluster.hasLayer(marker)) {
+                            markerCluster.addLayer(marker);
+                        }
                     }
                 } else {
                     // Hide marker
                     if (markerCluster.hasLayer(marker)) {
                         markerCluster.removeLayer(marker);
+                    }
+                    // Also hide the corresponding polygon if it's a geoshape
+                    if (location.boundaries && location.boundaries.length > 0) {
+                        const polygon = shapesByLayer[location.layer].find(shape => 
+                            shape.options.locationName === location.name
+                        );
+                        if (polygon && map.hasLayer(polygon)) {
+                            map.removeLayer(polygon);
+                        }
                     }
                 }
             }
@@ -617,11 +643,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Find the location's marker
         const location = locationsData.find(loc => loc.name === locationName);
         if (location) {
+            // First check in regular markers
             const layerMarkers = markersByLayer[location.layer];
-            const marker = layerMarkers.find(m => {
+            let marker = layerMarkers.find(m => {
                 const popup = m.getPopup();
                 return popup && popup.getContent().includes(locationName);
             });
+            
+            // If not found in regular markers, check in geoshape pins
+            if (!marker && location.boundaries && location.boundaries.length > 0) {
+                const geoshapePins = geoshapePinsByLayer[location.layer];
+                const locationIndex = geoshapeData.filter(loc => loc.layer === location.layer).findIndex(loc => loc.name === locationName);
+                if (locationIndex >= 0 && locationIndex < geoshapePins.length) {
+                    marker = geoshapePins[locationIndex];
+                }
+            }
             
             if (marker && markerCluster.hasLayer(marker)) {
                 const markerElement = marker._icon;
@@ -719,11 +755,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const location = locationsData.find(loc => loc.name === locationName);
         if (!location) return;
 
+        // First check in regular markers
         const layerMarkers = markersByLayer[location.layer];
-        const marker = layerMarkers.find(m => {
+        let marker = layerMarkers.find(m => {
             const popup = m.getPopup();
             return popup && popup.getContent().includes(locationName);
         });
+        
+        // If not found in regular markers, check in geoshape pins
+        if (!marker && location.boundaries && location.boundaries.length > 0) {
+            const geoshapePins = geoshapePinsByLayer[location.layer];
+            const locationIndex = geoshapeData.filter(loc => loc.layer === location.layer).findIndex(loc => loc.name === locationName);
+            if (locationIndex >= 0 && locationIndex < geoshapePins.length) {
+                marker = geoshapePins[locationIndex];
+            }
+        }
         
         if (marker && markerCluster.hasLayer(marker)) {
             const markerElement = marker._icon;
