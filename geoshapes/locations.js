@@ -50,7 +50,13 @@ const locationsData = [
         description: "The city that never sleeps, featuring iconic landmarks like Times Square, Central Park, and the Statue of Liberty.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed"
+        layer: "Drones witnessed",
+        type: "city",
+        boundaries: [
+            [40.9176, -73.7004], [40.9176, -74.2591], [40.4774, -74.2591],
+            [40.4774, -73.9441], [40.5034, -73.7004], [40.6953, -73.7004],
+            [40.8176, -73.7004], [40.9176, -73.7004]
+        ]
     },
     {
         name: "Camden",
@@ -59,7 +65,8 @@ const locationsData = [
         description: "A vibrant North London neighborhood famous for Camden Market, live music venues, and alternative culture scene.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results"
+        layer: "Activities extracted from search results",
+        type: "neighborhood"
     },
     {
         name: "Shoreditch",
@@ -68,7 +75,8 @@ const locationsData = [
         description: "East London's creative hub known for street art, trendy bars, vintage shops, and innovative restaurants.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed"
+        layer: "Drones witnessed",
+        type: "neighborhood"
     },
     {
         name: "Notting Hill",
@@ -77,7 +85,8 @@ const locationsData = [
         description: "Charming West London area famous for colorful Victorian houses, Portobello Road Market, and the annual Carnival.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed"
+        layer: "Drones witnessed",
+        type: "neighborhood"
     },
     {
         name: "Greenwich",
@@ -86,7 +95,8 @@ const locationsData = [
         description: "Historic maritime district home to the Prime Meridian, Royal Observatory, and beautiful riverside views.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "neighborhood"
     },
     {
         name: "Covent Garden",
@@ -95,7 +105,8 @@ const locationsData = [
         description: "Central London's theater and shopping district with street performers, boutique shops, and historic market buildings.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results"
+        layer: "Activities extracted from search results",
+        type: "neighborhood"
     },
     {
         name: "Paris",
@@ -104,7 +115,13 @@ const locationsData = [
         description: "The City of Light, famous for the Eiffel Tower, Louvre Museum, romantic ambiance, and world-class cuisine.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed"
+        layer: "Drones witnessed",
+        type: "city",
+        boundaries: [
+            [48.9021, 2.2247], [48.9021, 2.4697], [48.8156, 2.4697],
+            [48.8156, 2.4247], [48.7976, 2.4697], [48.7976, 2.2247],
+            [48.8156, 2.2247], [48.9021, 2.2247]
+        ]
     },
     {
         name: "Lyon",
@@ -113,7 +130,12 @@ const locationsData = [
         description: "France's gastronomic capital, known for its Renaissance architecture, silk industry heritage, and exceptional restaurants.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "city",
+        boundaries: [
+            [45.8176, 4.7440], [45.8176, 4.9274], [45.7104, 4.9274],
+            [45.7104, 4.7440], [45.8176, 4.7440]
+        ]
     },
     {
         name: "Marseille",
@@ -122,7 +144,12 @@ const locationsData = [
         description: "France's oldest city and major Mediterranean port, famous for its diverse culture, bouillabaisse, and coastal beauty.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "city",
+        boundaries: [
+            [43.3565, 5.3198], [43.3565, 5.4698], [43.2365, 5.4698],
+            [43.2365, 5.3198], [43.3565, 5.3198]
+        ]
     },
     {
         name: "Nice",
@@ -131,7 +158,12 @@ const locationsData = [
         description: "Glamorous French Riviera resort city known for its stunning coastline, Promenade des Anglais, and vibrant art scene.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed"
+        layer: "Drones witnessed",
+        type: "city",
+        boundaries: [
+            [43.7502, 7.1920], [43.7502, 7.3320], [43.6702, 7.3320],
+            [43.6702, 7.1920], [43.7502, 7.1920]
+        ]
     },
     {
         name: "Bordeaux",
@@ -140,7 +172,12 @@ const locationsData = [
         description: "World-renowned wine capital with elegant 18th-century architecture, prestigious vineyards, and exceptional gastronomy.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results"
+        layer: "Activities extracted from search results",
+        type: "city",
+        boundaries: [
+            [44.8878, -0.6292], [44.8878, -0.5292], [44.7878, -0.5292],
+            [44.7878, -0.6292], [44.8878, -0.6292]
+        ]
     },
     {
         name: "Toulouse",
@@ -149,7 +186,12 @@ const locationsData = [
         description: "The Pink City, known for its rose-colored brick architecture, aerospace industry, and vibrant university atmosphere.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Suspect movement"
+        layer: "Suspect movement",
+        type: "city",
+        boundaries: [
+            [43.6547, 1.3942], [43.6547, 1.4942], [43.5547, 1.4942],
+            [43.5547, 1.3942], [43.6547, 1.3942]
+        ]
     },
     {
         name: "Copacabana",
@@ -158,7 +200,8 @@ const locationsData = [
         description: "World-famous beach neighborhood in Rio de Janeiro, known for its stunning coastline, vibrant nightlife, and iconic promenade.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results"
+        layer: "Activities extracted from search results",
+        type: "neighborhood"
     },
     {
         name: "Ipanema",
@@ -167,7 +210,8 @@ const locationsData = [
         description: "Sophisticated beachfront district in Rio, famous for its beautiful beach, upscale shops, and trendy restaurants.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "neighborhood"
     },
     {
         name: "Santa Teresa",
@@ -176,7 +220,8 @@ const locationsData = [
         description: "Bohemian hilltop neighborhood in Rio known for its colonial architecture, art studios, and charming cobblestone streets.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed"
+        layer: "Drones witnessed",
+        type: "neighborhood"
     },
     {
         name: "Baixa de Luanda",
@@ -185,7 +230,8 @@ const locationsData = [
         description: "Historic downtown district of Luanda, Angola's capital, featuring colonial architecture and the bustling city center.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results"
+        layer: "Activities extracted from search results",
+        type: "neighborhood"
     },
     {
         name: "Miramar",
@@ -194,7 +240,8 @@ const locationsData = [
         description: "Upscale coastal neighborhood in Luanda known for its modern developments, restaurants, and Atlantic Ocean views.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "neighborhood"
     },
     {
         name: "Talatona",
@@ -203,7 +250,8 @@ const locationsData = [
         description: "Modern suburban district in Luanda featuring shopping centers, residential complexes, and contemporary architecture.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Suspect movement"
+        layer: "Suspect movement",
+        type: "neighborhood"
     },
     {
         name: "Istanbul",
@@ -212,7 +260,12 @@ const locationsData = [
         description: "Turkey's largest city straddling Europe and Asia, famous for the Hagia Sophia, Blue Mosque, and rich Byzantine and Ottoman heritage.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "city",
+        boundaries: [
+            [41.1582, 28.6784], [41.1582, 29.2784], [40.8582, 29.2784],
+            [40.8582, 28.6784], [41.1582, 28.6784]
+        ]
     },
     {
         name: "Ankara",
@@ -221,7 +274,12 @@ const locationsData = [
         description: "Turkey's capital city in central Anatolia, known for its modern government buildings, museums, and ancient Hittite ruins.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results"
+        layer: "Activities extracted from search results",
+        type: "city",
+        boundaries: [
+            [40.0334, 32.7597], [40.0334, 32.9597], [39.8334, 32.9597],
+            [39.8334, 32.7597], [40.0334, 32.7597]
+        ]
     },
     {
         name: "Izmir",
@@ -230,7 +288,12 @@ const locationsData = [
         description: "Major port city on Turkey's Aegean coast, known for its ancient Agora, vibrant bazaars, and beautiful waterfront promenade.",
         headline: "Hello world",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks"
+        layer: "Drone attacks",
+        type: "city",
+        boundaries: [
+            [38.5192, 27.0287], [38.5192, 27.2287], [38.3192, 27.2287],
+            [38.3192, 27.0287], [38.5192, 27.0287]
+        ]
     },
     {
         name: "United States",

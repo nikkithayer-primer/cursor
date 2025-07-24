@@ -192,6 +192,7 @@ body {
     pointer-events: none;
     transition: all 0.3s ease;
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 24px;
     padding: 6px 16px;
@@ -345,16 +346,15 @@ body {
     background-color: transparent;
 }
 
-/* Main Toolbar */
-.main-toolbar {
-    background: white;
-    border-bottom: 1px solid var(--gray-2);
-    padding: 12px 24px;
+/* Floating Controls on Map - Left Side */
+.floating-controls-left {
+    position: absolute;
+    top: 80px;
+    left: 11px;
+    z-index: 1000;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 999;
-    flex-shrink: 0;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .toolbar-header-row{
@@ -381,11 +381,7 @@ body {
 
 
 
-.toolbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+
 
 .main-container {
     display: flex;
@@ -584,18 +580,66 @@ body {
     border:none;
 }
 
-.show-all-btn {
-    margin: 0;
+
+
+/* Floating Controls on Map - Right Side */
+.floating-controls-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.new-layer-btn {
-    margin: 0;
+/* Floating Buttons */
+.floating-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 16px;
+    background: white;
+    color: var(--gray-9);
+    border: 1px solid var(--gray-3);
+    border-radius: 6px;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    text-align: left;
+    white-space: nowrap;
+    min-width: 120px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.floating-btn svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.floating-btn:hover {
+    background: var(--gray-0);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+
+.floating-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.floating-btn-primary:hover {
+    background: #0056b3;
+    border-color: #0056b3;
 }
 
 /* Button-specific flex layouts */
-#show-all-btn,
-#new-layer-btn,
-#add-point-btn,
 #load-more-btn,
 #kml-btn,
 #settings-btn,
@@ -606,8 +650,6 @@ body {
     gap: 6px;
 }
 
-.layer-section {
-}
 
 .layer-section:last-child {
     margin-bottom: 0;
