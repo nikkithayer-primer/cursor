@@ -228,10 +228,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const color = layerColors[location.layer];
         
         const polygon = L.polygon(location.boundaries, {
-            color: color,
+            color: 'white',         // White stroke/border color
             weight: 2,
             opacity: 0.8,
-            fillColor: color,
+            fillColor: color,       // Layer-specific fill color
             fillOpacity: 0.3,
             layer: location.layer
         });
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
         polygon.on('mouseover', function(e) {
             this.setStyle({
                 weight: 3,
-                fillOpacity: 0.5
+                fillOpacity: 0.4
             });
             highlightSidebarItem(location.name, true);
             
@@ -293,9 +293,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentZoom = map.getZoom();
         const bounds = map.getBounds();
         
-        // Use fixed zoom level 9 as threshold - show as pins until zoom 9, then show as geoshapes
-        const shouldShowAsPins = currentZoom <= 9;
-        
         geoshapeData.forEach((location, index) => {
             const polygon = shapesByLayer[location.layer].find(shape => 
                 shape.options.locationName === location.name
@@ -304,6 +301,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check if this location should be visible based on individual location visibility
             const isLocationVisible = locationVisibility[location.name] !== false; // Default to true if not set
+            
+            // Determine zoom threshold based on type: countries at zoom 4+, states at zoom 7+, cities at zoom 9+
+            let zoomThreshold;
+            if (location.type === 'country') {
+                zoomThreshold = 3;
+            } else if (location.type === 'state') {
+                zoomThreshold = 5;
+            } else {
+                zoomThreshold = 9; // Default for cities and other types
+            }
+            const shouldShowAsPins = currentZoom <= zoomThreshold;
             
             if (shouldShowAsPins) {
                 // Show as pin, hide polygon
