@@ -175,6 +175,18 @@ document.addEventListener('DOMContentLoaded', function() {
         'Suspect movement': []
     };
 
+    // Store geoshape data and their corresponding pin markers
+    const geoshapeData = [];
+    const geoshapePinsByLayer = {
+        'Activities extracted from search results': [],
+        'Drone attacks': [],
+        'Drones witnessed': [],
+        'Suspect movement': []
+    };
+
+    // Store the "Show All" zoom level for comparison
+    let showAllZoomLevel = null;
+
     // Layer colors for both markers and polygons
     const layerColors = {
         'Activities extracted from search results': '#43A7DD',
@@ -266,11 +278,61 @@ document.addEventListener('DOMContentLoaded', function() {
                 duration: 1.5
             });
             
-            // Update sidebar after animation completes
-            setTimeout(updateSidebarVisibility, 1600);
+            // Update sidebar and geoshape visibility after animation completes
+            setTimeout(function() {
+                updateSidebarVisibility();
+                updateGeoshapeVisibility();
+            }, 1600);
         });
 
         return polygon;
+    }
+
+    // Function to manage geoshape/pin visibility based on zoom level
+    function updateGeoshapeVisibility() {
+        const currentZoom = map.getZoom();
+        const bounds = map.getBounds();
+        
+        // If showAllZoomLevel hasn't been set yet, skip
+        if (showAllZoomLevel === null) return;
+        
+        const shouldShowAsPins = currentZoom <= showAllZoomLevel;
+        
+        geoshapeData.forEach((location, index) => {
+            const polygon = shapesByLayer[location.layer].find(shape => 
+                shape.options.locationName === location.name
+            );
+            const pinMarker = geoshapePinsByLayer[location.layer][geoshapeData.filter(loc => loc.layer === location.layer).indexOf(location)];
+            
+            if (shouldShowAsPins) {
+                // Show as pin, hide polygon
+                if (polygon && map.hasLayer(polygon)) {
+                    map.removeLayer(polygon);
+                }
+                if (pinMarker && !markerCluster.hasLayer(pinMarker) && layerVisibility[location.layer]) {
+                    markerCluster.addLayer(pinMarker);
+                }
+            } else {
+                // Hide pin, potentially show polygon
+                if (pinMarker && markerCluster.hasLayer(pinMarker)) {
+                    markerCluster.removeLayer(pinMarker);
+                }
+                
+                // Only show polygon if its center is visible and layer is visible
+                if (polygon && layerVisibility[location.layer]) {
+                    const center = L.polygon(location.boundaries).getBounds().getCenter();
+                    if (bounds.contains(center)) {
+                        if (!map.hasLayer(polygon)) {
+                            map.addLayer(polygon);
+                        }
+                    } else {
+                        if (map.hasLayer(polygon)) {
+                            map.removeLayer(polygon);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     // Layer visibility state
@@ -310,8 +372,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 duration: 1.5
             });
             
-            // Update sidebar after animation completes
-            setTimeout(updateSidebarVisibility, 1600);
+            // Update sidebar and geoshape visibility after animation completes
+            setTimeout(function() {
+                updateSidebarVisibility();
+                updateGeoshapeVisibility();
+            }, 1600);
         }
     }
 
@@ -333,6 +398,11 @@ document.addEventListener('DOMContentLoaded', function() {
         map.fitBounds(group.getBounds(), {
             padding: [20, 20]
         });
+        
+        // Store the "Show All" zoom level for future comparison
+        setTimeout(() => {
+            showAllZoomLevel = map.getZoom();
+        }, 100);
     }
 
     // Function to zoom to specific layer
@@ -356,8 +426,11 @@ document.addEventListener('DOMContentLoaded', function() {
             duration: 1.5
         });
         
-        // Update sidebar after animation completes
-        setTimeout(updateSidebarVisibility, 1600);
+        // Update sidebar and geoshape visibility after animation completes
+        setTimeout(function() {
+            updateSidebarVisibility();
+            updateGeoshapeVisibility();
+        }, 1600);
     }
 
     // Function to toggle layer visibility
@@ -374,23 +447,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Toggle individual shapes
-        const layerShapes = shapesByLayer[layerName];
-        layerShapes.forEach(shape => {
+        // Toggle geoshape pins in cluster
+        const layerGeoshapePins = geoshapePinsByLayer[layerName];
+        layerGeoshapePins.forEach(pin => {
             if (layerVisibility[layerName]) {
-                map.addLayer(shape);
+                // Will be managed by updateGeoshapeVisibility based on zoom level
             } else {
-                map.removeLayer(shape);
+                if (markerCluster.hasLayer(pin)) {
+                    markerCluster.removeLayer(pin);
+                }
             }
         });
+
+        // Toggle individual shapes will be managed by updateGeoshapeVisibility
+        // based on zoom level and bounds visibility
         
         // Update eye icon
         const layerSection = document.querySelector(`[data-layer="${layerName}"]`);
         const eyeBtn = layerSection.querySelector('.eye-toggle');
         updateEyeIcon(eyeBtn, layerVisibility[layerName]);
         
-        // Update sidebar visibility based on current map bounds
+        // Update visibility based on current state
         updateSidebarVisibility();
+        updateGeoshapeVisibility();
     }
 
     // Function to update eye icon
@@ -804,12 +883,74 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (location.boundaries && location.boundaries.length > 0) {
                     // Create geoshape (polygon) for cities, states, countries
                     const polygon = createGeoshape(location);
+                    polygon.options.locationName = location.name; // Add identifier
                     
-                    // Add polygon to map
+                    // Initially add polygon to map (will be managed by updateGeoshapeVisibility)
                     map.addLayer(polygon);
                     
                     // Store polygon reference for layer visibility control
                     shapesByLayer[location.layer].push(polygon);
+                    
+                    // Store geoshape data for management
+                    geoshapeData.push(location);
+                    
+                    // Create a corresponding pin marker for clustering (positioned at geoshape center)
+                    const center = L.polygon(location.boundaries).getBounds().getCenter();
+                    const popupContent = `
+                        <div>
+                            <h3>${location.headline}</h3>
+                            <h4>${location.name}</h4>
+                            <p>${location.description}</p>
+                            <small>${location.date}</small>
+                        </div>
+                    `;
+                    
+                    const pinMarker = L.marker([center.lat, center.lng], {
+                        icon: layerIcons[location.layer],
+                        layer: location.layer
+                    }).bindPopup(popupContent);
+                    
+                    // Add click event to pin marker
+                    pinMarker.on('click', function(e) {
+                        // Zoom to the geoshape bounds instead of just the center point
+                        map.flyToBounds(polygon.getBounds(), {
+                            padding: [20, 20],
+                            duration: 1.5
+                        });
+                        
+                        // Update sidebar after animation completes
+                        setTimeout(() => {
+                            updateSidebarVisibility();
+                            updateGeoshapeVisibility();
+                        }, 1600);
+                    });
+
+                    // Add hover events to pin marker
+                    pinMarker.on('mouseover', function(e) {
+                        highlightSidebarItem(location.name, true);
+                        highlightMapMarker(location.name, true);
+                        
+                        const markerElement = pinMarker._icon;
+                        if (markerElement) {
+                            const markerRect = markerElement.getBoundingClientRect();
+                            const mapContainer = document.getElementById('map');
+                            const mapRect = mapContainer.getBoundingClientRect();
+                            
+                            const x = markerRect.left + markerRect.width / 2 - mapRect.left;
+                            const y = markerRect.top + markerRect.height / 2 - mapRect.top;
+                            
+                            showMapTooltip(location.name, x, y, false, 0);
+                        }
+                    });
+
+                    pinMarker.on('mouseout', function(e) {
+                        highlightSidebarItem(location.name, false);
+                        highlightMapMarker(location.name, false);
+                        hideMapTooltip();
+                    });
+                    
+                    // Store pin marker reference
+                    geoshapePinsByLayer[location.layer].push(pinMarker);
                 } else {
                     // Create marker for point locations
                     const popupContent = `
@@ -1022,9 +1163,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add event listeners for map movement
-    map.on('moveend', updateSidebarVisibility);
-    map.on('zoomend', updateSidebarVisibility);
+    // Add event listeners for map movement and zoom
+    map.on('moveend', function() {
+        updateSidebarVisibility();
+        updateGeoshapeVisibility();
+    });
+    map.on('zoomend', function() {
+        updateSidebarVisibility();  
+        updateGeoshapeVisibility();
+    });
     
     // Update Show All button text with total count
     const showAllBtn = document.getElementById('show-all-btn');
@@ -1040,7 +1187,11 @@ document.addEventListener('DOMContentLoaded', function() {
     fitAllLocations();
     
     // Initial sidebar update after map is loaded
-    setTimeout(updateSidebarVisibility, 100);
+    setTimeout(function() {
+        updateSidebarVisibility();
+        // Give extra time for showAllZoomLevel to be set
+        setTimeout(updateGeoshapeVisibility, 200);
+    }, 100);
 
     // Add click handler for "Show All" button (with animation)
     showAllBtn.addEventListener('click', showAllLocations);
