@@ -1,0 +1,842 @@
+
+
+
+
+
+
+
+
+
+
+
+
+/* Search Section */
+.search-section {
+    padding: 16px 24px;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.search-section.condensed {
+    height: 42px;
+    padding: 8px 24px;
+    cursor: pointer;
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Expanded State */
+.search-container.expanded {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+}
+
+.search-section.condensed .search-container.expanded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.search-input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--gray-10);
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: var(--gray-6);
+}
+
+.close-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-7);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.close-search-btn:hover {
+    background-color: var(--gray-1);
+    color: var(--gray-9);
+}
+
+.search-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+
+
+/* Condensed State */
+.search-container.condensed {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 6px 16px;
+    height: 30px;
+}
+
+.search-section.condensed .search-container.condensed {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.condensed-search-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--gray-6);
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+}
+
+.condensed-date-range {
+    font-size: 14px;
+    color: var(--gray-8);
+    white-space: nowrap;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--gray-1);
+}
+
+.condensed-advanced-options {
+    font-size: 14px;
+    color: var(--gray-8);
+    white-space: nowrap;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--gray-1);
+}
+
+/* Button Styles */
+.date-range-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-8);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.date-range-btn:hover {
+    background-color: var(--gray-2);
+    color: var(--gray-10);
+}
+
+.calendar-icon {
+    color: var(--gray-7);
+    flex-shrink: 0;
+}
+
+.date-range-text {
+    font-size: 14px;
+    color: var(--gray-10);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.advanced-options-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-8);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.advanced-options-btn:hover {
+    background-color: var(--gray-2);
+    color: var(--gray-10);
+}
+
+.filter-icon {
+    color: var(--gray-7);
+    flex-shrink: 0;
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-7);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    margin-left: auto;
+}
+
+.search-btn:hover {
+    background-color: var(--gray-2);
+    color: var(--gray-9);
+}
+
+/* Tabs Section */
+.tabs-section {
+    background: var(--gray-0);
+    border-bottom: 1px solid var(--gray-2);
+    padding: 0 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.tab-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px 20px;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-7);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tab-item:hover {
+    color: var(--gray-9);
+    background-color: var(--gray-1);
+}
+
+.tab-item.active {
+    color: var(--link-blue);
+    border-bottom-color: var(--link-blue);
+}
+
+.tab-item.active:hover {
+    background-color: transparent;
+}
+
+/* Floating Controls on Map - Left Side */
+.floating-controls-left {
+    position: absolute;
+    top: 80px;
+    left: 11px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toolbar-header-row{
+    padding: 12px 24px 0;
+}
+
+.main-container h2 {
+    margin: 0;
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    line-height: 42px;
+}
+
+#back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    color: var(--link-blue);
+    text-decoration: none;
+    font-size: 16px;
+}
+
+
+
+
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 137px); /* Account for top nav (48px) + search section (42px) + tabs section (47px) */
+    transition: max-width 0.3s ease, margin 0.3s ease;
+}
+
+.main-container.collapsed {
+    max-width: 1380px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 820px;
+}
+
+
+
+#location-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+
+
+
+
+/* Floating Controls on Map - Right Side */
+.floating-controls-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Floating Buttons */
+.floating-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 16px;
+    background: white;
+    color: var(--gray-9);
+    border: 1px solid var(--gray-3);
+    border-radius: 6px;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    text-align: left;
+    white-space: nowrap;
+    min-width: 120px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.floating-btn svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.floating-btn:hover {
+    background: var(--gray-0);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+
+.floating-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.floating-btn-primary:hover {
+    background: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Button-specific flex layouts */
+#load-more-btn,
+#kml-btn,
+#settings-btn,
+#collapse-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+
+.layer-section:last-child {
+    margin-bottom: 0;
+}
+
+.layer-header {
+    font-family: 'NeueHaasGroteskDisplayLight', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--gray-11);
+    padding-bottom: 6px;
+    padding: 12px;
+    border-bottom: 1px solid var(--gray-3);
+    background-color: var(--gray-1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.layer-header:hover .layer-controls {
+    opacity: 1;
+}
+
+/* Layer-specific left borders matching pin colors */
+.layer-section[data-layer="Activities extracted from search results"] .layer-header {
+    border-left: 4px solid var(--chart-blue);
+}
+
+.layer-section[data-layer="Drone attacks"] .layer-header {
+    border-left: 4px solid var(--chart-orange);
+}
+
+.layer-section[data-layer="Drones witnessed"] .layer-header {
+    border-left: 4px solid var(--chart-green);
+}
+
+.layer-section[data-layer="Suspect movement"] .layer-header {
+    border-left: 4px solid var(--chart-pink);
+}
+
+.layer-title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.layer-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.layer-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.layer-count {
+    color: var(--gray-8);
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.layer-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.layer-control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.layer-control-btn:hover {
+    background-color: var(--gray-2);
+}
+
+.layer-control-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--gray-7);
+}
+
+.layer-control-btn:hover svg {
+    fill: var(--gray-9);
+}
+
+.layer-control-btn.eye-closed svg {
+    fill: var(--gray-5);
+}
+
+.layer-popover {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 150px;
+    z-index: 1000;
+    display: none;
+}
+
+.layer-popover.show {
+    display: block;
+}
+
+.layer-popover-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-9);
+    transition: background-color 0.2s ease;
+}
+
+.layer-popover-item:hover {
+    background-color: var(--gray-1);
+}
+
+.layer-popover-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.layer-popover-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+/* Location popover styles (same as layer popover) */
+.location-popover {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 150px;
+    z-index: 1000;
+    display: none;
+}
+
+.location-popover.show {
+    display: block;
+}
+
+.location-popover-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-9);
+    transition: background-color 0.2s ease;
+}
+
+.location-popover-item:hover {
+    background-color: var(--gray-1);
+}
+
+.location-popover-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.location-popover-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+/* Map Container */
+.map-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#map {
+    flex: 1;
+    background-color: #C4DFF8;
+    position: relative;
+    height: 100%;
+    min-height: 0;
+}
+
+/* Style for areas outside tile coverage */
+.leaflet-tile-pane {
+    background-color: #C4DFF8;
+}
+
+/* Layer-specific magnifying glass colors */
+.layer-control-btn.layer-activities-extracted-from-search-results svg {
+    fill: #43A7DD !important;
+}
+
+.layer-control-btn.layer-drone-attacks svg {
+    fill: #FC922D !important;
+}
+
+.layer-control-btn.layer-drones-witnessed svg {
+    fill: #819B2A !important;
+}
+
+.layer-control-btn.layer-suspect-movement svg {
+    fill: #DF5094 !important;
+}
+
+/* Keep hover state for colored magnifying glass icons */
+.layer-control-btn.layer-activities-extracted-from-search-results:hover svg,
+.layer-control-btn.layer-drone-attacks:hover svg,
+.layer-control-btn.layer-drones-witnessed:hover svg,
+.layer-control-btn.layer-suspect-movement:hover svg {
+    opacity: 0.8;
+}
+
+/* Bottom Toolbar */
+.bottom-toolbar {
+    height: 48px;
+    background-color: var(--gray-0);
+    border-top: 1px solid var(--gray-2);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 32px;
+    cursor: pointer;
+    margin-right: 12px;
+    border: 1px solid var(--gray-2)
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray-0);
+    border-radius: 0px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.toggle-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.toggle-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--gray-7);
+}
+
+.map-icon {
+    background-color: #C4DFF8;
+}
+
+.satellite-icon {
+    background-color: transparent;
+}
+
+.toggle-switch input:checked + .toggle-slider .map-icon {
+    background-color: transparent;
+}
+
+.toggle-switch input:checked + .toggle-slider .satellite-icon {
+    background-color: #C4DFF8;
+}
+
+.toggle-switch:hover .toggle-slider {
+    background-color: var(--gray-0);
+}
+
+.info-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    transition: background-color 0.2s ease;
+}
+
+.info-btn:hover {
+    background-color: var(--gray-2);
+}
+
+.info-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--gray-7);
+}
+
+.info-btn:hover svg {
+    fill: var(--gray-9);
+}
+
+.load-more-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.info-tooltip {
+    position: absolute;
+    top: calc(100% - 146px);
+    right: -6px;
+    transform: translateX(50%);
+    background: var(--gray-10);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.info-tooltip.show {
+    display: block;
+}
+
+.info-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: var(--gray-10);
+}
+
+/* Map marker and cluster highlighting */
+.marker-highlighted {
+    z-index: 1000 !important;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3)) !important;
+    transition: all 0.2s ease !important;
+}
+
+.cluster-highlighted {
+    z-index: 1000 !important;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)) drop-shadow(2px 2px 4px rgba(0,0,0,0.3)) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Map tooltip */
+.map-tooltip {
+    position: absolute;
+    background: var(--gray-0);
+    color: var(--gray-10);
+    padding: 8px 12px;
+    border-radius: 0px;
+    font-size: 14px;
+    border: 1px solid var(--gray-2);
+    border-radius: 4px;
+    z-index: 2000;
+    pointer-events: auto;
+    max-width: 250px;
+}
+
+.map-tooltip-headline {
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.map-tooltip-location {
+    font-size: 13px;
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+
+.map-tooltip-additional {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 4px;
+    font-style: italic;
+}
