@@ -267,18 +267,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const colorizedSVG = colorizeSVG(svgContent, 'white'); // White for visibility on colored pin
         
         return L.divIcon({
-            html: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 30px; height: 30px; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.3));">
-                <circle cx="12" cy="8" r="6" fill="white" stroke="${layerColor}" stroke-width="2"/>
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="${layerColor}"/>
-                <g transform="translate(12,9) scale(0.75)" style="transform-origin: center;">
+            html: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 30px; height: 30px; filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.4));">
+                <circle cx="12" cy="12" r="12" fill="${layerColor}" />
+                <g transform="translate(16,16)" style="transform-origin: center;">
                     <g transform="translate(-12,-12)">
                         ${colorizedSVG.replace(/<svg[^>]*>/, '').replace(/<\/svg>/, '')}
                     </g>
                 </g>
             </svg>`,
-            className: 'custom-extraction-pin-icon',
+            className: 'custom-extraction-circle-icon',
             iconSize: [24, 24],
-            iconAnchor: [12, 24]
+            iconAnchor: [12, 12]
         });
     }
 
