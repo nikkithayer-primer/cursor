@@ -9,6 +9,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [37.6950176788, -122.3919960437], [37.7014014915, -122.5003143726], [37.7823059746, -122.5149055896], 
             [37.7880039614, -122.504605907], [37.7882752831, -122.4948212085], [37.7926162956, -122.4845215259], 
@@ -29,6 +30,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [33.7141972899, -118.222905083], [33.7176242004, -118.2819565967], [33.7781437251, -118.2853898242], 
             [33.8072463874, -118.2338914111], [33.8819549225, -118.2222184375], [34.0015803048, -118.2325181201], 
@@ -55,6 +57,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [40.4907114033, -74.2570326161], [40.548128995, -74.2494795156], [40.5616932397, -74.2117140126], 
             [40.6352053152, -74.1959211659], [40.6513567036, -74.1766950917], [40.6440630122, -74.1485426259], 
@@ -74,7 +77,8 @@ const locationsData = [
         headline: "Camden Market Celebrates 50 Years of Alternative Culture",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Shoreditch",
@@ -84,7 +88,8 @@ const locationsData = [
         headline: "Street Art Festival Transforms Shoreditch Into Open-Air Gallery",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Notting Hill",
@@ -94,7 +99,8 @@ const locationsData = [
         headline: "Notting Hill Carnival Draws Record Crowds to West London",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Greenwich",
@@ -104,7 +110,8 @@ const locationsData = [
         headline: "Royal Observatory Unveils New Planetarium Exhibition",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Covent Garden",
@@ -114,7 +121,8 @@ const locationsData = [
         headline: "West End Theaters Report Sold-Out Summer Season",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Paris",
@@ -125,6 +133,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [48.8145929635, 2.3548360169], [48.8169667187, 2.3359532654], [48.8227310849, 2.3083157837], 
             [48.8262345913, 2.2923512757], [48.8338058493, 2.2708936036], [48.8338058493, 2.2576756775], 
@@ -147,6 +156,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [45.7070334073, 4.8395819776], [45.7127871518, 4.8248190992], [45.7234539858, 4.818810951], 
             [45.7375933902, 4.8100562207], [45.7478961249, 4.8117728345], [45.7519687746, 4.7988982312], 
@@ -171,6 +181,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [43.1575984832, 5.6105811149], [43.1751271445, 5.5656058341], [43.1979068842, 5.5474097282], 
             [43.2121711824, 5.5474097282], [43.2129218425, 5.529556945], [43.1956543217, 5.5041510612], 
@@ -200,6 +211,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [43.6435188863, 7.2023402534], [43.6509052023, 7.1990997181], [43.6629792864, 7.1994237716], 
             [43.6898149098, 7.1903502728], [43.7039895853, 7.1884059517], [43.7137107723, 7.1994237716], 
@@ -227,6 +239,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [44.808384424, -0.5255695842], [44.8223793092, -0.5380295573], [44.8125586925, -0.5556811859], 
             [44.8119448485, -0.5667567175], [44.808998306, -0.5741980903], [44.8185740187, -0.5785244699], 
@@ -252,6 +265,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Suspect movement",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [43.5336970925, 1.459269058], [43.5415368854, 1.4388413541], [43.5458918855, 1.4316315763], 
             [43.5431544936, 1.4237351529], [43.5481314773, 1.4117188565], [43.5429056336, 1.4058823697], 
@@ -284,7 +298,8 @@ const locationsData = [
         headline: "Rio's Copacabana Beach Hosts International Volleyball Championship",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Ipanema",
@@ -294,7 +309,8 @@ const locationsData = [
         headline: "Fashion Week Rio Showcases Latest Brazilian Designers",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Santa Teresa",
@@ -304,7 +320,8 @@ const locationsData = [
         headline: "Santa Teresa Art District Opens New Contemporary Gallery",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Baixa de Luanda",
@@ -314,7 +331,8 @@ const locationsData = [
         headline: "Angola's Capital Unveils Urban Renewal Project for Historic Center",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Miramar",
@@ -324,7 +342,8 @@ const locationsData = [
         headline: "Luanda's Waterfront Development Attracts International Investment",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Talatona",
@@ -334,7 +353,8 @@ const locationsData = [
         headline: "New Shopping Complex Opens in Luanda's Growing Suburban District",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Suspect movement",
-        type: "neighborhood"
+        type: "neighborhood",
+        "extraction-type": "Location"
     },
     {
         name: "Istanbul",
@@ -345,6 +365,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [40.7329052303, 29.4025557409], [40.7973926702, 29.3531172644], [40.7973926702, 29.2707198034], 
             [40.8493530842, 29.2762129675], [40.8950445707, 29.1169112097], [41.0112078539, 28.96859578], 
@@ -367,6 +388,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [39.7866225914, 32.6662521064], [39.7995485823, 32.650115937], [39.8256569478, 32.6483993232], 
             [39.8396300779, 32.6432494819], [39.8538639283, 32.6260833442], [39.864142096, 32.63054654], 
@@ -402,6 +424,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drone attacks",
         type: "city",
+        "extraction-type": "Location",
         boundaries: [
             [38.294757876, 27.1480905556], [38.2994970632, 27.103136068], [38.3163449998, 27.0793168991], 
             [38.3479243312, 27.101794143], [38.3592369088, 27.107161843], [38.3558170136, 27.0880394116], 
@@ -432,6 +455,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
         type: "country",
+        "extraction-type": "Location",
         boundaries: [
             [24.8226118538, -80.67577434], [30.1110671828, -84.2672468503], [28.6440578116, -96.0144936698], 
             [25.4439401759, -98.1718943902], [29.3324547176, -100.1456865388], [29.1121234017, -103.5602136914], 
@@ -455,6 +479,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Suspect movement",
         type: "state",
+        "extraction-type": "Location",
         boundaries: [
             [41.9773, -80.5189], [41.9657, -84.8203], [39.1034, -84.8203],
             [39.0918, -82.9988], [38.4031, -82.4429], [38.4031, -82.0191],
@@ -466,11 +491,12 @@ const locationsData = [
         name: "California",
         latitude: 36.7783,
         longitude: -119.4179,
-        description: "The Golden State, known for its Mediterranean climate, technological innovation, entertainment industry, and diverse geography from beaches to mountains.",
+        description: "California faces severe drought conditions as water restrictions expand statewide, with agricultural production declining 30% while tech companies invest billions in water recycling infrastructure.",
         headline: "California Leads Nation in Clean Energy Innovation and Adoption",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Drones witnessed",
         type: "state",
+        "extraction-type": "Location",
         boundaries: [
             [32.4211562947, -116.9300839305], [33.9086371678, -118.3660313487], [34.4337049463, -120.5262181163], 
             [36.3992093205, -121.9841381907], [37.4187392391, -122.4855610728], [38.7984100061, -123.6986920238], 
@@ -483,11 +509,12 @@ const locationsData = [
         name: "Turkey",
         latitude: 38.9637,
         longitude: 35.2433,
-        description: "A transcontinental country located mainly on Anatolia in Western Asia, with a smaller portion on the Balkan Peninsula in Southeastern Europe. Known for its rich history, cultural heritage, and strategic location between Europe and Asia.",
+        description: "Turkey's economy struggles with 85% inflation as the lira continues to weaken, forcing the government to implement emergency measures while millions face rising food and energy costs.",
         headline: "Turkey Strengthens Trade Partnerships Across Europe and Asia",
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
         type: "country",
+        "extraction-type": "Location",
         boundaries: [
             [35.8544479315, 35.9837790392], [36.3300964363, 35.8318587206], [36.613494872, 36.258265581], 
             [36.8881673728, 36.127116289], [36.5498791995, 35.4165240191], [36.8024464543, 34.6004458331], 
@@ -530,6 +557,7 @@ const locationsData = [
         date: "May 30, 2025 | 17:20 (UTC)",
         layer: "Activities extracted from search results",
         type: "sea",
+        "extraction-type": "Location",
         boundaries: [
             [-0.1187710503, 108.9952843417], [1.2250595069, 103.8671533102], [4.1921867386, 103.4781226802], 
             [7.4287413408, 100.2244119568], [9.9456986745, 99.1987857505], [13.0643049698, 100.4012440613], 
@@ -541,5 +569,685 @@ const locationsData = [
             [13.2364997941, 120.4186382947], [8.3045724244, 117.4478589385], [3.5923471132, 113.8758504269], 
             [1.2604176085, 110.9758039125], [1.4018450795, 109.5965134971], [-0.1187710503, 108.9952843417]
         ]
+    },
+    // Animal extraction types
+    {
+        name: "Central Park Zoo",
+        latitude: 40.7678,
+        longitude: -73.9718,
+        description: "Rare snow leopard cubs born at Central Park Zoo mark successful breeding program as conservationists celebrate population recovery efforts in urban wildlife facilities.",
+        headline: "Snow Leopard Cubs Born at Central Park Zoo Boost Conservation Efforts",
+        date: "May 30, 2025 | 18:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "facility",
+        "extraction-type": "Animal"
+    },
+    {
+        name: "Fisherman's Wharf Pier 39",
+        latitude: 37.8087,
+        longitude: -122.4098,
+        description: "California sea lions abandon traditional Pier 39 habitat as marine biologists investigate unusual migration patterns affecting San Francisco Bay wildlife populations.",
+        headline: "Sea Lions Mysteriously Abandon Pier 39 After Two Decades",
+        date: "May 30, 2025 | 18:15 (UTC)",
+        layer: "Drones witnessed",
+        type: "landmark",
+        "extraction-type": "Animal"
+    },
+    {
+        name: "Hyde Park Corner",
+        latitude: 51.5020,
+        longitude: -0.1526,
+        description: "Urban fox population surge in Hyde Park area prompts wildlife management concerns as residents report increased sightings and property damage across central London.",
+        headline: "Hyde Park Fox Population Reaches Record Levels",
+        date: "May 30, 2025 | 18:30 (UTC)",
+        layer: "Suspect movement",
+        type: "park",
+        "extraction-type": "Animal"
+    },
+    // Currency extraction types
+    {
+        name: "Wall Street Trading Floor",
+        latitude: 40.7074,
+        longitude: -74.0113,
+        description: "Federal Reserve announces emergency Bitcoin reserves purchase as cryptocurrency reaches $150,000 milestone, triggering massive trading volumes on Wall Street.",
+        headline: "Fed Announces Historic Bitcoin Reserve Purchase",
+        date: "May 30, 2025 | 19:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "financial_district",
+        "extraction-type": "Currency"
+    },
+    {
+        name: "Bank of England Plaza",
+        latitude: 51.5142,
+        longitude: -0.0865,
+        description: "Digital pound pilot program launches in financial district as UK central bank tests blockchain-based currency system with major commercial banks.",
+        headline: "UK Launches Digital Pound Pilot Program",
+        date: "May 30, 2025 | 19:15 (UTC)",
+        layer: "Drone attacks",
+        type: "financial_district",
+        "extraction-type": "Currency"
+    },
+    {
+        name: "Tokyo Stock Exchange District",
+        latitude: 35.6762,
+        longitude: 139.7633,
+        description: "Yen volatility reaches decade highs as Bank of Japan intervention fails to stabilize currency amid global market turbulence and inflation concerns.",
+        headline: "Japanese Yen Hits Decade Low Despite Central Bank Intervention",
+        date: "May 30, 2025 | 19:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "financial_district",
+        "extraction-type": "Currency"
+    },
+    // Civilian Vehicle extraction types
+    {
+        name: "Tesla Gigafactory Parking",
+        latitude: 37.4946,
+        longitude: -121.9468,
+        description: "Autonomous Tesla vehicles malfunction in factory parking lot as software update causes 200 cars to simultaneously attempt parking in same space.",
+        headline: "Tesla Autopilot Glitch Causes Parking Lot Chaos",
+        date: "May 30, 2025 | 20:00 (UTC)",
+        layer: "Drone attacks",
+        type: "industrial",
+        "extraction-type": "Civilian Vehicle"
+    },
+    {
+        name: "Times Square Taxi Stand",
+        latitude: 40.7580,
+        longitude: -73.9855,
+        description: "Yellow taxi drivers protest ride-sharing dominance as vintage cab fleet dwindles to historic lows amid changing urban transportation landscape.",
+        headline: "NYC Yellow Taxi Numbers Hit All-Time Low",
+        date: "May 30, 2025 | 20:15 (UTC)",
+        layer: "Suspect movement",
+        type: "transportation_hub",
+        "extraction-type": "Civilian Vehicle"
+    },
+    {
+        name: "Piccadilly Circus Bus Terminal",
+        latitude: 51.5101,
+        longitude: -0.1340,
+        description: "Double-decker bus collision with electric scooter triggers debate over mixed-mode transportation safety in central London traffic corridors.",
+        headline: "Double-Decker Bus Accident Highlights Urban Transport Safety",
+        date: "May 30, 2025 | 20:30 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "transportation_hub",
+        "extraction-type": "Civilian Vehicle"
+    },
+    // Communication Device extraction types
+    {
+        name: "Silicon Valley Tech Campus",
+        latitude: 37.4224,
+        longitude: -122.0856,
+        description: "Prototype quantum communication device successfully transmits encrypted data across campus network, marking breakthrough in unhackable communications technology.",
+        headline: "Quantum Communication Device Achieves Campus-Wide Success",
+        date: "May 30, 2025 | 21:00 (UTC)",
+        layer: "Drones witnessed",
+        type: "tech_facility",
+        "extraction-type": "Communication Device"
+    },
+    {
+        name: "NSA Listening Post Antenna Farm",
+        latitude: 39.1080,
+        longitude: -76.7707,
+        description: "Massive satellite dish array at Fort Meade intercepts suspicious encrypted transmissions as intelligence agencies investigate potential foreign interference.",
+        headline: "NSA Detects Encrypted Transmissions from Unknown Source",
+        date: "May 30, 2025 | 21:15 (UTC)",
+        layer: "Drone attacks",
+        type: "military_facility",
+        "extraction-type": "Communication Device"
+    },
+    {
+        name: "Cell Tower Maintenance Site",
+        latitude: 34.0522,
+        longitude: -118.2437,
+        description: "5G cell tower equipment theft ring dismantled as authorities recover millions in stolen communication hardware from underground network operation.",
+        headline: "Major 5G Equipment Theft Ring Busted in LA",
+        date: "May 30, 2025 | 21:30 (UTC)",
+        layer: "Suspect movement",
+        type: "infrastructure",
+        "extraction-type": "Communication Device"
+    },
+    // Disease extraction types
+    {
+        name: "CDC Atlanta Laboratory",
+        latitude: 33.7990,
+        longitude: -84.3283,
+        description: "Novel respiratory pathogen identified in CDC biosafety lab shows concerning mutation patterns as researchers work to develop containment protocols.",
+        headline: "CDC Identifies New Respiratory Pathogen with Concerning Mutations",
+        date: "May 30, 2025 | 22:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_facility",
+        "extraction-type": "Disease"
+    },
+    {
+        name: "Wuhan Institute Quarantine Zone",
+        latitude: 30.5384,
+        longitude: 114.3644,
+        description: "Avian influenza outbreak spreads through research facility as containment breach forces evacuation of surrounding residential areas in emergency response.",
+        headline: "Avian Flu Outbreak Forces Wuhan Research Facility Evacuation",
+        date: "May 30, 2025 | 22:15 (UTC)",
+        layer: "Drone attacks",
+        type: "research_facility",
+        "extraction-type": "Disease"
+    },
+    {
+        name: "London Hospital Emergency Ward",
+        latitude: 51.5194,
+        longitude: -0.0605,
+        description: "Antibiotic-resistant tuberculosis cases surge in East London as hospital implements strict isolation protocols amid growing public health crisis.",
+        headline: "Drug-Resistant TB Cases Surge in East London Hospital",
+        date: "May 30, 2025 | 22:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "medical_facility",
+        "extraction-type": "Disease"
+    },
+    // Date-Time Mention extraction types
+    {
+        name: "Greenwich Observatory Clock Tower",
+        latitude: 51.4769,
+        longitude: -0.0005,
+        description: "Atomic clock synchronization error at Greenwich Observatory causes global GPS disruption as navigation systems show incorrect timestamps worldwide.",
+        headline: "Greenwich Atomic Clock Error Disrupts Global GPS Systems",
+        date: "May 30, 2025 | 23:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "observatory",
+        "extraction-type": "Date-Time Mention"
+    },
+    {
+        name: "Times Square New Year's Ball",
+        latitude: 40.7589,
+        longitude: -73.9851,
+        description: "Historic New Year's Eve ball undergoes maintenance as countdown mechanism replacement prepares for next celebration cycle in iconic Times Square location.",
+        headline: "Times Square Ball Mechanism Receives Major Upgrade",
+        date: "May 30, 2025 | 23:15 (UTC)",
+        layer: "Suspect movement",
+        type: "landmark",
+        "extraction-type": "Date-Time Mention"
+    },
+    {
+        name: "Big Ben Clock Face",
+        latitude: 51.4994,
+        longitude: -0.1245,
+        description: "Big Ben restoration project reveals Victorian-era time capsule containing 1859 newspaper predicting future of London's iconic timepiece accuracy.",
+        headline: "Victorian Time Capsule Found During Big Ben Restoration",
+        date: "May 30, 2025 | 23:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "historic_landmark",
+        "extraction-type": "Date-Time Mention"
+    },
+    // Facility extraction types
+    {
+        name: "Pentagon Secure Briefing Room",
+        latitude: 38.8719,
+        longitude: -77.0563,
+        description: "Classified military briefing facility undergoes security upgrade as defense officials prepare for joint operations command center modernization project.",
+        headline: "Pentagon Briefing Room Receives Security Infrastructure Upgrade",
+        date: "May 31, 2025 | 00:00 (UTC)",
+        layer: "Drone attacks",
+        type: "military_facility",
+        "extraction-type": "Facility"
+    },
+    {
+        name: "CERN Particle Accelerator Complex",
+        latitude: 46.2333,
+        longitude: 6.0557,
+        description: "Large Hadron Collider facility achieves record energy levels as researchers detect previously unknown particle interactions in underground laboratory complex.",
+        headline: "CERN Achieves Record Energy Levels in Particle Experiments",
+        date: "May 31, 2025 | 00:15 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_facility",
+        "extraction-type": "Facility"
+    },
+    {
+        name: "SpaceX Launch Pad 39A",
+        latitude: 28.6080,
+        longitude: -80.6040,
+        description: "Kennedy Space Center launch facility prepares for Mars mission as ground support equipment undergoes final testing procedures before historic departure.",
+        headline: "SpaceX Mars Mission Launch Facility Completes Final Tests",
+        date: "May 31, 2025 | 00:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "aerospace_facility",
+        "extraction-type": "Facility"
+    },
+    // Fungus extraction types
+    {
+        name: "Oregon Forest Research Station",
+        latitude: 45.3311,
+        longitude: -121.7113,
+        description: "Massive fungal network discovered beneath Pacific Northwest forest as mycologists map largest known underground organism spanning thousands of acres.",
+        headline: "Scientists Map Largest Underground Fungal Network in Oregon",
+        date: "May 31, 2025 | 01:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_station",
+        "extraction-type": "Fungus"
+    },
+    {
+        name: "Amazon Research Camp",
+        latitude: -3.4653,
+        longitude: -62.2159,
+        description: "Psychedelic mushroom species with unique neurological properties identified in Amazon rainforest as researchers study potential medical applications.",
+        headline: "New Psychedelic Mushroom Species Discovered in Amazon",
+        date: "May 31, 2025 | 01:15 (UTC)",
+        layer: "Drone attacks",
+        type: "field_station",
+        "extraction-type": "Fungus"
+    },
+    {
+        name: "Dutch Mushroom Farm Laboratory",
+        latitude: 52.1326,
+        longitude: 5.2913,
+        description: "Genetically modified fungi produce sustainable protein alternatives as Netherlands agricultural facility pioneers next-generation food production methods.",
+        headline: "Dutch Lab Creates Protein-Rich Fungi for Sustainable Food",
+        date: "May 31, 2025 | 01:30 (UTC)",
+        layer: "Suspect movement",
+        type: "agricultural_facility",
+        "extraction-type": "Fungus"
+    },
+    // Microbe extraction types
+    {
+        name: "Pasteur Institute Laboratory",
+        latitude: 48.8405,
+        longitude: 2.3118,
+        description: "Antibiotic-resistant superbug isolated in Paris laboratory shows unprecedented resistance patterns as researchers race to develop new treatment protocols.",
+        headline: "Paris Lab Isolates Unprecedented Antibiotic-Resistant Superbug",
+        date: "May 31, 2025 | 02:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_facility",
+        "extraction-type": "Microbe"
+    },
+    {
+        name: "Antarctic Research Station",
+        latitude: -77.8419,
+        longitude: 166.6863,
+        description: "Ancient microorganisms revived from 15,000-year-old ice cores display unique metabolic properties as climate researchers study prehistoric life forms.",
+        headline: "Ancient Microbes Revived from Antarctic Ice Cores",
+        date: "May 31, 2025 | 02:15 (UTC)",
+        layer: "Drone attacks",
+        type: "polar_station",
+        "extraction-type": "Microbe"
+    },
+    {
+        name: "Deep Sea Research Vessel",
+        latitude: 36.7783,
+        longitude: -119.4179,
+        description: "Extremophile bacteria discovered in ocean thermal vents produce novel compounds with potential pharmaceutical applications for treating cancer.",
+        headline: "Deep Sea Bacteria Show Promise for Cancer Treatment",
+        date: "May 31, 2025 | 02:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "research_vessel",
+        "extraction-type": "Microbe"
+    },
+    // Miscellaneous extraction types
+    {
+        name: "Area 51 Perimeter Fence",
+        latitude: 37.2431,
+        longitude: -115.7930,
+        description: "Unidentified metallic debris recovered near classified facility perimeter displays unusual electromagnetic properties defying conventional material science.",
+        headline: "Mysterious Debris Found Near Area 51 Defies Scientific Analysis",
+        date: "May 31, 2025 | 03:00 (UTC)",
+        layer: "Suspect movement",
+        type: "restricted_area",
+        "extraction-type": "Miscellaneous"
+    },
+    {
+        name: "Bermuda Triangle Research Buoy",
+        latitude: 25.0000,
+        longitude: -71.0000,
+        description: "Scientific monitoring equipment in Bermuda Triangle records anomalous magnetic readings as researchers investigate unexplained navigation interference patterns.",
+        headline: "Bermuda Triangle Buoy Records Unexplained Magnetic Anomalies",
+        date: "May 31, 2025 | 03:15 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_station",
+        "extraction-type": "Miscellaneous"
+    },
+    {
+        name: "CERN Cafeteria Storage Room",
+        latitude: 46.2333,
+        longitude: 6.0557,
+        description: "Unusual energy signatures detected in particle physics facility storage area as maintenance crews investigate unexplained electromagnetic disturbances.",
+        headline: "CERN Reports Unusual Energy Signatures in Storage Areas",
+        date: "May 31, 2025 | 03:30 (UTC)",
+        layer: "Drone attacks",
+        type: "research_facility",
+        "extraction-type": "Miscellaneous"
+    },
+    // Military Vehicle extraction types
+    {
+        name: "Fort Knox Armored Division",
+        latitude: 37.8914,
+        longitude: -85.9635,
+        description: "Next-generation stealth tank prototype undergoes field testing as military engineers evaluate advanced armor systems and electronic warfare capabilities.",
+        headline: "Stealth Tank Prototype Begins Field Testing at Fort Knox",
+        date: "May 31, 2025 | 04:00 (UTC)",
+        layer: "Drone attacks",
+        type: "military_base",
+        "extraction-type": "Military Vehicle"
+    },
+    {
+        name: "Naval Air Station Oceana",
+        latitude: 36.8206,
+        longitude: -76.0333,
+        description: "F-35 fighter jet squadron conducts classified mission rehearsals as pilots prepare for joint international defense exercises over Atlantic Ocean.",
+        headline: "F-35 Squadron Conducts Classified Training at Naval Air Station",
+        date: "May 31, 2025 | 04:15 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "air_base",
+        "extraction-type": "Military Vehicle"
+    },
+    {
+        name: "Norfolk Naval Shipyard",
+        latitude: 36.8201,
+        longitude: -76.2951,
+        description: "Nuclear submarine undergoes weapons system upgrade as naval engineers install next-generation torpedo guidance systems and sonar arrays.",
+        headline: "Nuclear Submarine Receives Advanced Weapons System Upgrade",
+        date: "May 31, 2025 | 04:30 (UTC)",
+        layer: "Suspect movement",
+        type: "naval_facility",
+        "extraction-type": "Military Vehicle"
+    },
+    // Named Event extraction types
+    {
+        name: "Olympic Stadium London",
+        latitude: 51.5385,
+        longitude: -0.0164,
+        description: "2026 Summer Olympics opening ceremony rehearsal begins as performers practice synchronized drone light show for anticipated global audience of 4 billion viewers.",
+        headline: "London 2026 Olympics Opening Ceremony Rehearsal Begins",
+        date: "May 31, 2025 | 05:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "stadium",
+        "extraction-type": "Named Event"
+    },
+    {
+        name: "Coachella Music Festival Grounds",
+        latitude: 33.6803,
+        longitude: -116.2378,
+        description: "Coachella 2025 headliner announcement creates ticket sales frenzy as virtual reality concert experiences debut for first time in festival history.",
+        headline: "Coachella 2025 Introduces Revolutionary VR Concert Experience",
+        date: "May 31, 2025 | 05:15 (UTC)",
+        layer: "Drone attacks",
+        type: "festival_ground",
+        "extraction-type": "Named Event"
+    },
+    {
+        name: "Davos Convention Center",
+        latitude: 46.8037,
+        longitude: 9.8370,
+        description: "World Economic Forum 2025 summit focuses on artificial intelligence governance as global leaders debate regulatory frameworks for emerging technologies.",
+        headline: "Davos 2025 Summit Addresses AI Governance and Global Regulation",
+        date: "May 31, 2025 | 05:30 (UTC)",
+        layer: "Suspect movement",
+        type: "convention_center",
+        "extraction-type": "Named Event"
+    },
+    // Organization extraction types
+    {
+        name: "WHO Geneva Headquarters",
+        latitude: 46.2327,
+        longitude: 6.1251,
+        description: "World Health Organization declares global health emergency as coordinated response teams deploy to address emerging pandemic threat across multiple continents.",
+        headline: "WHO Declares Global Health Emergency for Emerging Pandemic",
+        date: "May 31, 2025 | 06:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "international_organization",
+        "extraction-type": "Organization"
+    },
+    {
+        name: "UN Security Council Chamber",
+        latitude: 40.7489,
+        longitude: -73.9680,
+        description: "United Nations Security Council convenes emergency session as diplomatic tensions escalate over territorial disputes in South China Sea region.",
+        headline: "UN Security Council Holds Emergency Session on Territorial Disputes",
+        date: "May 31, 2025 | 06:15 (UTC)",
+        layer: "Drone attacks",
+        type: "diplomatic_facility",
+        "extraction-type": "Organization"
+    },
+    {
+        name: "Doctors Without Borders Field Hospital",
+        latitude: 0.3476,
+        longitude: 32.5825,
+        description: "Médecins Sans Frontières establishes emergency medical facility as humanitarian crisis intensifies following natural disaster in East African region.",
+        headline: "Doctors Without Borders Establishes Emergency Hospital in Uganda",
+        date: "May 31, 2025 | 06:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "medical_facility",
+        "extraction-type": "Organization"
+    },
+    // Person extraction types
+    {
+        name: "Tesla CEO Private Office",
+        latitude: 30.2672,
+        longitude: -97.7431,
+        description: "Elon Musk announces revolutionary neural interface breakthrough as Neuralink achieves first successful human-computer telepathic communication trial.",
+        headline: "Elon Musk Announces Breakthrough in Human-Computer Telepathy",
+        date: "May 31, 2025 | 07:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "corporate_office",
+        "extraction-type": "Person"
+    },
+    {
+        name: "Vatican Papal Residence",
+        latitude: 41.9029,
+        longitude: 12.4534,
+        description: "Pope Francis delivers historic encyclical on artificial intelligence ethics as Vatican establishes guidelines for AI development in religious contexts.",
+        headline: "Pope Francis Issues Historic AI Ethics Encyclical",
+        date: "May 31, 2025 | 07:15 (UTC)",
+        layer: "Suspect movement",
+        type: "religious_facility",
+        "extraction-type": "Person"
+    },
+    {
+        name: "Nobel Prize Committee Office",
+        latitude: 59.3293,
+        longitude: 18.0686,
+        description: "Nobel Committee announces surprise joint Peace Prize winners as climate activists and AI researchers share award for collaborative environmental solutions.",
+        headline: "Nobel Peace Prize Awarded to Climate-AI Collaboration Team",
+        date: "May 31, 2025 | 07:30 (UTC)",
+        layer: "Drone attacks",
+        type: "academic_institution",
+        "extraction-type": "Person"
+    },
+    // Plant extraction types
+    {
+        name: "Amazon Botanical Research Station",
+        latitude: -3.4653,
+        longitude: -62.2159,
+        description: "Rare orchid species with unique carbon absorption properties discovered in Amazon rainforest as botanists study climate change mitigation potential.",
+        headline: "Amazon Orchid Discovery Shows Promise for Carbon Capture",
+        date: "May 31, 2025 | 08:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_station",
+        "extraction-type": "Plant"
+    },
+    {
+        name: "Svalbard Global Seed Vault",
+        latitude: 78.2232,
+        longitude: 15.1534,
+        description: "Arctic seed vault receives emergency deposit of endangered wheat varieties as global food security concerns drive preservation of genetic diversity.",
+        headline: "Svalbard Seed Vault Receives Emergency Wheat Variety Deposits",
+        date: "May 31, 2025 | 08:15 (UTC)",
+        layer: "Drones witnessed",
+        type: "preservation_facility",
+        "extraction-type": "Plant"
+    },
+    {
+        name: "Kew Gardens Research Laboratory",
+        latitude: 51.4816,
+        longitude: -0.2943,
+        description: "Genetically modified bamboo grows at unprecedented rate as Royal Botanic Gardens develops fast-growing construction materials for sustainable architecture.",
+        headline: "Kew Gardens Develops Super-Fast Growing Bamboo for Construction",
+        date: "May 31, 2025 | 08:30 (UTC)",
+        layer: "Suspect movement",
+        type: "botanical_garden",
+        "extraction-type": "Plant"
+    },
+    // Role extraction types
+    {
+        name: "CIA Langley Training Facility",
+        latitude: 38.9517,
+        longitude: -77.1467,
+        description: "Intelligence analyst training program adapts to quantum computing threats as cybersecurity specialists prepare for next-generation espionage challenges.",
+        headline: "CIA Analysts Train for Quantum Computing Security Threats",
+        date: "May 31, 2025 | 09:00 (UTC)",
+        layer: "Drone attacks",
+        type: "intelligence_facility",
+        "extraction-type": "Role"
+    },
+    {
+        name: "Emergency Response Command Center",
+        latitude: 38.8951,
+        longitude: -77.0364,
+        description: "First responders coordinate multi-agency disaster response as emergency management specialists deploy advanced AI-assisted rescue coordination systems.",
+        headline: "Emergency Responders Deploy AI-Assisted Rescue Coordination",
+        date: "May 31, 2025 | 09:15 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "emergency_facility",
+        "extraction-type": "Role"
+    },
+    {
+        name: "Flight Control Center Houston",
+        latitude: 29.5586,
+        longitude: -95.0890,
+        description: "Mission control specialists manage complex Mars rover operations as planetary geologists analyze unprecedented mineral discoveries on Martian surface.",
+        headline: "Mission Control Manages Historic Mars Mineral Discovery",
+        date: "May 31, 2025 | 09:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "space_facility",
+        "extraction-type": "Role"
+    },
+    // Substance extraction types
+    {
+        name: "Chemical Processing Plant",
+        latitude: 29.7604,
+        longitude: -95.3698,
+        description: "Lithium extraction facility develops new purification method as demand for battery materials drives innovation in sustainable mining techniques.",
+        headline: "Houston Plant Develops Revolutionary Lithium Purification Method",
+        date: "May 31, 2025 | 10:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "industrial_facility",
+        "extraction-type": "Substance"
+    },
+    {
+        name: "Pharmaceutical Manufacturing Lab",
+        latitude: 40.0583,
+        longitude: -74.4057,
+        description: "Synthetic opioid production facility implements new safety protocols as pharmaceutical companies address addiction crisis through safer pain management alternatives.",
+        headline: "Pharma Lab Develops Safer Alternative to Synthetic Opioids",
+        date: "May 31, 2025 | 10:15 (UTC)",
+        layer: "Suspect movement",
+        type: "pharmaceutical_facility",
+        "extraction-type": "Substance"
+    },
+    {
+        name: "Nuclear Fuel Reprocessing Center",
+        latitude: 35.3606,
+        longitude: 138.7274,
+        description: "Uranium enrichment facility upgrades safety systems as nuclear energy expansion drives demand for advanced fuel processing capabilities.",
+        headline: "Japanese Nuclear Facility Upgrades Uranium Processing Safety",
+        date: "May 31, 2025 | 10:30 (UTC)",
+        layer: "Drone attacks",
+        type: "nuclear_facility",
+        "extraction-type": "Substance"
+    },
+    // Unidentified Equipment extraction types
+    {
+        name: "Roswell UFO Museum Basement",
+        latitude: 33.3943,
+        longitude: -104.5230,
+        description: "Mysterious device with unknown power source discovered in museum storage displays properties inconsistent with known terrestrial technology.",
+        headline: "Roswell Museum Discovers Device with Unknown Technology",
+        date: "May 31, 2025 | 11:00 (UTC)",
+        layer: "Suspect movement",
+        type: "museum",
+        "extraction-type": "Unidentified Equipment"
+    },
+    {
+        name: "SETI Radio Observatory",
+        latitude: 37.8732,
+        longitude: -121.4690,
+        description: "Radio telescope array detects structured signal patterns of artificial origin as astronomers investigate potential extraterrestrial communication attempts.",
+        headline: "SETI Detects Structured Signals of Potential Alien Origin",
+        date: "May 31, 2025 | 11:15 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "observatory",
+        "extraction-type": "Unidentified Equipment"
+    },
+    {
+        name: "Deep Ocean Research Platform",
+        latitude: 21.3099,
+        longitude: -157.8581,
+        description: "Submersible encounters metallic object of unknown composition on Pacific Ocean floor displaying electromagnetic properties defying current scientific understanding.",
+        headline: "Pacific Ocean Submersible Discovers Mysterious Metallic Object",
+        date: "May 31, 2025 | 11:30 (UTC)",
+        layer: "Drones witnessed",
+        type: "research_platform",
+        "extraction-type": "Unidentified Equipment"
+    },
+    // Unnamed Event extraction types
+    {
+        name: "Yellowstone Seismic Station",
+        latitude: 44.4280,
+        longitude: -110.5885,
+        description: "Unusual seismic activity patterns detected beneath Yellowstone caldera as geological monitoring systems record unprecedented underground movements.",
+        headline: "Yellowstone Monitoring Systems Detect Unusual Seismic Patterns",
+        date: "May 31, 2025 | 12:00 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "monitoring_station",
+        "extraction-type": "Unnamed Event"
+    },
+    {
+        name: "Northern Lights Observatory Alaska",
+        latitude: 64.8378,
+        longitude: -147.7164,
+        description: "Unprecedented aurora borealis activity displays unusual color patterns as atmospheric physicists investigate solar storm interactions with Earth's magnetosphere.",
+        headline: "Alaska Observatory Records Unprecedented Aurora Activity",
+        date: "May 31, 2025 | 12:15 (UTC)",
+        layer: "Drone attacks",
+        type: "observatory",
+        "extraction-type": "Unnamed Event"
+    },
+    {
+        name: "Crop Circle Investigation Site",
+        latitude: 51.1789,
+        longitude: -1.8262,
+        description: "Complex geometric patterns appear overnight in English countryside wheat field displaying precision impossible to achieve through conventional means.",
+        headline: "Complex Crop Circles Appear Overnight in English Countryside",
+        date: "May 31, 2025 | 12:30 (UTC)",
+        layer: "Suspect movement",
+        type: "agricultural_field",
+        "extraction-type": "Unnamed Event"
+    },
+    // Weapon extraction types
+    {
+        name: "Aberdeen Proving Ground",
+        latitude: 39.4817,
+        longitude: -76.1378,
+        description: "Hypersonic missile prototype undergoes final testing phase as military engineers evaluate next-generation weapons system capabilities and deployment scenarios.",
+        headline: "Hypersonic Missile Prototype Completes Final Testing Phase",
+        date: "May 31, 2025 | 13:00 (UTC)",
+        layer: "Drone attacks",
+        type: "weapons_testing_facility",
+        "extraction-type": "Weapon"
+    },
+    {
+        name: "Los Alamos National Laboratory",
+        latitude: 35.8800,
+        longitude: -106.3031,
+        description: "Directed energy weapon system demonstrates unprecedented precision as researchers develop non-lethal crowd control technologies for law enforcement agencies.",
+        headline: "Los Alamos Develops Precision Directed Energy Weapon System",
+        date: "May 31, 2025 | 13:15 (UTC)",
+        layer: "Activities extracted from search results",
+        type: "research_facility",
+        "extraction-type": "Weapon"
+    },
+    {
+        name: "Naval Weapons Station Yorktown",
+        latitude: 37.2707,
+        longitude: -76.5951,
+        description: "Electromagnetic railgun achieves record projectile velocity as naval weapons engineers prepare revolutionary ship-based defense systems for fleet deployment.",
+        headline: "Naval Railgun Achieves Record Velocity in Fleet Trials",
+        date: "May 31, 2025 | 13:30 (UTC)",
+        layer: "Suspect movement",
+        type: "naval_weapons_facility",
+        "extraction-type": "Weapon"
     }
 ]; 
