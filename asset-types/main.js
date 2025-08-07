@@ -17,12 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get all child markers and count by layer
             const children = cluster.getAllChildMarkers();
             const layerCounts = {};
-            const layerColors = {
-                'Activities extracted from search results': '#43A7DD',
-                'Drone attacks': '#FC922D', 
-                'Drones witnessed': '#819B2A',
-                'Suspect movement': '#DF5094'
-            };
+            const layerColors = LAYERS.getColorsObject();
             
             // Count markers by layer
             children.forEach(marker => {
@@ -160,68 +155,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Store individual markers and shapes by layer for visibility control
-    const markersByLayer = {
-        'Activities extracted from search results': [],
-        'Drone attacks': [],
-        'Drones witnessed': [],
-        'Suspect movement': []
-    };
+    const markersByLayer = LAYERS.initializeArrays();
 
     // Store individual geoshapes separately for different handling
-    const shapesByLayer = {
-        'Activities extracted from search results': [],
-        'Drone attacks': [],
-        'Drones witnessed': [],
-        'Suspect movement': []
-    };
+    const shapesByLayer = LAYERS.initializeArrays();
 
     // Store geoshape data and their corresponding pin markers
     const geoshapeData = [];
-    const geoshapePinsByLayer = {
-        'Activities extracted from search results': [],
-        'Drone attacks': [],
-        'Drones witnessed': [],
-        'Suspect movement': []
-    };
+    const geoshapePinsByLayer = LAYERS.initializeArrays();
 
     // Store the "Show All" zoom level for comparison
     let showAllZoomLevel = null;
 
     // Layer colors for both markers and polygons
-    const layerColors = {
-        'Activities extracted from search results': '#43A7DD',
-        'Drone attacks': '#FC922D', 
-        'Drones witnessed': '#819B2A',
-        'Suspect movement': '#DF5094'
-    };
+    const layerColors = LAYERS.getColorsObject();
 
     // Create custom colored markers for each layer
-    const layerIcons = {
-        'Activities extracted from search results': L.divIcon({
-            html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#43A7DD" /></svg>',
+    const layerIcons = {};
+    LAYERS.getNames().forEach(layerName => {
+        const color = LAYERS.getColor(layerName);
+        layerIcons[layerName] = L.divIcon({
+            html: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="${color}" /></svg>`,
             className: 'custom-pin-icon',
             iconSize: [30, 30],
             iconAnchor: [15, 30]
-        }),
-        'Drone attacks': L.divIcon({
-            html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#FC922D" /></svg>',
-            className: 'custom-pin-icon',
-            iconSize: [30, 30],
-            iconAnchor: [15, 30]
-        }),
-        'Drones witnessed': L.divIcon({
-            html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#819B2A" /></svg>',
-            className: 'custom-pin-icon',
-            iconSize: [30, 30],
-            iconAnchor: [15, 30]
-        }),
-        'Suspect movement': L.divIcon({
-            html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));"><circle cx="12" cy="8" r="6" fill="white" /><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#DF5094" /></svg>',
-            className: 'custom-pin-icon',
-            iconSize: [30, 30],
-            iconAnchor: [15, 30]
-        })
-    };
+        });
+    });
 
     // Function to create a geoshape (polygon) for locations with boundary data
     function createGeoshape(location) {
@@ -347,12 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Layer visibility state
-    const layerVisibility = {
-        'Activities extracted from search results': true,
-        'Drone attacks': true,
-        'Drones witnessed': true,
-        'Suspect movement': true
-    };
+    const layerVisibility = LAYERS.getVisibilityObject();
 
     // Location visibility state (indexed by location name)
     const locationVisibility = {};
