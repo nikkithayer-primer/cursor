@@ -1412,6 +1412,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarToggleBtn = document.getElementById('sidebar-toggle');
     const sidebarElement = document.getElementById('sidebar');
     const contentArea = document.querySelector('.content-area');
+    const clusterToggle = document.getElementById('cluster-toggle');
+    const summaryToggle = document.getElementById('summary-toggle');
 
     if (sidebarFilterInput) {
         sidebarFilterInput.addEventListener('input', function(e) {
@@ -1502,6 +1504,80 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Toggle clustering on/off
+    if (clusterToggle) {
+        clusterToggle.addEventListener('change', function() {
+            const enableClustering = clusterToggle.checked;
+            // Gather all current point markers (including geoshape pins)
+            const allMarkers = [];
+            Object.values(markersByLayer).forEach(arr => allMarkers.push(...arr));
+            Object.values(geoshapePinsByLayer).forEach(arr => allMarkers.push(...arr));
+
+            if (enableClustering) {
+                // Re-add only visible markers to cluster; remove any direct layers
+                allMarkers.forEach(m => {
+                    // Always remove any direct layer version
+                    if (map.hasLayer(m)) {
+                        map.removeLayer(m);
+                    }
+
+                    // Determine visibility based on layer and point visibility
+                    let show = true;
+                    const layerName = m.options?.layer;
+                    if (layerName && layerVisibility[layerName] === false) show = false;
+                    if (m.getPopup) {
+                        const content = m.getPopup()?.getContent?.() || '';
+                        const nameMatch = content.match(/<h4>(.*?)<\/h4>/);
+                        if (nameMatch) {
+                            const name = nameMatch[1];
+                            if (locationVisibility[name] === false) show = false;
+                        }
+                    }
+
+                    if (show) {
+                        if (!markerCluster.hasLayer(m)) {
+                            markerCluster.addLayer(m);
+                        }
+                    } else if (markerCluster.hasLayer(m)) {
+                        markerCluster.removeLayer(m);
+                    }
+                });
+                if (!map.hasLayer(markerCluster)) map.addLayer(markerCluster);
+                // Let geoshape pin visibility be enforced per zoom
+                updateGeoshapeVisibility();
+            } else {
+                // Disable clustering: remove from cluster group and add directly to map if visible
+                allMarkers.forEach(m => {
+                    if (markerCluster.hasLayer(m)) {
+                        markerCluster.removeLayer(m);
+                    }
+                    // Only show markers that should be visible per layer/location visibility and zoom for geoshapes
+                    let show = true;
+                    const layerName = m.options?.layer;
+                    if (layerName && layerVisibility[layerName] === false) show = false;
+                    if (m.getPopup) {
+                        const content = m.getPopup()?.getContent?.() || '';
+                        const nameMatch = content.match(/<h4>(.*?)<\/h4>/);
+                        if (nameMatch) {
+                            const name = nameMatch[1];
+                            if (locationVisibility[name] === false) show = false;
+                        }
+                    }
+                    if (show && !map.hasLayer(m)) map.addLayer(m);
+                });
+                if (map.hasLayer(markerCluster)) map.removeLayer(markerCluster);
+            }
+            map.invalidateSize();
+        });
+    }
+
+    // Toggle full summaries on/off
+    if (summaryToggle) {
+        summaryToggle.addEventListener('change', function() {
+            const enableSummaries = summaryToggle.checked;
+            document.body.classList.toggle('hide-summaries', !enableSummaries);
+        });
+    }
     // Sidebar bottom tab to restore sidebar
     const sidebarTabBtn = document.getElementById('sidebar-tab');
     if (sidebarTabBtn) {

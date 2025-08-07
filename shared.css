@@ -140,6 +140,22 @@ body {
     cursor: pointer;
 }
 
+.cluster-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--gray-10);
+}
+
+.summary-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--gray-10);
+}
+
 .sidebar-collapsed .sidebar {
     width: 0;
     border-right: none;
@@ -301,6 +317,12 @@ body {
     line-height: 1.5;
     letter-spacing: 0.25px;
     margin-bottom: 8px;
+}
+
+/* Hide summaries mode */
+.hide-summaries .location-description,
+.hide-summaries .location-coordinates {
+    display: none;
 }
 
 /* Button Styles */
