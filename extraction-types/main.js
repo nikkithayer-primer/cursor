@@ -1,5 +1,5 @@
 // Initialize the map
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Create map instance with a temporary center, will be updated to show all locations
     const map = L.map('map').setView([39.8283, -98.5795], 2);
 
@@ -170,7 +170,85 @@ document.addEventListener('DOMContentLoaded', function() {
     // Layer colors for both markers and polygons
     const layerColors = LAYERS.getColorsObject();
 
-    // Create custom colored markers for each layer
+    // Mapping of extraction types to SVG filenames
+    const extractionTypeSVGMap = {
+        'Location': 'Location.svg',
+        'Animal': 'PawPrint.svg',
+        'Currency': 'Currency.svg',
+        'Civilian Vehicle': 'Car.svg',
+        'Communication Device': 'walkie.svg',
+        'Disease': 'Disease.svg',
+        'Date-Time Mention': 'DateTimeMention.svg',
+        'Facility': 'Facility.svg',
+        'Fungus': 'Fungus.svg',
+        'Microbe': 'Microbe.svg',
+        'Miscellaneous': 'Shapes.svg',
+        'Military Vehicle': 'TankFilled.svg',
+        'Named Event': 'NamedEvent.svg',
+        'Organization': 'Organization.svg',
+        'Person': 'Person.svg',
+        'Plant': 'Plant.svg',
+        'Role': 'Manage.svg',
+        'Substance': 'Flask.svg',
+        'Unidentified Equipment': 'UnidentifiedEquipment.svg',
+        'Unnamed Event': 'UnnamedEvent.svg',
+        'Weapon': 'Grenade.svg'
+    };
+
+    // Cache for loaded SVG content
+    const svgCache = {};
+
+    // Function to load and cache SVG content
+    async function loadSVG(filename) {
+        if (svgCache[filename]) {
+            return svgCache[filename];
+        }
+
+        try {
+            const response = await fetch(`svgs/${filename}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${filename}`);
+            }
+            const svgText = await response.text();
+            svgCache[filename] = svgText;
+            return svgText;
+        } catch (error) {
+            console.warn(`Could not load SVG ${filename}, using fallback`, error);
+            // Return a simple fallback SVG
+            return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>';
+        }
+    }
+
+    // Function to colorize SVG content
+    function colorizeSVG(svgContent, color) {
+        // Replace fill attributes with the specified color
+        let colorizedSVG = svgContent
+            .replace(/fill="[^"]*"/g, `fill="${color}"`)
+            .replace(/fill:[^;]*/g, `fill:${color}`)
+            .replace(/<svg/, `<svg style="color: ${color}"`);
+        
+        // If no fill attributes found, add fill to the main elements
+        if (!colorizedSVG.includes('fill=')) {
+            colorizedSVG = colorizedSVG.replace(/<path/g, `<path fill="${color}"`);
+            colorizedSVG = colorizedSVG.replace(/<circle/g, `<circle fill="${color}"`);
+            colorizedSVG = colorizedSVG.replace(/<rect/g, `<rect fill="${color}"`);
+            colorizedSVG = colorizedSVG.replace(/<polygon/g, `<polygon fill="${color}"`);
+        }
+        
+        return colorizedSVG;
+    }
+
+    // Function to get extraction type icon HTML
+    async function getExtractionTypeIconHTML(extractionType, color, size = '16px') {
+        const filename = extractionTypeSVGMap[extractionType] || extractionTypeSVGMap['Location'];
+        const svgContent = await loadSVG(filename);
+        const colorizedSVG = colorizeSVG(svgContent, color);
+        
+        // Wrap in a container div with specified size
+        return `<div style="width: ${size}; height: ${size}; display: inline-flex; align-items: center; justify-content: center;">${colorizedSVG}</div>`;
+    }
+
+    // Create custom colored markers for each layer (fallback for locations without extraction types)
     const layerIcons = {};
     LAYERS.getNames().forEach(layerName => {
         const color = LAYERS.getColor(layerName);
@@ -181,6 +259,42 @@ document.addEventListener('DOMContentLoaded', function() {
             iconAnchor: [15, 30]
         });
     });
+
+    // Function to create extraction-type specific map markers
+    async function createExtractionTypeMarker(extractionType, layerColor) {
+        const filename = extractionTypeSVGMap[extractionType] || extractionTypeSVGMap['Location'];
+        const svgContent = await loadSVG(filename);
+        const colorizedSVG = colorizeSVG(svgContent, 'white'); // White for visibility on colored pin
+        
+        return L.divIcon({
+            html: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 30px; height: 30px; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.3));">
+                <circle cx="12" cy="8" r="6" fill="white" stroke="${layerColor}" stroke-width="2"/>
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="${layerColor}"/>
+                <g transform="translate(12,9) scale(0.75)" style="transform-origin: center;">
+                    <g transform="translate(-12,-12)">
+                        ${colorizedSVG.replace(/<svg[^>]*>/, '').replace(/<\/svg>/, '')}
+                    </g>
+                </g>
+            </svg>`,
+            className: 'custom-extraction-pin-icon',
+            iconSize: [24, 24],
+            iconAnchor: [12, 24]
+        });
+    }
+
+    // Function to get pin icon for sidebar display
+    async function getPinIcon(extractionType, layerColor) {
+        if (!extractionType || !layerColor) {
+            return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>';
+        }
+        
+        return await getExtractionTypeIconHTML(extractionType, layerColor, '16px');
+    }
+
+    // Function to get layer class for styling
+    function getLayerClass(layerName) {
+        return layerName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    }
 
     // Function to create a geoshape (polygon) for locations with boundary data
     function createGeoshape(location) {
@@ -797,7 +911,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add markers for each location and populate sidebar by layer
-    layerOrder.forEach(layerName => {
+    for (const layerName of layerOrder) {
         if (locationsByLayer[layerName]) {
             // Create layer section
             const layerSection = document.createElement('div');
@@ -885,7 +999,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // Add locations for this layer
-            locationsByLayer[layerName].forEach((location, index) => {
+            for (const location of locationsByLayer[layerName]) {
                 // Initialize location visibility (default to visible)
                 locationVisibility[location.name] = true;
 
@@ -915,8 +1029,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     `;
                     
+                    // Create pin marker with extraction-type icon
+                    const pinMarkerIcon = await createExtractionTypeMarker(location['extraction-type'] || 'Location', layerColors[location.layer]);
                     const pinMarker = L.marker([center.lat, center.lng], {
-                        icon: layerIcons[location.layer],
+                        icon: pinMarkerIcon,
                         layer: location.layer
                     }).bindPopup(popupContent);
                     
@@ -972,8 +1088,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     `;
                     
+                    // Create marker with extraction-type icon
+                    const markerIcon = await createExtractionTypeMarker(location['extraction-type'] || 'Location', layerColors[location.layer]);
                     const marker = L.marker([location.latitude, location.longitude], {
-                        icon: layerIcons[location.layer],
+                        icon: markerIcon,
                         layer: location.layer
                     }).bindPopup(popupContent);
                     
@@ -1023,10 +1141,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Create sidebar item with SVG pin icon and controls
                 const locationItem = document.createElement('div');
                 locationItem.className = 'location-item';
+                
+                // Get the pin icon HTML asynchronously
+                const pinIconHTML = await getPinIcon(location['extraction-type'] || 'Location', layerColors[location.layer]);
+                
                 locationItem.innerHTML = `
                     <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
                         <div class="location-name-content">
-                            <span class="pin-icon ${getLayerClass(location.layer)}">${getPinIcon()}</span>
+                            <span class="pin-icon ${getLayerClass(location.layer)}">${pinIconHTML}</span>
                             <span>${location.name}</span>
                         </div>
                         <div class="location-controls">
@@ -1124,11 +1246,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 layerSection.appendChild(locationItem);
-            });
+            }
 
             locationList.appendChild(layerSection);
         }
-    });
+    }
 
     // Add all cluster groups to the map
     map.addLayer(markerCluster);
