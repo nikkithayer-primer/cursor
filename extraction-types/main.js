@@ -1407,6 +1407,116 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Sidebar filter and toggle
+    const sidebarFilterInput = document.getElementById('sidebar-filter');
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle');
+    const sidebarElement = document.getElementById('sidebar');
+    const contentArea = document.querySelector('.content-area');
+
+    if (sidebarFilterInput) {
+        sidebarFilterInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.location-item');
+            items.forEach(item => {
+                const nameEl = item.querySelector('.location-name-content span:last-child');
+                const name = nameEl?.textContent?.toLowerCase() || '';
+                const headline = item.querySelector('.location-headline')?.textContent?.toLowerCase() || '';
+                const matches = (name.includes(query) || headline.includes(query));
+                item.style.display = matches ? 'block' : 'none';
+                if (nameEl) {
+                    const locName = nameEl.textContent;
+                    // Hide markers on the map for non-matching items; show for matches
+                    const currentlyVisible = locationVisibility[locName] !== false;
+                    if (matches && !currentlyVisible) {
+                        locationVisibility[locName] = true;
+                    } else if (!matches && currentlyVisible) {
+                        locationVisibility[locName] = false;
+                    }
+                }
+            });
+            // Apply map/geoshape updates after filtering
+            updateGeoshapeVisibility();
+            // For regular markers, add/remove based on locationVisibility
+            locationsData.forEach(location => {
+                const isVisible = locationVisibility[location.name] !== false;
+                // Find marker or geoshape pin
+                let marker = markersByLayer[location.layer].find(m => {
+                    const popup = m.getPopup();
+                    return popup && popup.getContent().includes(location.name);
+                });
+                if (!marker && location.boundaries && location.boundaries.length > 0) {
+                    const geoshapePins = geoshapePinsByLayer[location.layer];
+                    const locationIndex = geoshapeData.filter(loc => loc.layer === location.layer).findIndex(loc => loc.name === location.name);
+                    if (locationIndex >= 0 && locationIndex < geoshapePins.length) {
+                        marker = geoshapePins[locationIndex];
+                    }
+                }
+                if (marker) {
+                    if (isVisible) {
+                        if (!markerCluster.hasLayer(marker)) markerCluster.addLayer(marker);
+                    } else {
+                        if (markerCluster.hasLayer(marker)) markerCluster.removeLayer(marker);
+                    }
+                }
+            });
+            // Finally, refresh sidebar counts and map layout, then fit to visible markers
+            updateSidebarVisibility();
+            setTimeout(() => {
+                map.invalidateSize();
+                const visibleLayers = [];
+                markerCluster.eachLayer(layer => {
+                    if (layer && typeof layer.getLatLng === 'function') {
+                        visibleLayers.push(layer);
+                    }
+                });
+                if (visibleLayers.length > 0) {
+                    const group = new L.featureGroup(visibleLayers);
+                    map.flyToBounds(group.getBounds(), {
+                        padding: [20, 20],
+                        animate: true,
+                        duration: 0.6
+                    });
+                }
+            }, 80);
+        });
+    }
+
+    function invalidateMapSizeSoon() {
+        setTimeout(() => map.invalidateSize(), 150);
+    }
+
+    if (sidebarToggleBtn) {
+        sidebarToggleBtn.addEventListener('click', function() {
+            const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+            this.setAttribute('aria-expanded', String(!isCollapsed));
+            this.title = isCollapsed ? 'Show sidebar' : 'Hide sidebar';
+            const sidebarTab = document.getElementById('sidebar-tab');
+            if (sidebarTab) {
+                sidebarTab.classList.toggle('show', isCollapsed);
+            }
+            invalidateMapSizeSoon();
+            if (isCollapsed) {
+                // When entering full-screen map, fit to contents
+                setTimeout(() => fitAllLocations(), 200);
+            }
+        });
+    }
+
+    // Sidebar bottom tab to restore sidebar
+    const sidebarTabBtn = document.getElementById('sidebar-tab');
+    if (sidebarTabBtn) {
+        sidebarTabBtn.addEventListener('click', function() {
+            document.body.classList.remove('sidebar-collapsed');
+            const toggle = document.getElementById('sidebar-toggle');
+            if (toggle) {
+                toggle.setAttribute('aria-expanded', 'true');
+                toggle.title = 'Hide sidebar';
+            }
+            this.classList.remove('show');
+            invalidateMapSizeSoon();
+        });
+    }
+
     // Function to toggle full screen mode
     function toggleFullScreen() {
         const mainContainer = document.querySelector('.main-container');

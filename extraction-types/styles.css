@@ -600,6 +600,15 @@
     min-height: 0;
 }
 
+.sidebar-collapsed .sidebar {
+    width: 0;
+    border-right: none;
+}
+
+.sidebar-collapsed .map-container {
+    width: 100%;
+}
+
 /* Style for areas outside tile coverage */
 .leaflet-tile-pane {
     background-color: #C4DFF8;
@@ -765,9 +774,9 @@
 
 .info-tooltip {
     position: absolute;
-    top: calc(100% - 146px);
-    right: -6px;
-    transform: translateX(50%);
+    top: 50%;
+    left: calc(100% + 8px);
+    transform: translateY(-50%);
     background: var(--gray-10);
     color: white;
     padding: 8px 12px;
@@ -786,9 +795,9 @@
 .info-tooltip::before {
     content: '';
     position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
+    top: 50%;
+    left: -4px;
+    transform: translateY(-50%) rotate(45deg);
     width: 8px;
     height: 8px;
     background: var(--gray-10);

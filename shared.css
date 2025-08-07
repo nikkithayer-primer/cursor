@@ -109,6 +109,68 @@ body {
     min-height: 0;
 }
 
+/* Sidebar controls */
+.sidebar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--gray-2);
+}
+
+.sidebar-filter-input {
+    flex: 1;
+    height: 28px;
+    padding: 4px 8px;
+    border: 1px solid var(--gray-3);
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.sidebar-toggle-btn {
+    height: 28px;
+    width: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-0);
+    color: var(--gray-9);
+    border: 1px solid var(--gray-3);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sidebar-collapsed .sidebar {
+    width: 0;
+    border-right: none;
+}
+
+.sidebar-collapsed .map-container {
+    width: 100%;
+}
+
+/* Sidebar bottom tab */
+.sidebar-tab {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    background: var(--gray-0);
+    border: 1px solid var(--gray-3);
+    border-radius: 6px;
+    color: var(--gray-10);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    z-index: 1200;
+}
+
+.sidebar-collapsed #sidebar-tab,
+#sidebar-tab.show {
+    display: inline-flex !important;
+}
+
 /* Location Items */
 .location-item {
     border-left: 4px solid var(--gray-1);
