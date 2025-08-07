@@ -1,5 +1,5 @@
 // Initialize the map
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Create map instance with a temporary center, will be updated to show all locations
     const map = L.map('map').setView([39.8283, -98.5795], 2);
 
@@ -195,28 +195,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         'Weapon': 'Grenade.svg'
     };
 
-    // Cache for loaded SVG content
-    const svgCache = {};
-
-    // Function to load and cache SVG content
-    async function loadSVG(filename) {
-        if (svgCache[filename]) {
-            return svgCache[filename];
-        }
-
-        try {
-            const response = await fetch(`svgs/${filename}`);
-            if (!response.ok) {
-                throw new Error(`Failed to load ${filename}`);
-            }
-            const svgText = await response.text();
-            svgCache[filename] = svgText;
-            return svgText;
-        } catch (error) {
-            console.warn(`Could not load SVG ${filename}, using fallback`, error);
-            // Return a simple fallback SVG
-            return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>';
-        }
+    // Function to get simple fallback SVG content (synchronous)
+    function getSVG(filename) {
+        // Return a simple fallback SVG for all extraction types
+        return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>';
     }
 
     // Function to colorize SVG content
@@ -239,9 +221,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // Function to get extraction type icon HTML
-    async function getExtractionTypeIconHTML(extractionType, color, size = '16px') {
+    function getExtractionTypeIconHTML(extractionType, color, size = '16px') {
         const filename = extractionTypeSVGMap[extractionType] || extractionTypeSVGMap['Location'];
-        const svgContent = await loadSVG(filename);
+        const svgContent = getSVG(filename);
         const colorizedSVG = colorizeSVG(svgContent, color);
         
         // Wrap in a container div with specified size
@@ -261,9 +243,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     // Function to create extraction-type specific map markers
-    async function createExtractionTypeMarker(extractionType, layerColor) {
+    function createExtractionTypeMarker(extractionType, layerColor) {
         const filename = extractionTypeSVGMap[extractionType] || extractionTypeSVGMap['Location'];
-        const svgContent = await loadSVG(filename);
+        const svgContent = getSVG(filename);
         const colorizedSVG = colorizeSVG(svgContent, 'white'); // White for visibility on colored pin
         
         return L.divIcon({
@@ -282,12 +264,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // Function to get pin icon for sidebar display
-    async function getPinIcon(extractionType, layerColor) {
+    function getPinIcon(extractionType, layerColor) {
         if (!extractionType || !layerColor) {
-            return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>';
+            return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><circle cx="12" cy="12" r="8" fill="#ccc"/></svg>';
         }
         
-        return await getExtractionTypeIconHTML(extractionType, layerColor, '16px');
+        return getExtractionTypeIconHTML(extractionType, layerColor, '16px');
     }
 
     // Function to get layer class for styling
@@ -1029,7 +1011,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `;
                     
                     // Create pin marker with extraction-type icon
-                    const pinMarkerIcon = await createExtractionTypeMarker(location['extraction-type'] || 'Location', layerColors[location.layer]);
+                    const pinMarkerIcon = createExtractionTypeMarker(location['extraction-type'] || 'Location', layerColors[location.layer]);
                     const pinMarker = L.marker([center.lat, center.lng], {
                         icon: pinMarkerIcon,
                         layer: location.layer
@@ -1088,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `;
                     
                     // Create marker with extraction-type icon
-                    const markerIcon = await createExtractionTypeMarker(location['extraction-type'] || 'Location', layerColors[location.layer]);
+                    const markerIcon = createExtractionTypeMarker(location['extraction-type'] || 'Location', layerColors[location.layer]);
                     const marker = L.marker([location.latitude, location.longitude], {
                         icon: markerIcon,
                         layer: location.layer
@@ -1141,8 +1123,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const locationItem = document.createElement('div');
                 locationItem.className = 'location-item';
                 
-                // Get the pin icon HTML asynchronously
-                const pinIconHTML = await getPinIcon(location['extraction-type'] || 'Location', layerColors[location.layer]);
+                // Get the pin icon HTML
+                const pinIconHTML = getPinIcon(location['extraction-type'] || 'Location', layerColors[location.layer]);
                 
                 locationItem.innerHTML = `
                     <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
