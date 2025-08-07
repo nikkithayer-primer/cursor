@@ -302,12 +302,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if this location should be visible based on individual location visibility
             const isLocationVisible = locationVisibility[location.name] !== false; // Default to true if not set
             
-            // Determine zoom threshold based on type: countries at zoom 4+, states at zoom 7+, cities at zoom 9+
+            // Determine zoom threshold based on type: countries at zoom 4+, states at zoom 7+, seas at zoom 4+, cities at zoom 9+
             let zoomThreshold;
             if (location.type === 'country') {
                 zoomThreshold = 3;
             } else if (location.type === 'state') {
                 zoomThreshold = 5;
+            } else if (location.type === 'sea') {
+                zoomThreshold = 4;
             } else {
                 zoomThreshold = 9; // Default for cities and other types
             }
