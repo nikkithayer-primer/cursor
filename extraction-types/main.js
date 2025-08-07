@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const markerCluster = L.markerClusterGroup({
         chunkedLoading: true,
         maxClusterRadius: 80,
+        disableClusteringAtZoom: 8,
         iconCreateFunction: function(cluster) {
             // Get all child markers and count by layer
             const children = cluster.getAllChildMarkers();
@@ -91,41 +92,35 @@ document.addEventListener('DOMContentLoaded', function() {
         if (clusterElement) {
             highlightCluster(clusterElement, true);
             
-            // Highlight sidebar items for all markers in the cluster
+            // Collect all items in cluster for tooltip with icons
             const childMarkers = e.layer.getAllChildMarkers();
-            let firstLocationName = null;
-            let additionalCount = 0;
-            
-            childMarkers.forEach((marker, index) => {
+            const clusterItems = [];
+            childMarkers.forEach(marker => {
                 const popup = marker.getPopup();
-                if (popup) {
-                    const content = popup.getContent();
-                    const nameMatch = content.match(/<h4>(.*?)<\/h4>/);
-                    if (nameMatch) {
-                        const locationName = nameMatch[1];
-                        highlightSidebarItem(locationName, true);
-                        
-                        // Store the first location for tooltip
-                        if (index === 0) {
-                            firstLocationName = locationName;
-                        }
-                    }
-                }
+                if (!popup) return;
+                const content = popup.getContent();
+                const nameMatch = content.match(/<h4>(.*?)<\/h4>/);
+                if (!nameMatch) return;
+                const locationName = nameMatch[1];
+                const loc = locationsData.find(l => l.name === locationName);
+                if (!loc) return;
+                highlightSidebarItem(locationName, true);
+                clusterItems.push({
+                    headline: loc.headline,
+                    name: locationName,
+                    layer: loc.layer,
+                    extractionType: loc['extraction-type'] || 'Location'
+                });
             });
-            
-            // Calculate additional locations count
-            additionalCount = childMarkers.length - 1;
-            
-            // Show tooltip for the first location with additional count
-            if (firstLocationName) {
+
+            // Show tooltip listing all items with colored icons
+            if (clusterItems.length > 0) {
                 const clusterRect = clusterElement.getBoundingClientRect();
                 const mapContainer = document.getElementById('map');
                 const mapRect = mapContainer.getBoundingClientRect();
-                
                 const x = clusterRect.left + clusterRect.width / 2 - mapRect.left;
                 const y = clusterRect.top + clusterRect.height / 2 - mapRect.top;
-                
-                showMapTooltip(firstLocationName, x, y, true, additionalCount);
+                showClusterTooltip(clusterItems, x, y);
             }
         }
     });
@@ -765,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mapTooltip.style.display = 'none';
     document.body.appendChild(mapTooltip);
 
-    // Function to show tooltip next to map marker or cluster
+    // Function to show tooltip next to a single map marker
     function showMapTooltip(locationName, x, y, isCluster = false, additionalCount = 0) {
         const location = locationsData.find(loc => loc.name === locationName);
         if (!location) return;
@@ -774,11 +769,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="map-tooltip-location">${location.name}</div>
             <div class="map-tooltip-headline">${location.headline}</div>
         `;
-        
-        if (isCluster && additionalCount > 0) {
-            const locationText = additionalCount === 1 ? 'location' : 'locations';
-            tooltipContent += `<div class="map-tooltip-additional">+${additionalCount} more ${locationText}</div>`;
-        }
         
         mapTooltip.innerHTML = tooltipContent;
         mapTooltip.style.display = 'block';
@@ -803,6 +793,63 @@ document.addEventListener('DOMContentLoaded', function() {
             top = mapRect.height - tooltipRect.height - 10;
         }
         
+        mapTooltip.style.left = (mapRect.left + left) + 'px';
+        mapTooltip.style.top = (mapRect.top + top) + 'px';
+    }
+
+    // Function to show tooltip for a cluster with all items listed and colored icons
+    function showClusterTooltip(clusterItems, x, y) {
+        if (!clusterItems || clusterItems.length === 0) return;
+
+        const maxItems = 3;
+        const displayItems = clusterItems.slice(0, maxItems);
+        const remaining = clusterItems.length - displayItems.length;
+
+        const itemsHTML = displayItems.map(item => {
+            const iconHTML = getExtractionTypeIconHTML(item.extractionType || 'Location', layerColors[item.layer] || '#66778C', '14px');
+            return `
+                <div class="map-tooltip-cluster-item" style="display:flex;align-items:flex-start;gap:8px;margin:8px 0;max-width:360px;">
+                    <span class="map-tooltip-cluster-icon">${iconHTML}</span>
+                    <span style="display:flex;flex-direction:column;gap:4px;max-width:320px;">
+                        <span class="map-tooltip-cluster-headline" style="line-height:1.25;">${item.headline}</span>
+                        <div class="location-name"><div class="location-name-content"><span>${item.name}</span></div></div>
+                    </span>
+                </div>
+            `;
+        }).join('');
+
+        const moreHTML = remaining > 0
+            ? `<div class="map-tooltip-cluster-more" style="margin-top:6px;color:var(--gray-9);font-size:12px;">+${remaining} more</div>`
+            : '';
+
+        const tooltipContent = `
+            <div class="map-tooltip-cluster" style="padding:10px 12px;">
+                ${itemsHTML}
+                ${moreHTML}
+            </div>
+        `;
+
+        mapTooltip.innerHTML = tooltipContent;
+        mapTooltip.style.display = 'block';
+
+        // Position tooltip next to the cluster
+        const tooltipRect = mapTooltip.getBoundingClientRect();
+        const mapContainer = document.getElementById('map');
+        const mapRect = mapContainer.getBoundingClientRect();
+
+        let left = x + 20;
+        let top = y - (tooltipRect.height / 2);
+
+        if (left + tooltipRect.width > mapRect.width) {
+            left = x - tooltipRect.width - 20;
+        }
+        if (top < 0) {
+            top = 10;
+        }
+        if (top + tooltipRect.height > mapRect.height) {
+            top = mapRect.height - tooltipRect.height - 10;
+        }
+
         mapTooltip.style.left = (mapRect.left + left) + 'px';
         mapTooltip.style.top = (mapRect.top + top) + 'px';
     }
