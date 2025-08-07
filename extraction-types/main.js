@@ -1333,12 +1333,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update Show All button text with total count
     const showAllBtn = document.getElementById('show-all-btn');
-    const totalLocations = locationsData.length;
-    showAllBtn.innerHTML = `
+            const totalLocations = locationsData.length;
+        showAllBtn.innerHTML = `
         <svg viewBox="0 0 24 24" width="16" height="16">
             <path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M20.94,11C20.7,6.73 17.27,3.3 13,3.06V1H11V3.06C6.73,3.3 3.3,6.73 3.06,11H1V13H3.06C3.3,17.27 6.73,20.7 11,20.94V23H13V20.94C17.27,20.7 20.7,17.27 20.94,13H23V11H20.94M12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19Z" fill="currentColor"/>
         </svg>
-        Show all (${totalLocations})
+            Show all (${totalLocations})
     `;
 
     // Set initial view to show all locations (no animation for first load)

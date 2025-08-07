@@ -171,7 +171,7 @@ body {
     display: inline-flex !important;
 }
 
-/* Location Items */
+/* Point Items */
 .location-item {
     border-left: 4px solid var(--gray-1);
     border-bottom: 1px solid var(--gray-2);
@@ -265,7 +265,7 @@ body {
     fill: var(--chart-pink);
 }
 
-/* Location Controls */
+/* Point Controls */
 .location-controls {
     display: flex;
     align-items: center;

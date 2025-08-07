@@ -545,7 +545,7 @@
     border-radius: 0 0 6px 6px;
 }
 
-/* Location popover styles (same as layer popover) */
+/* Point popover styles (same as layer popover) */
 .location-popover {
     position: absolute;
     top: 100%;
