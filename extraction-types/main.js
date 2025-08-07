@@ -195,9 +195,12 @@ document.addEventListener('DOMContentLoaded', function() {
         'Weapon': 'Grenade.svg'
     };
 
-    // Function to get simple fallback SVG content (synchronous)
+    // Function to get SVG content by filename from inline map, with a simple fallback
     function getSVG(filename) {
-        // Return a simple fallback SVG for all extraction types
+        if (window.SVG_MAP && window.SVG_MAP.byFilename && window.SVG_MAP.byFilename[filename]) {
+            return window.SVG_MAP.byFilename[filename];
+        }
+        // Fallback SVG
         return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>';
     }
 
