@@ -1501,7 +1501,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const nameEl = item.querySelector('.location-name-content span:last-child');
                 const name = nameEl?.textContent?.toLowerCase() || '';
                 const headline = item.querySelector('.location-headline')?.textContent?.toLowerCase() || '';
-                const matches = (name.includes(query) || headline.includes(query));
+                const pinType = item.querySelector('.pin-icon')?.getAttribute('data-tooltip')?.toLowerCase() || '';
+                const matches = (name.includes(query) || headline.includes(query) || pinType.includes(query));
                 item.style.display = matches ? 'block' : 'none';
                 if (nameEl) {
                     const locName = nameEl.textContent;
@@ -1545,7 +1546,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     map.flyToBounds(group.getBounds(), {
                         padding: [20, 20],
                         animate: true,
-                        duration: 0.6
+                        duration: 0.6,
+                        maxZoom: 9 // Do not zoom in past city geoshape threshold
                     });
                 }
             }, 80);
