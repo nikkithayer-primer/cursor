@@ -349,7 +349,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
-    padding: 10px 16px;
+    padding: 6px 8px;
     background: white;
     color: var(--gray-9);
     border: 1px solid var(--gray-3);
@@ -362,7 +362,6 @@
     text-decoration: none;
     text-align: left;
     white-space: nowrap;
-    min-width: 120px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
