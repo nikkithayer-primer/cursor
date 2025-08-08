@@ -320,17 +320,11 @@
     max-height: 820px;
 }
 
-
-
 #location-list {
     flex: 1;
     overflow-y: auto;
     padding: 0;
 }
-
-
-
-
 
 /* Floating Controls on Map - Right Side */
 .floating-controls-right {
