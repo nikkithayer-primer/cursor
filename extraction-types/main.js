@@ -750,9 +750,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const location = locationsData.find(loc => loc.name === locationName);
         if (!location) return;
 
+        // Get extraction type icon for non-clustered items
+        const extractionTypeIcon = !isCluster && location['extraction-type'] 
+            ? getPinIcon(location['extraction-type'], layerColors[location.layer]) 
+            : '';
+
         let tooltipContent = `
-            <div class="map-tooltip-location">${location.name}</div>
-            <div class="map-tooltip-headline">${location.headline}</div>
+            <div class="map-tooltip-header">
+                ${extractionTypeIcon ? `<div class="map-tooltip-icon">${extractionTypeIcon}</div>` : ''}
+                <div class="map-tooltip-content">
+                    <div class="map-tooltip-headline">${location.headline}</div>
+                    <div class="map-tooltip-location">${location.name}</div>
+                </div>
+            </div>
         `;
         
         mapTooltip.innerHTML = tooltipContent;
@@ -1145,10 +1155,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const pinIconHTML = getPinIcon(location['extraction-type'] || 'Location', layerColors[location.layer]);
                 
                 locationItem.innerHTML = `
-                    <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
-                        <div class="location-name-content">
+                    <div class="location-headline">
+                        <div class="location-headline-content">
                             <span class="pin-icon ${getLayerClass(location.layer)}" title="${location['extraction-type'] || 'Location'}" data-tooltip="${location['extraction-type'] || 'Location'}">${pinIconHTML}</span>
-                            <span>${location.name}</span>
+                            <span>${location.headline}</span>
                         </div>
                         <div class="location-controls">
                             <button class="layer-control-btn location-eye-toggle" title="Toggle visibility">
@@ -1157,18 +1167,28 @@ document.addEventListener('DOMContentLoaded', function() {
                             <button class="layer-control-btn location-menu-btn" title="Location options">
                                 <svg viewBox="0 0 24 24"><path d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"/></svg>
                                 <div class="location-popover">
-                                    <div class="location-popover-item" data-action="zoom">Zoom to Location</div>
-                                    <div class="location-popover-item" data-action="hide">Hide Location</div>
+                                    <div class="location-popover-content">
+                                        <div class="location-popover-header">
+                                            <div class="location-popover-icon">${pinIconHTML}</div>
+                                            <div class="location-popover-text">
+                                                <div class="location-popover-headline">${location.headline}</div>
+                                                <div class="location-popover-coordinates">${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}</div>
+                                            </div>
+                                        </div>
+                                        <div class="location-popover-actions">
+                                            <div class="location-popover-item" data-action="zoom">Zoom to Location</div>
+                                            <div class="location-popover-item" data-action="hide">Hide Location</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </button>
                         </div>
                     </div>
                     <div class="location-info-wrapper">
-                        <div class="location-headline">${location.headline}</div>
                         <div class="location-date">${location.date}</div>
                         <div class="location-description">${location.description}</div>
-                        <div class="location-coordinates">
-                            ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}
+                        <div class="location-coordinates" data-lat="${location.latitude}" data-lng="${location.longitude}">
+                            <span>${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}</span>
                         </div>
                     </div>
                 `;
@@ -1177,6 +1197,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 const locationEyeBtn = locationItem.querySelector('.location-eye-toggle');
                 const locationMenuBtn = locationItem.querySelector('.location-menu-btn');
                 const locationPopover = locationItem.querySelector('.location-popover');
+                
+                // Add click handlers for icon and headline to zoom to location
+                const pinIcon = locationItem.querySelector('.pin-icon');
+                const headlineText = locationItem.querySelector('.location-headline-content span:last-child');
+                
+                const zoomToLocation = (e) => {
+                    e.stopPropagation();
+                    
+                    if (location.boundaries && location.boundaries.length > 0) {
+                        // For geoshapes, zoom to the bounds of the shape
+                        const polygon = L.polygon(location.boundaries);
+                        map.flyToBounds(polygon.getBounds(), {
+                            padding: [20, 20],
+                            duration: 1.5
+                        });
+                    } else {
+                        // For point locations, zoom to coordinates
+                        map.flyTo([location.latitude, location.longitude], 13, {
+                            animate: true,
+                            duration: 1.5
+                        });
+                    }
+                    setTimeout(updateSidebarVisibility, 1600);
+                };
+                
+                if (pinIcon) {
+                    pinIcon.addEventListener('click', zoomToLocation);
+                    pinIcon.style.cursor = 'pointer';
+                }
+                
+                if (headlineText) {
+                    headlineText.addEventListener('click', zoomToLocation);
+                    headlineText.style.cursor = 'pointer';
+                }
 
                 if (locationEyeBtn) {
                     locationEyeBtn.addEventListener('click', (e) => {
@@ -1199,10 +1253,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         switch(action) {
                             case 'zoom':
-                                map.flyTo([location.latitude, location.longitude], 13, {
-                                    animate: true,
-                                    duration: 1.5
-                                });
+                                if (location.boundaries && location.boundaries.length > 0) {
+                                    // For geoshapes, zoom to the bounds of the shape
+                                    const polygon = L.polygon(location.boundaries);
+                                    map.flyToBounds(polygon.getBounds(), {
+                                        padding: [20, 20],
+                                        duration: 1.5
+                                    });
+                                } else {
+                                    // For point locations, zoom to coordinates
+                                    map.flyTo([location.latitude, location.longitude], 13, {
+                                        animate: true,
+                                        duration: 1.5
+                                    });
+                                }
                                 setTimeout(updateSidebarVisibility, 1600);
                                 break;
                             case 'hide':

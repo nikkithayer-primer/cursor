@@ -688,25 +688,44 @@
     background: var(--gray-0);
     color: var(--gray-10);
     padding: 8px 12px;
-    border-radius: 0px;
+    border-radius: 4px;
     font-size: 14px;
     border: 1px solid var(--gray-2);
-    border-radius: 4px;
     z-index: 2000;
     pointer-events: auto;
     max-width: 250px;
 }
 
-.map-tooltip-headline {
-    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
+.map-tooltip-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
 }
 
-.map-tooltip-location {
+.map-tooltip-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.map-tooltip-content {
+    flex: 1;
+}
+
+/* Shared tooltip text styles */
+.map-tooltip-headline,
+.map-tooltip-cluster-headline {
+    color: var(--gray-10);
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.map-tooltip-location,
+.map-tooltip-cluster-item .location-name-content span {
+    color: var(--gray-10);
+    font-weight: 500;
     font-size: 13px;
-    line-height: 1.3;
-    margin-bottom: 4px;
 }
 
 .map-tooltip-additional {

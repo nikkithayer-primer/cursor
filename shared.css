@@ -443,12 +443,33 @@ body {
     font-size: 16px;
     letter-spacing: 0.33px;
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.location-date, .location-coordinates {
+.location-headline-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+
+
+.location-date {
     font-size: 12px;
     color: var(--gray-9);
     margin-bottom: 8px;
+}
+
+.location-coordinates {
+    font-size: 12px;
+    color: var(--gray-9);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .location-description {
@@ -472,6 +493,11 @@ h3 {
 }
 
 /* Button Styles */
+button {
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 500;
+}
+
 .btn {
     display: inline-block;
     padding: 6px 12px;
@@ -479,7 +505,7 @@ h3 {
     color: var(--gray-9);
     border: 1px solid var(--gray-9);
     border-radius: 4px;
-    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
@@ -493,7 +519,8 @@ h3 {
     color: #fff;
     padding: 8px 16px;
     border-radius: 8px;
-    font-weight: 600;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 500;
 }
 
 .btn-primary:hover {
@@ -506,6 +533,7 @@ h3 {
     border: none;
     color: var(--gray-9);
     padding: 8px 12px;
+    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
     font-weight: 500;
 }
 
