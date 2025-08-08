@@ -142,10 +142,6 @@ body {
 /* Full-screen timer styling */
 .toggle-section.switching .timer-container {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 3px solid var(--secondary-color);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
     padding: 40px;
     display: flex !important;
 }
@@ -243,13 +239,9 @@ body {
     justify-content: center;
     text-align: center;
     padding: 30px;
-    border: 3px solid var(--accent-color);
-    background-color: var(--secondary-color);
-    border-radius: 60px;
     width: 100%;
     max-width: 600px;
     height: 120px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .timer-text {
@@ -321,7 +313,8 @@ body {
     content: "CLASSIFIED";
     position: absolute;
     top: -15px;
-    left: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--accent-color);
     color: var(--secondary-color);
     padding: 5px 15px;
