@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE VASE - A Cold War Experiment</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <p class="subtitle">Mission S.01</p>
+            <h1 class="title">THE VASE</h1>
+        </header>
+
+        <!-- Toggle Section -->
+        <section class="toggle-section" id="toggleSection">
+            <div class="switch-container" id="switchContainer">
+                <div class="button-wrapper">
+                    <button class="team-button red-button" id="redButton">RED</button>
+                    <button class="team-button blue-button" id="blueButton">BLUE</button>
+                </div>
+            </div>
+            
+            <!-- Timer Display (replaces switch) -->
+            <div class="timer-container" id="timerContainer" style="display: none;">
+                <div class="timer-text">SWITCHING IN PROGRESS</div>
+                <div class="timer-display" id="timerDisplay">15</div>
+            </div>
+        </section>
+
+        <!-- Status Section -->
+        <section class="status-section">
+            <div class="status-card">
+                <div class="status-label">CURRENT CONTROL</div>
+                <div class="status-indicator" id="statusIndicator">NONE</div>
+            </div>
+            <div class="status-card">
+                <div class="countdown-label">TIME TO DEADLINE</div>
+                <div class="countdown-display" id="countdownDisplay">--:--:--</div>
+            </div>
+        </section>
+
+        <!-- Mission Briefing -->
+        <section class="mission-brief">
+            <div class="briefing-text">
+                <p>The side in control of the vase at 4pm will receive useful information for their objectives.</p>
+                <p>Good luck, have fun, <span class="warning">DON'T GET CAUGHT</span>.</p>
+            </div>
+        </section>
+
+        <!-- Mission End (Hidden initially) -->
+        <section class="mission-end" id="missionEnd" style="display: none;">
+            <div class="end-message" id="endMessage">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Geometric Elements -->
+        <div class="geometric-elements">
+            <div class="triangle triangle-1"></div>
+            <div class="triangle triangle-2"></div>
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="rectangle rectangle-1"></div>
+            <div class="rectangle rectangle-2"></div>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="connection-status" id="connectionStatus">
+            OFFLINE
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

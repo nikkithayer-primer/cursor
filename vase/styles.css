@@ -1,0 +1,603 @@
+/* CSS Variables for Themes */
+:root {
+    /* Default Grey Theme */
+    --primary-color: #232428;
+    --secondary-color: #FFF9F0;
+    --accent-color: #434347;
+    --bg-color: #434347;
+    --text-color: #FFF9F0;
+    --shadow-color: rgba(67, 67, 71, 0.3);
+    --switch-bg: #232428;
+    --switch-blue: #0C5679;
+    --switch-blue-bg: rgba(12, 86, 121, 0.1);
+    --success-color: #00cc66;
+    --grid-overlay: rgba(255, 249, 240, 0.05);
+    --transparent: transparent;
+}
+
+.red-theme {
+    --primary-color: #E5340B;
+    --secondary-color: #FFF9F0;
+    --accent-color: #232428;
+    --bg-color: #E5340B;
+    --text-color: #FFF9F0;
+    --shadow-color: rgba(229, 52, 11, 0.3);
+    --switch-bg: #232428;
+    --switch-blue: #0C5679;
+    --switch-blue-bg: rgba(12, 86, 121, 0.1);
+    --success-color: #00cc66;
+    --grid-overlay: rgba(255, 249, 240, 0.05);
+    --transparent: transparent;
+}
+
+.blue-theme {
+    --primary-color: #0C5679;
+    --secondary-color: #FFF9F0;
+    --accent-color: #232428;
+    --bg-color: #0C5679;
+    --text-color: #FFF9F0;
+    --shadow-color: rgba(12, 86, 121, 0.3);
+    --switch-bg: #232428;
+    --switch-blue: #0C5679;
+    --switch-blue-bg: rgba(12, 86, 121, 0.1);
+    --success-color: #00cc66;
+    --grid-overlay: rgba(255, 249, 240, 0.05);
+    --transparent: transparent;
+}
+
+/* Base Typography */
+body {
+    font-family: 'Red Hat Display', sans-serif;
+    background-color: var(--bg-color);
+    background-image: 
+        linear-gradient(var(--grid-overlay) 1px, var(--transparent) 1px),
+        linear-gradient(90deg, var(--grid-overlay) 1px, var(--transparent) 1px);
+    background-size: 20px 20px;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: var(--text-color);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden;
+}
+
+.theme-transition {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.main-header {
+    text-align: center;
+    padding: 40px 20px;
+    border-bottom: 3px solid var(--secondary-color);
+    position: relative;
+    z-index: 2;
+}
+
+.title {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    color: var(--secondary-color);
+    margin: 0;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+.subtitle {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    font-weight: 600;
+    color: var(--secondary-color);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin: 10px 0 0 0;
+    opacity: 0.8;
+}
+
+/* Toggle Section */
+.toggle-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.switch-container.switching {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    z-index: 1000;
+    background-color: #666666;
+    flex-direction: column;
+}
+
+.switch-container.switching .timer-container {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.switch-container.switching .timer-text {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 900;
+}
+
+.switch-container.switching .timer-display {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+}
+
+.switch-container.switching-to-red {
+    animation: flash-red 0.5s infinite alternate;
+}
+
+.switch-container.switching-to-blue {
+    animation: flash-blue 0.5s infinite alternate;
+}
+
+.button-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    height: 120px;
+    border-radius: 60px;
+    border: 3px solid var(--secondary-color);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.team-button {
+    flex: 1;
+    height: 100%;
+    border: none;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border-radius: 0;
+}
+
+.red-button {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+    border-right: 1.5px solid var(--accent-color);
+}
+
+.blue-button {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+    border-left: 1.5px solid var(--accent-color);
+}
+
+.team-button:hover {
+    transform: scale(1.05);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.team-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.red-button.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    border-right: 1.5px solid var(--secondary-color);
+}
+
+.blue-button.active {
+    background-color: var(--switch-blue);
+    color: var(--secondary-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    border-left: 1.5px solid var(--secondary-color);
+}
+
+/* Timer Container */
+.timer-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    border: 3px solid var(--accent-color);
+    background-color: var(--secondary-color);
+    border-radius: 60px;
+    width: 100%;
+    max-width: 600px;
+    height: 120px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.timer-text {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.timer-display {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    color: var(--primary-color);
+    letter-spacing: 0.1em;
+}
+
+/* Status Section */
+.status-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 60px;
+    padding: 0 20px;
+}
+
+.status-card {
+    text-align: center;
+    padding: 30px;
+    border: 3px solid var(--accent-color);
+    background-color: var(--secondary-color);
+    position: relative;
+    z-index: 2;
+}
+
+.status-label,
+.countdown-label {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.status-indicator,
+.countdown-display {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 900;
+    color: var(--primary-color);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Mission Briefing */
+.mission-brief {
+    margin-bottom: 60px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-brief::before {
+    content: "CLASSIFIED";
+    position: absolute;
+    top: -15px;
+    left: 40px;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 3;
+}
+
+.briefing-text {
+    padding: 40px 20px;
+    border: 3px solid var(--accent-color);
+    background-color: var(--secondary-color);
+}
+
+.briefing-text p {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+    letter-spacing: 0.05em;
+}
+
+.briefing-text p:last-child {
+    margin-bottom: 0;
+}
+
+.warning {
+    font-weight: 700;
+    color: var(--accent-color);
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    letter-spacing: 0.1em;
+    text-decoration: underline;
+}
+
+/* Mission End */
+.mission-end {
+    text-align: center;
+    padding: 60px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.end-message {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--primary-color);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Geometric Elements */
+.geometric-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0.15;
+    transition: opacity 0.6s ease;
+}
+
+.triangle-1 {
+    top: 10%;
+    left: 5%;
+    border-left: 50px solid var(--transparent);
+    border-right: 50px solid var(--transparent);
+    border-bottom: 87px solid var(--primary-color);
+    animation: float 8s ease-in-out infinite;
+}
+
+.triangle-2 {
+    bottom: 15%;
+    right: 8%;
+    border-left: 40px solid var(--transparent);
+    border-right: 40px solid var(--transparent);
+    border-top: 69px solid var(--primary-color);
+    animation: float 6s ease-in-out infinite reverse;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0.1;
+    transition: opacity 0.6s ease;
+}
+
+.circle-1 {
+    top: 20%;
+    right: 15%;
+    width: 80px;
+    height: 80px;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+.circle-2 {
+    bottom: 25%;
+    left: 10%;
+    width: 60px;
+    height: 60px;
+    animation: pulse 5s ease-in-out infinite reverse;
+}
+
+.rectangle {
+    position: absolute;
+    background-color: var(--primary-color);
+    opacity: 0.08;
+    transition: opacity 0.6s ease;
+}
+
+.rectangle-1 {
+    top: 50%;
+    left: 2%;
+    width: 30px;
+    height: 120px;
+    animation: rotate 20s linear infinite;
+}
+
+.rectangle-2 {
+    bottom: 10%;
+    right: 3%;
+    width: 25px;
+    height: 100px;
+    animation: rotate 15s linear infinite reverse;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes flash-red {
+    0% { background-color: #434347; }
+    100% { background-color: #E5340B; }
+}
+
+@keyframes flash-blue {
+    0% { background-color: #434347; }
+    100% { background-color: #0C5679; }
+}
+
+/* Connection Status */
+.connection-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    border: 2px solid var(--accent-color);
+    background-color: var(--secondary-color);
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    z-index: 100;
+    border-radius: 4px;
+}
+
+.connection-status.connected {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.connection-status.disconnected {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Active Element Styling */
+.active-element {
+    animation: activePulse 2s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 var(--shadow-color);
+    }
+    50% { 
+        box-shadow: 0 0 0 10px var(--transparent);
+    }
+}
+
+.switching {
+    animation: defaultPulse 1s ease-in-out infinite;
+}
+
+@keyframes defaultPulse {
+    0%, 100% { 
+        opacity: 1;
+    }
+    50% { 
+        opacity: 0.7;
+    }
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .container {
+        padding: 60px 40px;
+    }
+    
+    .status-section {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    
+    .switch-container {
+        margin-bottom: 40px;
+    }
+    
+    .geometric-elements .triangle-1 {
+        border-left: 75px solid var(--transparent);
+        border-right: 75px solid var(--transparent);
+        border-bottom: 130px solid var(--primary-color);
+    }
+    
+    .geometric-elements .triangle-2 {
+        border-left: 60px solid var(--transparent);
+        border-right: 60px solid var(--transparent);
+        border-top: 104px solid var(--primary-color);
+    }
+    
+    .geometric-elements .circle-1 {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .geometric-elements .circle-2 {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+        padding: 60px;
+    }
+    
+    .switch-container {
+        margin-bottom: 50px;
+    }
+    
+    .button-wrapper {
+        max-width: 700px;
+        height: 140px;
+        border-radius: 70px;
+    }
+    
+    .team-button {
+        font-size: 2.8rem;
+    }
+    
+    .timer-container {
+        max-width: 700px;
+        height: 140px;
+        border-radius: 70px;
+    }
+}
+
