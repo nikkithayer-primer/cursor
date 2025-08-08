@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive JavaScript Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>JS Demo</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Welcome to JavaScript Demo</h2>
+                <p>A modern interactive website showcasing JavaScript functionality</p>
+                <button id="colorBtn" class="cta-button">Change Theme</button>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Interactive Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Counter</h3>
+                        <div class="counter-display">
+                            <span id="counterValue">0</span>
+                        </div>
+                        <div class="counter-controls">
+                            <button id="decrementBtn">-</button>
+                            <button id="resetBtn">Reset</button>
+                            <button id="incrementBtn">+</button>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Todo List</h3>
+                        <div class="todo-container">
+                            <input type="text" id="todoInput" placeholder="Add a new task...">
+                            <button id="addTodoBtn">Add</button>
+                            <ul id="todoList"></ul>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Random Quote</h3>
+                        <div class="quote-container">
+                            <blockquote id="quoteText">Click the button to get an inspiring quote!</blockquote>
+                            <button id="quoteBtn">Get Quote</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Get in Touch</h2>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="nameInput" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="emailInput" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="messageInput" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 JavaScript Demo. Built with vanilla JavaScript.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

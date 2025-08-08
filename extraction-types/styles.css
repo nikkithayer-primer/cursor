@@ -404,7 +404,7 @@
     border-radius: 0 0 6px 6px;
 }
 
-/* Point popover styles (same as layer popover) */
+/* Point popover styles (tooltip-like with icon and content) */
 .location-popover {
     position: absolute;
     top: 100%;
@@ -413,14 +413,54 @@
     border: 1px solid var(--gray-2);
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px 0;
-    min-width: 150px;
+    padding: 0;
+    min-width: 200px;
     z-index: 1000;
     display: none;
 }
 
 .location-popover.show {
     display: block;
+}
+
+.location-popover-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.location-popover-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    border-bottom: 1px solid var(--gray-2);
+}
+
+.location-popover-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.location-popover-text {
+    flex: 1;
+}
+
+.location-popover-headline {
+    color: var(--gray-10);
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.location-popover-coordinates {
+    color: var(--gray-10);
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.location-popover-actions {
+    padding: 8px 0;
 }
 
 .location-popover-item {
