@@ -10,148 +10,7 @@
 
 
 
-/* Search Section */
-.search-section {
-    padding: 16px 24px;
-    position: relative;
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-.search-section.condensed {
-    height: 42px;
-    padding: 8px 24px;
-    cursor: pointer;
-}
-
-/* Search Container */
-.search-container {
-    position: relative;
-    max-width: 800px;
-    margin: 0 48px;
-    background: white;
-    border: 1px solid var(--gray-2);
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* Expanded State */
-.search-container.expanded {
-    opacity: 1;
-    visibility: visible;
-    transition: all 0.3s ease;
-}
-
-.search-section.condensed .search-container.expanded {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.search-input-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.search-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    color: var(--gray-10);
-    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
-    background: transparent;
-}
-
-.search-input::placeholder {
-    color: var(--gray-6);
-}
-
-.search-container:focus-within {
-    border-color: var(--link-blue);
-}
-
-.close-search-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gray-7);
-    transition: background-color 0.2s ease, color 0.2s ease;
-    flex-shrink: 0;
-}
-
-.close-search-btn:hover {
-    background-color: var(--gray-1);
-    color: var(--gray-9);
-}
-
-.search-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-
-
-
-/* Condensed State */
-.search-container.condensed {
-    position: absolute;
-    top: 0px;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 24px;
-    padding: 6px 16px;
-    height: 30px;
-}
-
-.search-section.condensed .search-container.condensed {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.condensed-search-text {
-    flex: 1;
-    font-size: 14px;
-    color: var(--gray-6);
-    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
-}
-
-.condensed-date-range {
-    font-size: 14px;
-    color: var(--gray-8);
-    white-space: nowrap;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: var(--gray-1);
-}
-
-.condensed-advanced-options {
-    font-size: 14px;
-    color: var(--gray-8);
-    white-space: nowrap;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: var(--gray-1);
-}
+/* (Removed Search Section styles) */
 
 /* Button Styles */
 .date-range-btn {
@@ -309,7 +168,7 @@
 .main-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 137px); /* Account for top nav (48px) + search section (42px) + tabs section (47px) */
+    height: calc(100vh - 163px); /* Account for top nav (48px) + search section (42px) + tabs section (47px) */
     transition: max-width 0.3s ease, margin 0.3s ease;
 }
 
@@ -435,6 +294,11 @@
 
 .layer-section[data-layer="Suspect movement"] .layer-header {
     border-left: 4px solid var(--chart-pink);
+}
+
+/* Troop Activity border styling */
+.layer-section[data-layer="Troop Activity"] .layer-header {
+    border-left: 4px solid var(--chart-purple);
 }
 
 .layer-title {
@@ -613,26 +477,32 @@
 
 /* Layer-specific magnifying glass colors */
 .layer-control-btn.layer-activities-extracted-from-search-results svg {
-    fill: #43A7DD !important;
+    fill: var(--chart-blue) !important;
 }
 
 .layer-control-btn.layer-drone-attacks svg {
-    fill: #FC922D !important;
+    fill: var(--chart-orange) !important;
 }
 
 .layer-control-btn.layer-drones-witnessed svg {
-    fill: #819B2A !important;
+    fill: var(--chart-green) !important;
 }
 
 .layer-control-btn.layer-suspect-movement svg {
-    fill: #DF5094 !important;
+    fill: var(--chart-pink) !important;
+}
+
+/* Troop Activity (purple) magnifying glass color */
+.layer-control-btn.layer-troop-activity svg {
+    fill: var(--chart-purple) !important;
 }
 
 /* Keep hover state for colored magnifying glass icons */
 .layer-control-btn.layer-activities-extracted-from-search-results:hover svg,
 .layer-control-btn.layer-drone-attacks:hover svg,
 .layer-control-btn.layer-drones-witnessed:hover svg,
-.layer-control-btn.layer-suspect-movement:hover svg {
+.layer-control-btn.layer-suspect-movement:hover svg,
+.layer-control-btn.layer-troop-activity:hover svg {
     opacity: 0.8;
 }
 

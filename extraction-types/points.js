@@ -7,7 +7,7 @@ const locationsData = [
         description: "Major tech companies announce $2.3 billion investment in renewable energy infrastructure across the Bay Area, with new solar farms and wind installations planned for 2025.",
         headline: "Tech Giants Announce Major AI Research Initiative in Silicon Valley",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed",
+        layer: "Troop Activity",
         type: "city",
         "extraction-type": "Location",
         boundaries: [
@@ -28,7 +28,7 @@ const locationsData = [
         description: "Los Angeles County declares state of emergency due to unprecedented wildfire activity, with over 15,000 residents evacuated from foothill communities as firefighters battle multiple blazes.",
         headline: "Hollywood Studios Report Record Box Office Returns This Quarter",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks",
+        layer: "Troop Activity",
         type: "city",
         "extraction-type": "Location",
         boundaries: [
@@ -55,7 +55,7 @@ const locationsData = [
         description: "New York City launches ambitious $50 billion climate resilience program following recent flooding, with plans to build sea walls and upgrade subway infrastructure by 2030.",
         headline: "Wall Street Reaches New Heights as Financial Markets Surge",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed",
+        layer: "Troop Activity",
         type: "city",
         "extraction-type": "Location",
         boundaries: [
@@ -76,7 +76,7 @@ const locationsData = [
         description: "Camden Market vendors report 40% increase in sales as international tourism rebounds, with new sustainable food stalls and eco-friendly shops opening throughout the district.",
         headline: "Camden Market Celebrates 50 Years of Alternative Culture",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results",
+        layer: "Troop Activity",
         type: "neighborhood",
         "extraction-type": "Location"
     },
@@ -87,7 +87,7 @@ const locationsData = [
         description: "Shoreditch tech startup district receives £200 million investment fund approval, positioning the area as London's primary fintech innovation hub with 50 new companies expected to launch.",
         headline: "Street Art Festival Transforms Shoreditch Into Open-Air Gallery",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed",
+        layer: "Troop Activity",
         type: "neighborhood",
         "extraction-type": "Location"
     },
@@ -98,7 +98,7 @@ const locationsData = [
         description: "Notting Hill housing prices surge 25% following announcement of new Crossrail station, sparking debate over gentrification and affordable housing policies in West London.",
         headline: "Notting Hill Carnival Draws Record Crowds to West London",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed",
+        layer: "Troop Activity",
         type: "neighborhood",
         "extraction-type": "Location"
     },
@@ -109,7 +109,7 @@ const locationsData = [
         description: "Greenwich Maritime Museum breaks attendance records with new climate change exhibition, drawing 2 million visitors as Thames flood barriers undergo major upgrades nearby.",
         headline: "Royal Observatory Unveils New Planetarium Exhibition",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks",
+        layer: "Troop Activity",
         type: "neighborhood",
         "extraction-type": "Location"
     },
@@ -120,7 +120,7 @@ const locationsData = [
         description: "Covent Garden pedestrianization project moves forward with £15 million investment, banning vehicles from historic piazza as part of London's green transport initiative.",
         headline: "West End Theaters Report Sold-Out Summer Season",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results",
+        layer: "Troop Activity",
         type: "neighborhood",
         "extraction-type": "Location"
     },
@@ -131,7 +131,7 @@ const locationsData = [
         description: "Paris implements Europe's largest urban bike-sharing expansion with 50,000 new electric bicycles, as city officials report air quality improvements ahead of 2024 Olympics legacy programs.",
         headline: "Louvre Museum Sets New Visitor Record Following Renovation",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drones witnessed",
+        layer: "Troop Activity",
         type: "city",
         "extraction-type": "Location",
         boundaries: [
@@ -154,7 +154,7 @@ const locationsData = [
         description: "Lyon becomes first French city to achieve carbon neutrality target, with new tram lines and renewable energy district heating systems reducing emissions by 60% since 2020.",
         headline: "Lyon's Michelin-Starred Restaurants Win International Recognition",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Drone attacks",
+        layer: "Troop Activity",
         type: "city",
         "extraction-type": "Location",
         boundaries: [
@@ -237,7 +237,7 @@ const locationsData = [
         description: "Bordeaux wine industry adapts to climate change with drought-resistant grape varieties, as vineyard owners invest €500 million in sustainable farming technologies.",
         headline: "Bordeaux Vineyards Report Exceptional Harvest Season",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results",
+        layer: "Troop Activity",
         type: "city",
         "extraction-type": "Location",
         boundaries: [
@@ -297,7 +297,7 @@ const locationsData = [
         description: "Copacabana beach cleanup initiative removes 50 tons of plastic waste as Rio prepares for international environmental summit, with new recycling programs launched citywide.",
         headline: "Rio's Copacabana Beach Hosts International Volleyball Championship",
         date: "May 30, 2025 | 17:20 (UTC)",
-        layer: "Activities extracted from search results",
+        layer: "Troop Activity",
         type: "neighborhood",
         "extraction-type": "Location"
     },

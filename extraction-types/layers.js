@@ -4,22 +4,27 @@ const LAYERS = {
     definitions: {
         'Activities extracted from search results': {
             name: 'Activities extracted from search results',
-            color: '#43A7DD',
+            color: 'var(--chart-blue)',
             visible: true
         },
         'Drone attacks': {
             name: 'Drone attacks',
-            color: '#FC922D',
+            color: 'var(--chart-orange)',
             visible: true
         },
         'Drones witnessed': {
             name: 'Drones witnessed',
-            color: '#819B2A',
+            color: 'var(--chart-green)',
             visible: true
         },
         'Suspect movement': {
             name: 'Suspect movement',
-            color: '#DF5094',
+            color: 'var(--chart-pink)',
+            visible: true
+        },
+        'Troop Activity': {
+            name: 'Troop Activity',
+            color: 'var(--chart-purple)',
             visible: true
         }
     },

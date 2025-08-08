@@ -893,7 +893,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Group locations by layer
     const locationsByLayer = {};
-    const layerOrder = ['Activities extracted from search results', 'Drone attacks', 'Drones witnessed', 'Suspect movement'];
+    const layerOrder = ['Activities extracted from search results', 'Drone attacks', 'Drones witnessed', 'Suspect movement', 'Troop Activity'];
 
     locationsData.forEach(location => {
         if (!locationsByLayer[location.layer]) {
@@ -1140,7 +1140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 locationItem.className = 'location-item';
                 
                 // Get the pin icon HTML
-                const pinIconHTML = getPinIcon(location['extraction-type'] || 'Location', layerColors[location.layer]);
+            const pinIconHTML = getPinIcon(location['extraction-type'] || 'Location', layerColors[location.layer]);
                 
                 locationItem.innerHTML = `
                     <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
@@ -1664,127 +1664,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Function to toggle full screen mode
-    function toggleFullScreen() {
-        const mainContainer = document.querySelector('.main-container');
-        mainContainer.classList.toggle('collapsed');
-        
-        // Update button icon and text based on state
-        const isCollapsed = mainContainer.classList.contains('collapsed');
-        const content = isCollapsed ? 
-            '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,1c-.2761402,0-.5.22386-.5.5s.2238598.5.5.5h3.7929001l-4.14645,4.14645c-.1952696.19526-.1952696.5118399,0,.7070999.19526.1952701.5118399.1952701.7070999,0l4.14645-4.14644v3.7928901c0,.2761402.2238998.5.5.5s.5-.2238598.5-.5V1.5c0-.27614-.2238998-.5-.5-.5h-5ZM6.5,15c.2761402,0,.5-.2238998.5-.5s-.2238598-.5-.5-.5h-3.7928901l4.14644-4.14645c.1952701-.19526.1952701-.5118399,0-.7070999-.19526-.1952696-.5118399-.1952696-.7070999,0l-4.14645,4.14645v-3.7929001c0-.2761402-.22386-.5-.5-.5s-.5.2238598-.5.5v5c0,.2761002.22386.5.5.5h5Z" fill="currentColor" stroke-width="0"></path></g></svg> Open Full Screen' :
-            '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,7h5c.3000002,0,.5-.1999998.5-.5s-.1999998-.5-.5-.5h-3.8000002L14.7999992,1.9000001c.1999998-.2.1999998-.5,0-.7s-.5-.2-.6999998,0l-4.0999994,4.1000001V1.5c0-.3-.1999998-.5-.5-.5s-.5.2-.5.5v5c0,.3000002.1999998.5.5.5ZM1.5,9c-.3,0-.5.1999998-.5.5s.2.5.5.5h3.8000002L1.2000003,14.1000004c-.2.1999998-.2.5,0,.6999998s.5.1999998.7,0l4.0999997-4.1000004v3.8000002c0,.3000002.1999998.5.5.5s.5-.1999998.5-.5v-5c0-.3000002-.1999998-.5-.5-.5H1.5Z" fill="currentColor" stroke-width="0"></path></g></svg> Close Full Screen';
-        const collapseBtn = document.getElementById('collapse-btn');
-        if (collapseBtn) {
-            collapseBtn.innerHTML = content;
-        }
-    }
+    // (Removed full screen toggle and related handlers)
 
-    // Function to exit full screen mode
-    function exitFullScreen() {
-        const mainContainer = document.querySelector('.main-container');
-        if (mainContainer.classList.contains('collapsed')) {
-            mainContainer.classList.remove('collapsed');
-            
-            // Update button to show "Close Full Screen" state
-            const collapseBtn = document.getElementById('collapse-btn');
-            if (collapseBtn) {
-                collapseBtn.innerHTML = '<svg height="1em" role="presentation" version="1.1" viewBox="0 0 16 16" width="1em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="currentColor"><path d="M9.5,7h5c.3000002,0,.5-.1999998.5-.5s-.1999998-.5-.5-.5h-3.8000002L14.7999992,1.9000001c.1999998-.2.1999998-.5,0-.7s-.5-.2-.6999998,0l-4.0999994,4.1000001V1.5c0-.3-.1999998-.5-.5-.5s-.5.2-.5.5v5c0,.3000002.1999998.5.5.5ZM1.5,9c-.3,0-.5.1999998-.5.5s.2.5.5.5h3.8000002L1.2000003,14.1000004c-.2.1999998-.2.5,0,.6999998s.5.1999998.7,0l4.0999997-4.1000004v3.8000002c0,.3000002.1999998.5.5.5s.5-.1999998.5-.5v-5c0-.3000002-.1999998-.5-.5-.5H1.5Z" fill="currentColor" stroke-width="0"></path></g></svg> Close Full Screen';
-            }
-        }
-    }
-
-    // Add click handler for Collapse Screen button
-    const collapseBtn = document.getElementById('collapse-btn');
-    if (collapseBtn) {
-        collapseBtn.addEventListener('click', toggleFullScreen);
-    }
-
-    // Add keyboard event listener for Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            const mainContainer = document.querySelector('.main-container');
-            if (!mainContainer.classList.contains('collapsed')) {
-                // If not in collapsed mode, enter collapsed mode (full screen)
-                toggleFullScreen();
-            } else {
-                // If in collapsed mode, exit full screen
-                exitFullScreen();
-            }
-        }
-    });
-
-    // Search section functionality
-    const searchSection = document.getElementById('search-section');
-    const searchInput = document.getElementById('search-input');
-    const condensedSearchText = document.getElementById('condensed-search-text');
-    const closeSearchBtn = document.getElementById('close-search-btn');
-
-    // Start in condensed state
-    if (searchSection) {
-        searchSection.classList.add('condensed');
-    }
-
-    // Expand search when clicking on condensed state
-    if (searchSection) {
-        searchSection.addEventListener('click', function(e) {
-            if (searchSection.classList.contains('condensed')) {
-                expandSearch();
-                // Focus the search input after expansion
-                setTimeout(() => {
-                    if (searchInput) {
-                        searchInput.focus();
-                    }
-                }, 300);
-            }
-        });
-    }
-
-    // Collapse search when clicking close button
-    if (closeSearchBtn) {
-        closeSearchBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            collapseSearch();
-        });
-    }
-
-    // Update condensed text when typing in search input
-    if (searchInput && condensedSearchText) {
-        searchInput.addEventListener('input', function() {
-            const value = this.value.trim();
-            condensedSearchText.textContent = value || 'Locations across the world';
-        });
-    }
-
-    function expandSearch() {
-        if (searchSection) {
-            searchSection.classList.remove('condensed');
-        }
-    }
-
-    function collapseSearch() {
-        if (searchSection) {
-            searchSection.classList.add('condensed');
-        }
-    }
-
-
-
-    // Close search when clicking outside
-    document.addEventListener('click', function(e) {
-        // Check if click is outside the search section
-        if (searchSection && !searchSection.contains(e.target)) {
-            collapseSearch();
-        }
-    });
-
-    // Prevent clicks inside expanded content from propagating
-    const searchExpandedContent = document.getElementById('search-expanded-content');
-    if (searchExpandedContent) {
-        searchExpandedContent.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
+    // (Removed search section functionality)
 
 
 });
