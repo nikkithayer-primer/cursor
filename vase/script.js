@@ -227,22 +227,22 @@ function updateConnectionStatus() {
     }
 }
 
-// Start countdown to 4pm
+// Start countdown to 6pm
 function startCountdown() {
     function updateCountdown() {
         const now = new Date();
-        const today4pm = new Date();
-        today4pm.setHours(16, 0, 0, 0); // 4:00 PM
+        const today6pm = new Date();
+        today6pm.setHours(18, 0, 0, 0); // 6:00 PM
 
-        // If it's past 4pm today, set for tomorrow
-        if (now > today4pm) {
-            today4pm.setDate(today4pm.getDate() + 1);
+        // If it's past 6pm today, set for tomorrow
+        if (now > today6pm) {
+            today6pm.setDate(today6pm.getDate() + 1);
         }
 
-        const timeDiff = today4pm - now;
+        const timeDiff = today6pm - now;
         
         if (timeDiff <= 0) {
-            // It's 4pm or past - lock the system
+            // It's 6pm or past - lock the system
             lockSystem();
             return;
         }
@@ -258,18 +258,18 @@ function startCountdown() {
     setInterval(updateCountdown, 1000);
 }
 
-// Check if system should be locked (past 4pm)
+// Check if system should be locked (past 6pm)
 function checkLockStatus() {
     const now = new Date();
-    const today4pm = new Date();
-    today4pm.setHours(16, 0, 0, 0);
+    const today6pm = new Date();
+    today6pm.setHours(18, 0, 0, 0);
 
-    if (now >= today4pm) {
+    if (now >= today6pm) {
         lockSystem();
     }
 }
 
-// Lock the system at 4pm
+// Lock the system at 6pm
 function lockSystem() {
     isLocked = true;
     updateButtonStates();

@@ -24,13 +24,13 @@ let gameState = {
     lastUpdate: Date.now()
 };
 
-// Check if system should be locked (past 4pm)
+// Check if system should be locked (past 6pm)
 function checkLockStatus() {
     const now = new Date();
-    const today4pm = new Date();
-    today4pm.setHours(16, 0, 0, 0);
+    const today6pm = new Date();
+    today6pm.setHours(18, 0, 0, 0);
     
-    if (now >= today4pm && !gameState.isLocked) {
+    if (now >= today6pm && !gameState.isLocked) {
         gameState.isLocked = true;
         gameState.winner = gameState.currentColor === 'default' ? null : gameState.currentColor;
         
@@ -40,7 +40,7 @@ function checkLockStatus() {
             winner: gameState.winner
         });
         
-        console.log(`System locked at 4pm. Winner: ${gameState.winner || 'None'}`);
+        console.log(`System locked at 6pm. Winner: ${gameState.winner || 'None'}`);
     }
 }
 
