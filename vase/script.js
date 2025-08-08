@@ -101,8 +101,13 @@ function handleButtonClick(color) {
         return;
     }
 
-    // If clicking the currently active color, switch to default
-    const targetColor = (currentState === color) ? 'default' : color;
+    // If clicking the currently active color, do nothing
+    if (currentState === color) {
+        return;
+    }
+
+    // Switch to the clicked color
+    const targetColor = color;
     
     if (isConnected) {
         socket.emit('toggleColor', { color: targetColor });
