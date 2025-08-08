@@ -1174,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 locationItem.innerHTML = `
                     <div class="location-name" data-lat="${location.latitude}" data-lng="${location.longitude}">
                         <div class="location-name-content">
-                            <span class="pin-icon ${getLayerClass(location.layer)}">${pinIconHTML}</span>
+                            <span class="pin-icon ${getLayerClass(location.layer)}" title="${location['extraction-type'] || 'Location'}" data-tooltip="${location['extraction-type'] || 'Location'}">${pinIconHTML}</span>
                             <span>${location.name}</span>
                         </div>
                         <div class="location-controls">
@@ -1324,22 +1324,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners for map movement and zoom
     map.on('moveend', function() {
         updateSidebarVisibility();
+        updateGlobalCounts();
         updateGeoshapeVisibility();
     });
     map.on('zoomend', function() {
         updateSidebarVisibility();  
+        updateGlobalCounts();
         updateGeoshapeVisibility();
     });
     
-    // Update Show All button text with total count
-    const showAllBtn = document.getElementById('show-all-btn');
-            const totalLocations = locationsData.length;
-        showAllBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" width="16" height="16">
-            <path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M20.94,11C20.7,6.73 17.27,3.3 13,3.06V1H11V3.06C6.73,3.3 3.3,6.73 3.06,11H1V13H3.06C3.3,17.27 6.73,20.7 11,20.94V23H13V20.94C17.27,20.7 20.7,17.27 20.94,13H23V11H20.94M12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19Z" fill="currentColor"/>
-        </svg>
-            Show all (${totalLocations})
-    `;
+    // Update visible/total counts and wire fit-all button
+    const countsEl = document.getElementById('global-counts');
+    function updateGlobalCounts() {
+        if (!countsEl) return;
+        const total = locationsData.length;
+        let visible = 0;
+        document.querySelectorAll('.location-item').forEach(item => {
+            if (item.style.display !== 'none') visible += 1;
+        });
+        countsEl.textContent = `Showing ${visible} of ${total} locations`;
+    }
+    updateGlobalCounts();
+    const fitAllBtn = document.getElementById('fit-all-btn');
+    if (fitAllBtn) {
+        fitAllBtn.addEventListener('click', showAllLocations);
+    }
 
     // Set initial view to show all locations (no animation for first load)
     fitAllLocations();
@@ -1351,8 +1360,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(updateGeoshapeVisibility, 200);
     }, 100);
 
-    // Add click handler for "Show All" button (with animation)
-    showAllBtn.addEventListener('click', showAllLocations);
+    // Fit-all button click is set above if present
 
     // Add click handler for info button tooltip
     const infoBtn = document.getElementById('info-btn');
@@ -1414,6 +1422,115 @@ document.addEventListener('DOMContentLoaded', function() {
     const contentArea = document.querySelector('.content-area');
     const clusterToggle = document.getElementById('cluster-toggle');
     const summaryToggle = document.getElementById('summary-toggle');
+    const typeFilterBtn = document.getElementById('type-filter-btn');
+    const typeFilterModal = document.getElementById('type-filter-modal');
+    const typeFilterBackdrop = document.getElementById('type-filter-backdrop');
+    const typeFilterList = document.getElementById('type-filter-list');
+    const typeFilterClose = document.getElementById('type-filter-close');
+    const typeFilterApply = document.getElementById('type-filter-apply');
+    const typeFilterClear = document.getElementById('type-filter-clear');
+
+    // Build list of extraction types from data
+    const allExtractionTypes = Array.from(new Set(locationsData
+        .map(l => l['extraction-type'])
+        .filter(Boolean)));
+    const extractionTypeVisibility = {};
+    allExtractionTypes.forEach(t => extractionTypeVisibility[t] = true);
+
+    function openTypeModal() {
+        if (!typeFilterModal || !typeFilterBackdrop) return;
+        // Populate list
+        if (typeFilterList) {
+            typeFilterList.innerHTML = allExtractionTypes.map(t => {
+                const checked = extractionTypeVisibility[t] ? 'checked' : '';
+                return `<label style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" data-type="${t}" ${checked}>
+                    <span>${t}</span>
+                </label>`;
+            }).join('');
+        }
+        typeFilterBackdrop.style.display = 'block';
+        typeFilterModal.style.display = 'block';
+    }
+    function closeTypeModal() {
+        if (!typeFilterModal || !typeFilterBackdrop) return;
+        typeFilterBackdrop.style.display = 'none';
+        typeFilterModal.style.display = 'none';
+    }
+    if (typeFilterBtn) typeFilterBtn.addEventListener('click', openTypeModal);
+    if (typeFilterClose) typeFilterClose.addEventListener('click', closeTypeModal);
+    if (typeFilterBackdrop) typeFilterBackdrop.addEventListener('click', closeTypeModal);
+
+    if (typeFilterApply) {
+        typeFilterApply.addEventListener('click', function() {
+            // Read selections
+            if (typeFilterList) {
+                typeFilterList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    const t = cb.getAttribute('data-type');
+                    extractionTypeVisibility[t] = cb.checked;
+                });
+            }
+            // Apply to sidebar items and markers
+            document.querySelectorAll('.location-item').forEach(item => {
+                const nameSpan = item.querySelector('.location-name-content span:last-child');
+                if (!nameSpan) return;
+                const locName = nameSpan.textContent;
+                const loc = locationsData.find(l => l.name === locName);
+                if (!loc) return;
+                const typeAllowed = extractionTypeVisibility[loc['extraction-type'] || 'Location'] !== false;
+                const combinedAllowed = typeAllowed && (locationVisibility[loc.name] !== false);
+                // Persist combined visibility so all logic (sidebar + map) respects it
+                locationVisibility[loc.name] = combinedAllowed;
+                const nameDiv = item.querySelector('.location-name');
+                if (nameDiv) {
+                    if (combinedAllowed) nameDiv.classList.remove('location-hidden');
+                    else nameDiv.classList.add('location-hidden');
+                }
+                // Toggle marker / pin
+                let marker = markersByLayer[loc.layer].find(m => {
+                    const popup = m.getPopup();
+                    return popup && popup.getContent().includes(locName);
+                });
+                if (!marker && loc.boundaries && loc.boundaries.length > 0) {
+                    const geoshapePins = geoshapePinsByLayer[loc.layer];
+                    const locationIndex = geoshapeData.filter(l => l.layer === loc.layer).findIndex(l => l.name === locName);
+                    if (locationIndex >= 0 && locationIndex < geoshapePins.length) {
+                        marker = geoshapePins[locationIndex];
+                    }
+                }
+                if (marker) {
+                    if (combinedAllowed) {
+                        if (clusterToggle && clusterToggle.checked) {
+                            if (!markerCluster.hasLayer(marker)) markerCluster.addLayer(marker);
+                            if (map.hasLayer(marker)) map.removeLayer(marker);
+                        } else {
+                            if (markerCluster.hasLayer(marker)) markerCluster.removeLayer(marker);
+                            if (!map.hasLayer(marker)) map.addLayer(marker);
+                        }
+                    } else {
+                        if (markerCluster.hasLayer(marker)) markerCluster.removeLayer(marker);
+                        if (map.hasLayer(marker)) map.removeLayer(marker);
+                    }
+                }
+            });
+            updateSidebarVisibility();
+            if (typeof updateGlobalCounts === 'function') updateGlobalCounts();
+            updateGeoshapeVisibility();
+            closeTypeModal();
+        });
+    }
+
+    if (typeFilterClear) {
+        typeFilterClear.addEventListener('click', function() {
+            // Reset all types to checked in UI and state
+            allExtractionTypes.forEach(t => extractionTypeVisibility[t] = true);
+            if (typeFilterList) {
+                typeFilterList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = true;
+                });
+            }
+        });
+    }
 
     if (sidebarFilterInput) {
         sidebarFilterInput.addEventListener('input', function(e) {
@@ -1463,6 +1580,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             // Finally, refresh sidebar counts and map layout, then fit to visible markers
             updateSidebarVisibility();
+            updateGlobalCounts();
             setTimeout(() => {
                 map.invalidateSize();
                 const visibleLayers = [];

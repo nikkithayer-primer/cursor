@@ -1250,4 +1250,16 @@ const locationsData = [
         type: "naval_weapons_facility",
         "extraction-type": "Weapon"
     }
-]; 
+    ,
+    {
+        name: "Red Sea Carrier Group",
+        latitude: 20.2961,
+        longitude: 38.5126,
+        description: "Carrier strike group conducts joint naval exercise, deploying armored amphibious vehicles and support craft for littoral operations.",
+        headline: "Carrier Group Deploys Amphibious Armor in Joint Exercise",
+        date: "May 31, 2025 | 04:45 (UTC)",
+        layer: "Drones witnessed",
+        type: "naval_operation",
+        "extraction-type": "Military Vehicle"
+    }
+];
