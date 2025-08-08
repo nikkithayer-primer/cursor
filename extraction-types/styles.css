@@ -139,6 +139,21 @@
     gap: 8px;
 }
 
+/* Sidebar open button styling and animation */
+.sidebar-open-btn {
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+}
+
+.sidebar-open-btn.show {
+    display: inline-flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .toolbar-header-row{
     padding: 12px 24px 0;
 }
@@ -279,26 +294,9 @@
     opacity: 1;
 }
 
-/* Layer-specific left borders matching pin colors */
-.layer-section[data-layer="Activities extracted from search results"] .layer-header {
-    border-left: 4px solid var(--chart-blue);
-}
-
-.layer-section[data-layer="Drone attacks"] .layer-header {
-    border-left: 4px solid var(--chart-orange);
-}
-
-.layer-section[data-layer="Drones witnessed"] .layer-header {
-    border-left: 4px solid var(--chart-green);
-}
-
-.layer-section[data-layer="Suspect movement"] .layer-header {
-    border-left: 4px solid var(--chart-pink);
-}
-
-/* Troop Activity border styling */
-.layer-section[data-layer="Troop Activity"] .layer-header {
-    border-left: 4px solid var(--chart-purple);
+/* Generic layer header border driven by CSS variable set on section */
+.layer-section .layer-header {
+    border-left: 4px solid var(--layer-color, var(--gray-3));
 }
 
 .layer-title {
@@ -451,6 +449,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: width 0.3s ease;
 }
 
 #map {

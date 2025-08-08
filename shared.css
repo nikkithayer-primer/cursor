@@ -107,6 +107,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    position: relative;
+    transition: width 0.3s ease, border-right 0.3s ease;
 }
 
 /* Sidebar controls */
@@ -117,6 +119,9 @@ body {
     gap: 8px;
     padding: 8px 12px;
     border-bottom: 1px solid var(--gray-2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.075);
+    position: relative;
+    z-index: 100;
 }
 
 .sidebar-filter-input {
@@ -132,6 +137,41 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* Sidebar header with title and close button */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--gray-0);
+}
+
+.sidebar-title {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    color: var(--gray-9);
+}
+
+.sidebar-close-btn {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--gray-7);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.sidebar-close-btn:hover {
+    background: var(--gray-1);
+    color: var(--gray-9);
 }
 
 .sidebar-counts {
@@ -227,6 +267,7 @@ body {
 .sidebar-collapsed .sidebar {
     width: 0;
     border-right: none;
+    overflow: hidden;
 }
 
 .sidebar-collapsed .map-container {
@@ -424,6 +465,12 @@ body {
     display: none;
 }
 
+/* Heading Styles */
+h3 {
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+}
+
 /* Button Styles */
 .btn {
     display: inline-block;
@@ -432,7 +479,7 @@ body {
     color: var(--gray-9);
     border: 1px solid var(--gray-9);
     border-radius: 4px;
-    font-family: 'NeueHaasGrotesk', 'Helvetica', 'Arial', sans-serif;
+    font-family: 'NeueHaasGroteskDisplayMedium', 'Helvetica', 'Arial', sans-serif;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;

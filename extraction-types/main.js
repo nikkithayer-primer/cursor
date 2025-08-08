@@ -914,6 +914,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const layerSection = document.createElement('div');
             layerSection.className = 'layer-section';
             layerSection.setAttribute('data-layer', layerName);
+            // Expose layer color via CSS variable for generic styling
+            try { layerSection.style.setProperty('--layer-color', LAYERS.getColor(layerName)); } catch (e) {}
             
             // Create layer header with controls
             const layerHeader = document.createElement('div');
@@ -1333,21 +1335,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fit-all button click is set above if present
 
-    // Add click handler for info button tooltip
-    const infoBtn = document.getElementById('info-btn');
-    const infoTooltip = document.getElementById('info-tooltip');
-    
-    if (infoBtn && infoTooltip) {
-        infoBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            infoTooltip.classList.toggle('show');
-        });
-        
-        // Close tooltip when clicking outside
-        document.addEventListener('click', function() {
-            infoTooltip.classList.remove('show');
-        });
-    }
+
 
     // Add click handler for Map Layer Toggle (Street Map / Satellite)
     const toolbarToggle = document.getElementById('toolbar-toggle');
@@ -1389,6 +1377,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sidebar filter and toggle
     const sidebarFilterInput = document.getElementById('sidebar-filter');
     const sidebarToggleBtn = document.getElementById('sidebar-toggle');
+    const sidebarCloseBtn = document.getElementById('sidebar-close');
+    const openSidebarBtn = document.getElementById('sidebar-open');
     const sidebarElement = document.getElementById('sidebar');
     const contentArea = document.querySelector('.content-area');
     const clusterToggle = document.getElementById('cluster-toggle');
@@ -1558,20 +1548,33 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => map.invalidateSize(), 150);
     }
 
-    if (sidebarToggleBtn) {
-        sidebarToggleBtn.addEventListener('click', function() {
-            const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
-            this.setAttribute('aria-expanded', String(!isCollapsed));
-            this.title = isCollapsed ? 'Show sidebar' : 'Hide sidebar';
-            const sidebarTab = document.getElementById('sidebar-tab');
-            if (sidebarTab) {
-                sidebarTab.classList.toggle('show', isCollapsed);
-            }
-            invalidateMapSizeSoon();
-            if (isCollapsed) {
-                // When entering full-screen map, fit to contents
-                setTimeout(() => fitAllLocations(), 200);
-            }
+    function collapseSidebar() {
+        document.body.classList.add('sidebar-collapsed');
+        if (openSidebarBtn) openSidebarBtn.classList.add('show');
+        invalidateMapSizeSoon();
+        setTimeout(() => fitAllLocations(), 200);
+    }
+
+    function expandSidebar() {
+        document.body.classList.remove('sidebar-collapsed');
+        const toggle = document.getElementById('sidebar-toggle');
+        if (toggle) {
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.title = 'Hide sidebar';
+        }
+        if (openSidebarBtn) openSidebarBtn.classList.remove('show');
+        invalidateMapSizeSoon();
+    }
+
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', function() {
+            collapseSidebar();
+        });
+    }
+
+    if (openSidebarBtn) {
+        openSidebarBtn.addEventListener('click', function() {
+            expandSidebar();
         });
     }
 
@@ -1649,20 +1652,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.toggle('hide-summaries', !enableSummaries);
         });
     }
-    // Sidebar bottom tab to restore sidebar
-    const sidebarTabBtn = document.getElementById('sidebar-tab');
-    if (sidebarTabBtn) {
-        sidebarTabBtn.addEventListener('click', function() {
-            document.body.classList.remove('sidebar-collapsed');
-            const toggle = document.getElementById('sidebar-toggle');
-            if (toggle) {
-                toggle.setAttribute('aria-expanded', 'true');
-                toggle.title = 'Hide sidebar';
-            }
-            this.classList.remove('show');
-            invalidateMapSizeSoon();
-        });
-    }
+
 
     // (Removed full screen toggle and related handlers)
 
